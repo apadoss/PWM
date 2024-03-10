@@ -4,7 +4,7 @@
     bottom: 0%;
     background-color: rgb(125, 125, 125);
     z-index: 1;
-    width: 100%;
+    width: 90%;
     height: 35%;
     left: 10%;
     display: flex;
@@ -25,7 +25,7 @@
     padding-left: 1%;
     text-align:left;
     font-size: 125%;
-    display: flex; /* Usamos flexbox */
+    display: flex;
     align-items: center; 
     font-family:'Times New Roman', Times, serif; 
   }
@@ -42,7 +42,7 @@
     width: 2.5%;
     bottom: 35%;
     height: 4%;
-    right: 0px;
+    right: 0%;
     border-top-left-radius: 80px;
     padding-left: 10px;
     text-align:center;
@@ -53,7 +53,7 @@
   .background-openTab:hover{
     background-color: rgb(93, 91, 91);
   }
-  
+
   .image {
     width: calc((100% - 15%) / 4);
     height: 70%; 
