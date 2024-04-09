@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "worldpix-database": {
+      "hosting": {
+        "worldpix": [
+          "worldpix-database"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "worldpix-database"
+  }
+}
