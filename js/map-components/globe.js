@@ -5,6 +5,7 @@ import {
 import * as ut from "./utility.js";
 import * as sh from "./shaders.js";
 import * as dt from "./data.js";
+import * as ab from "./albums.js";
 
 //const sh = require('./shaders.js');
 
@@ -33,6 +34,9 @@ let container;
 let bodies = dt.bodies;
 
 let uniforms;
+
+let albums = [];
+let renderedAlbums = [];
 
 run();
 
@@ -117,9 +121,10 @@ async function init() {
   camcontrols.maxDistance = 1;
   //camcontrols.enabled = true/false;
 
-  addAlbum([48.856697, 2.351462]);
-  addAlbum([35.6764, 139.6500]);
-  addAlbum([52.5200, 13.4050]);
+  //loadAlbums();
+  //refreshAlbums();
+
+  loadAlbum(ab.generateAlbumJSON());
 
   window.addEventListener("resize", onWindowResize, false);
   onWindowResize();
@@ -267,21 +272,52 @@ async function generateMainBodies() {
   }
 }
 
-let albums = [];
-
-function addAlbum(coordinates) {
-  let icon = addRenderAlbum(coordinates);
-  albums.push(icon);
-  //const box = new THREE.BoxHelper( icon, 0xffff00 );
-  //scene.add( box );
-  console.log(albums);
+//Recibe un dict de álbum y lo renderiza
+function renderAlbum(album) {
+  if (renderedAlbums.hasKey(album.albumID)) {
+    deRenderAlbum(album);
+  }
+  let pin = addAlbumPin(album.name, album.albumID, album.coordinates);
+  renderedAlbums[album.albumID] = pin;
 }
 
-function addRenderAlbum(coordinates = [48.856697,2.351462], distance = 0.43, iconLink = 'https%3A%2F%2Ficons.iconarchive.com%2Ficons%2Fpaomedia%2Fsmall-n-flat%2F256%2Fmap-marker-icon.png') {
+//Recibe un dict de álbum y lo derenderiza, true si lo ha quitado false si no existía
+function deRenderAlbum(album) {
+  if (renderedAlbums.hasKey(album.albumID)) {
+    renderedAlbums[album.albumID].parent.removeFromParent();
+    delete renderedAlbums[album.albumID];
+    return true;
+  }
+  return false;
+}
+
+//Recibe un dict de álbum, lo guarda en la lista general de álbumes y (dependiendo de parámetro) lo renderiza directamente o no
+function loadAlbum(album, render=true) {
+  if (albums.hasKey(album.albumID)) {
+    delete albums[album.albumID];
+  }
+  albums[album.albumID] = album;
+  if (render) {
+    renderAlbum(album);
+  }
+  /*name
+  albumID
+  date-start
+  date-end
+  city-name
+  coordinates
+  */
+  //const box = new THREE.BoxHelper( icon, 0xffff00 );
+  //scene.add( box );
+}
+
+//Renderiza un pin de álbum sobre el mapa y retorna específicamente la mesh del icono
+function addAlbumPin(name = "Default", id = "ID error", coordinates = [48.856697,2.351462], distance = 0.43, size = 0.02, iconLink = 'https%3A%2F%2Ficons.iconarchive.com%2Ficons%2Fpaomedia%2Fsmall-n-flat%2F256%2Fmap-marker-icon.png') {
   let line = ut.normalLine(distance);
   rotateToCoordinates(coordinates, line);
   bodies["earth"]["object"].add(line);
-  let geom = new THREE.PlaneBufferGeometry(0.02, 0.02);
+
+  let geom = new THREE.PlaneBufferGeometry(size, size);
   let mat = new THREE.ShaderMaterial({
     fragmentShader: sh.fragmentShader_alwayslit(),
     vertexShader: sh.vertexShader_generic(),
@@ -300,6 +336,8 @@ function addRenderAlbum(coordinates = [48.856697,2.351462], distance = 0.43, ico
   icon.position.y += distance;
   icon.rotateX(Math.PI / 2.0);
   icon.rotateZ(Math.PI);
+
+  icon.albumID = id;
   return icon;
 }
 
@@ -317,7 +355,8 @@ function onPointerMove( event ) {
 
   raycaster.setFromCamera( pointer, earthCamera );
   //scene.add(new THREE.ArrowHelper(raycaster.ray.direction, raycaster.ray.origin, 300, 0xff0000) );
-	const intersects = raycaster.intersectObjects( albums );
+	const intersects = raycaster.intersectObjects( renderedAlbums );
+
   if (intersects.length > 0) {
     if (intersecting != intersects[0].object) {
       intersecting = intersects[0].object;
