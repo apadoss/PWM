@@ -117,6 +117,10 @@ async function init() {
   camcontrols.maxDistance = 1;
   //camcontrols.enabled = true/false;
 
+  addAlbum([48.856697, 2.351462]);
+  addAlbum([35.6764, 139.6500]);
+  addAlbum([52.5200, 13.4050]);
+
   window.addEventListener("resize", onWindowResize, false);
   onWindowResize();
 
@@ -263,6 +267,108 @@ async function generateMainBodies() {
   }
 }
 
+let albums = [];
+
+function addAlbum(coordinates) {
+  let icon = addRenderAlbum(coordinates);
+  albums.push(icon);
+  //const box = new THREE.BoxHelper( icon, 0xffff00 );
+  //scene.add( box );
+  console.log(albums);
+}
+
+function addRenderAlbum(coordinates = [48.856697,2.351462], distance = 0.43, iconLink = 'https%3A%2F%2Ficons.iconarchive.com%2Ficons%2Fpaomedia%2Fsmall-n-flat%2F256%2Fmap-marker-icon.png') {
+  let line = ut.normalLine(distance);
+  rotateToCoordinates(coordinates, line);
+  bodies["earth"]["object"].add(line);
+  let geom = new THREE.PlaneBufferGeometry(0.02, 0.02);
+  let mat = new THREE.ShaderMaterial({
+    fragmentShader: sh.fragmentShader_alwayslit(),
+    vertexShader: sh.vertexShader_generic(),
+    uniforms: {
+      texture1: {
+        value: tloader.load(
+          `https://corsproxy.io/?` + iconLink
+        ),
+      },
+    },
+    side: THREE.DoubleSide,
+    transparent: true,
+  });
+  const icon = new THREE.Mesh(geom, mat);
+  line.add(icon);
+  icon.position.y += distance;
+  icon.rotateX(Math.PI / 2.0);
+  icon.rotateZ(Math.PI);
+  return icon;
+}
+
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+let intersecting;
+
+function onPointerMove( event ) {
+  const rect = renderer.domElement.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+
+  pointer.x = ( x / container.offsetWidth ) *  2 - 1;
+  pointer.y = ( y / container.offsetHeight ) * - 2 + 1;
+
+  raycaster.setFromCamera( pointer, earthCamera );
+  //scene.add(new THREE.ArrowHelper(raycaster.ray.direction, raycaster.ray.origin, 300, 0xff0000) );
+	const intersects = raycaster.intersectObjects( albums );
+  if (intersects.length > 0) {
+    if (intersecting != intersects[0].object) {
+      intersecting = intersects[0].object;
+      intersecting.scale.set(1.3, 1.3, 1.);
+    }
+  } else if (typeof intersecting !== "undefined") {
+    intersecting.scale.set(1.0, 1.0, 1.0);
+    intersecting = undefined;
+  }
+}
+
+function mouseRaycast() {
+  raycaster.setFromCamera( pointer, earthCamera );
+  //scene.add(new THREE.ArrowHelper(raycaster.ray.direction, raycaster.ray.origin, 300, 0xff0000) );
+	const intersects = raycaster.intersectObjects( albums );
+  if (intersects.length > 0) {
+    console.log(intersects[0])
+  }
+}
+
+window.addEventListener( 'pointermove', onPointerMove );
+//window.addEventListener( 'click', mouseRaycast );
+
+var mDragging = false;
+var mDown = false;
+
+window.addEventListener('mousedown', function () {
+  mDown = true;
+});
+
+window.addEventListener('mousemove', function () {
+  if(mDown) {
+      mDragging = true;
+  }
+});
+
+window.addEventListener('mouseup', function() {
+  // If not dragging, then it's a click!
+  if(!mDragging) {
+      mouseRaycast();
+  }
+  // Reset variables
+  mDown = false;
+  mDragging = false;
+});
+/*function mouseCollide() {
+
+let mouseCast = new THREE.Vector4();
+
+}*/
+
 function onWindowResize(e) {
     let x, y, w, h;
 
@@ -291,4 +397,5 @@ function animationLoop() {
 
   requestAnimationFrame(animationLoop);
   earthCamera.copy(fakeCamera);
+  //mouseRaycast();
 }
