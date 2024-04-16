@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import * as THREE from "three";
 import {
   OrbitControls,
@@ -15,8 +15,10 @@ import * as ab from "./albums.js";*/
   templateUrl: './globe.component.html',
   styleUrl: './globe.component.css'
 })
-export class GlobeComponent {
-
+export class GlobeComponent implements AfterViewInit {
+  ngAfterViewInit(): void {
+    run();
+  }
 }
 
 //const sh = require('./shaders.js');
@@ -51,18 +53,15 @@ let uniforms;
 //let renderedAlbums: any[] = {};
 let renderedAlbums: { [id: string]: any } = {};
 
-run();
-
 async function run() {
   console.log("Running");
   await init();
-  //animationLoop();
+  animationLoop();
 }
 
 async function init() {
 
   container = document.getElementById(globeContainer);
-  console.log(document)
   if (!!container) {
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(
@@ -147,6 +146,8 @@ async function init() {
 
     t0 = Date.now();
     console.log("a", renderer)
+  } else {
+    console.log("No container buddy")
   }
 }
 
