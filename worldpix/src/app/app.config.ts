@@ -5,7 +5,6 @@ import { routes } from './app.routes';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
-import { initializeAppCheck, ReCaptchaEnterpriseProvider, provideAppCheck } from '@angular/fire/app-check';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getDatabase, provideDatabase } from '@angular/fire/database';
 import { getFunctions, provideFunctions } from '@angular/fire/functions';
@@ -14,18 +13,18 @@ import { getPerformance, providePerformance } from '@angular/fire/performance';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { getRemoteConfig, provideRemoteConfig } from '@angular/fire/remote-config';
 
+export const enviroment = {
+  "projectId":"worldpix-database",
+  "appId":"1:848991872822:web:3087dc2049c7e65090f597",
+  "storageBucket":"worldpix-database.appspot.com",
+  "apiKey":"AIzaSyCDFU3iBucv7JoO9d-deYdXwGGMBHWoa4A",
+  "authDomain":"worldpix-database.firebaseapp.com",
+  "messagingSenderId":"848991872822"
+}
+
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), 
-    importProvidersFrom(provideFirebaseApp(() => initializeApp(
-      {
-      "projectId":"worldpix-database",
-      "appId":"1:848991872822:web:3087dc2049c7e65090f597",
-      "storageBucket":"worldpix-database.appspot.com",
-      "apiKey":"AIzaSyCDFU3iBucv7JoO9d-deYdXwGGMBHWoa4A",
-      "authDomain":"worldpix-database.firebaseapp.com",
-      "messagingSenderId":"848991872822"
-      }
-    ))), 
+    importProvidersFrom(provideFirebaseApp(() => initializeApp(enviroment))), 
     importProvidersFrom(provideAuth(() => getAuth())), 
     importProvidersFrom(provideAnalytics(() => getAnalytics())), 
     ScreenTrackingService, 
