@@ -56,12 +56,13 @@ run();
 async function run() {
   console.log("Running");
   await init();
-  animationLoop();
+  //animationLoop();
 }
 
 async function init() {
 
   container = document.getElementById(globeContainer);
+  console.log(document)
   if (!!container) {
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(
@@ -83,6 +84,7 @@ async function init() {
       //opacity: 0.5,
       //shadowMap: true
     });
+    //console.log("AAAAAA", renderer)
     container.appendChild(renderer.domElement)
     renderer.autoClear = true;
     renderer.setPixelRatio(1);
@@ -113,7 +115,6 @@ async function init() {
         value: new THREE.Vector2(),
       },
     };
-
     await generateMainBodies();
 
     let minitarget = "earth";
@@ -145,6 +146,7 @@ async function init() {
     //const renderScene = new RenderPass(scene, camera);
 
     t0 = Date.now();
+    console.log("a", renderer)
   }
 }
 
@@ -378,7 +380,7 @@ function onPointerMove( event: any ) {
 
     raycaster.setFromCamera( pointer, earthCamera );
     //scene.add(new THREE.ArrowHelper(raycaster.ray.direction, raycaster.ray.origin, 300, 0xff0000) );
-    const intersects = raycaster.intersectObjects( renderedAlbums );
+    const intersects = raycaster.intersectObjects( Object.values(renderedAlbums) );
 
     if (intersects.length > 0) {
       if (intersecting != intersects[0].object) {
@@ -395,7 +397,7 @@ function onPointerMove( event: any ) {
 function mouseRaycast() {
   raycaster.setFromCamera( pointer, earthCamera );
   //scene.add(new THREE.ArrowHelper(raycaster.ray.direction, raycaster.ray.origin, 300, 0xff0000) );
-	const intersects = raycaster.intersectObjects( albums );
+	const intersects = raycaster.intersectObjects( Object.values(renderedAlbums) );
   if (intersects.length > 0) {
     console.log(intersects[0])
   }
@@ -458,6 +460,7 @@ function onWindowResize() {
 function animationLoop() {
   timestamp = (Date.now() - t0) * accglobal;
 
+  //console.log(renderer)
   renderer.render(scene, earthCamera);
 
   requestAnimationFrame(animationLoop);
