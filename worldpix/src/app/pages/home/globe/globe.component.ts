@@ -34,7 +34,7 @@ let accglobal = 0.001;
 let camcontrols;
 const dummy = new THREE.Object3D();
 let timestamp;
-let code_generator = ut.makeRandomRange(1000);
+let code_generator = makeRandomRange(1000);
 const fov = 60;
 const aspect = window.innerWidth / window.innerHeight;
 const near = 0.1;
@@ -47,9 +47,9 @@ let container: HTMLElement | null;
 
 let uniforms;
 
-let albums: any[] = [];
+//let albums: any[] = [];
 //let renderedAlbums: any[] = {};
-let renderedAlbums: { [id: string] : THREE.Object3D; } = {};
+let renderedAlbums: { [id: string]: any } = {};
 
 run();
 
@@ -137,7 +137,7 @@ async function init() {
     //loadAlbums();
     //refreshAlbums();
 
-    loadAlbum(ab.generateAlbumJSON());
+    //loadAlbum(generateAlbumJSON());
 
     window.addEventListener("resize", onWindowResize, false);
     onWindowResize();
@@ -148,7 +148,7 @@ async function init() {
   }
 }
 
-function rotateToCoordinates(coordinates, object) {
+function rotateToCoordinates(coordinates: number[], object: any) {
   object.rotation.x = 0.0;
   object.rotation.y = 0.0;
   object.rotation.z = 0.0;
@@ -156,10 +156,10 @@ function rotateToCoordinates(coordinates, object) {
   object.rotateX(Math.PI * (Math.abs(coordinates[0] - 90.0) / 180.0));
 }
 
-function generateUniformsFrom(data) {
+function generateUniformsFrom(data: Body) {
   return new Promise((resolve, reject) => {
     try {
-      let returner = {};
+      let returner: { [string: string] : {} } = {};
       let promises = [];
 
       for (let i in data["textures"]) {
@@ -186,12 +186,12 @@ function generateUniformsFrom(data) {
   });
 }
 
-async function generateMaterial(data) {
-  return new Promise(async (resolve, reject) => {
+async function generateMaterial(data: Body) {
+  return new Promise<any>(async (resolve, reject) => {
     try {
       const uniforms = await generateUniformsFrom(data);
       resolve(
-        new THREE.ShaderMaterial({
+        /*@ts-ignore*/ new THREE.ShaderMaterial({
           uniforms: uniforms,
           fragmentShader: data["fragsh"],
           vertexShader: data["versh"],
@@ -212,7 +212,8 @@ async function generateBody(input_data: string, drawOrbit = true) {
         const orbit_container = new THREE.Object3D();
         const orbit_position = new THREE.Object3D();
         let geometry;
-        let material;
+        let material: THREE.ShaderMaterial;
+        let body;
 
         if (data["object"] == null) {
           geometry = new THREE.SphereBufferGeometry(
@@ -220,18 +221,15 @@ async function generateBody(input_data: string, drawOrbit = true) {
             data["definition"],
             data["definition"]
           );
-          material = await generateMaterial(data);
-          var body = new THREE.Mesh(geometry, material);
+          /*@ts-ignore*/ material = await generateMaterial(data);
+          /*@ts-ignore*/ body = new THREE.Mesh(geometry, material);
 
-          data["distance"] =
-            bodies[data["parent"]] == null
-              ? 0
-              : data["distance"] + bodies[data["parent"]]["size"];
+          data["distance"] = bodies[data["parent"]] == null ? 0 : data["distance"] + bodies[data["parent"]]["size"];
 
           orbit_container.add(orbit_position);
           orbit_position.add(body);
         } else {
-          var body = data["object"];
+          body = data["object"];
           orbit_container.add(orbit_position);
           orbit_position.add(body);
         }
@@ -239,7 +237,7 @@ async function generateBody(input_data: string, drawOrbit = true) {
         data["object"] = body;
         data["orbit_container"] = orbit_container;
         data["orbit_position"] = orbit_position;
-        body.userData.dict = data;
+        //body.userData['dict'] = data;
 
         body.rotation.x += data["axis_rotation"][0];
         body.rotation.y += data["axis_rotation"][1];
@@ -251,11 +249,21 @@ async function generateBody(input_data: string, drawOrbit = true) {
           bodies[data["parent"]]["orbit_position"].add(orbit_container);
 
           if (drawOrbit) {
-            const curve = new THREE.EllipseCurve(
+            /*const curve = new THREE.EllipseCurve(
               0,
               0,
               -data["distance"] * data["xccentricity"],
               -data["distance"] * data["yccentricity"]
+            );*/
+            const curve = new THREE.EllipseCurve(
+              0,
+              0,
+              -data["distance"] * data["xccentricity"],
+              -data["distance"] * data["yccentricity"],
+              0,
+              Math.PI * 2,
+              false,
+              0
             );
             const points = curve.getPoints(100);
             const geome = new THREE.BufferGeometry().setFromPoints(points);
@@ -287,8 +295,8 @@ async function generateMainBodies() {
 }
 
 //Recibe un dict de álbum y lo renderiza
-function renderAlbum(album) {
-  if (renderedAlbums.hasKey(album.albumID)) {
+function renderAlbum(album: { albumID: any; name?: any; coordinates?: any; }) {
+  if (album.albumID in renderedAlbums) {
     deRenderAlbum(album);
   }
   let pin = addAlbumPin(album.name, album.albumID, album.coordinates);
@@ -297,7 +305,7 @@ function renderAlbum(album) {
 
 //Recibe un dict de álbum y lo derenderiza, true si lo ha quitado false si no existía
 function deRenderAlbum(album: { albumID: string | number; }) {
-  if (renderedAlbums.hasKey(album.albumID)) {
+  if (album.albumID in renderedAlbums) {
     renderedAlbums[album.albumID].parent.removeFromParent();
     delete renderedAlbums[album.albumID];
     return true;
@@ -329,7 +337,7 @@ function deRenderAlbum(album: { albumID: string | number; }) {
 function addAlbumPin(name = "Default", id = "ID error", coordinates = [48.856697,2.351462], distance = 0.43, size = 0.02, iconLink = 'https%3A%2F%2Ficons.iconarchive.com%2Ficons%2Fpaomedia%2Fsmall-n-flat%2F256%2Fmap-marker-icon.png') {
   let line = normalLine(distance);
   rotateToCoordinates(coordinates, line);
-  bodies["earth"]["object"].add(line);
+  if (!!bodies["earth"]["object"]) bodies["earth"]["object"].add(line);
 
   let geom = new THREE.PlaneBufferGeometry(size, size);
   let mat = new THREE.ShaderMaterial({
@@ -839,10 +847,12 @@ interface Body {
   definition: number;
   versh: any; // Assuming vertexShader_generic and other similar types are string
   fragsh: any; // Assuming fragmentShader_generic and other similar types are string
-  object: any | null;
+  object: THREE.Mesh | null;
+  orbit_container: any | null;
+  orbit_position: any | null;
 }
 
-const bodies: Record<string, Body> = {
+const bodies: {[id: string]:  Body} = {
   "baseline": {
     parent: null,
     size: 1,
@@ -858,6 +868,8 @@ const bodies: Record<string, Body> = {
     },
     definition: 20,
     object: null,
+    orbit_container: null,
+    orbit_position: null,
     versh: vertexShader_generic,
     fragsh: fragmentShader_generic
   },
@@ -879,6 +891,8 @@ const bodies: Record<string, Body> = {
     },
     definition: 200,
     object: null,
+    orbit_container: null,
+    orbit_position: null,
     versh: vertexShader_earth(), 
     fragsh: fragmentShader_alwayslit()
   },
