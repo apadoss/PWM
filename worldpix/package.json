@@ -19,11 +19,13 @@
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
     "@types/three": "^0.134.0",
+    "process": "^0.11.10",
     "rxjs": "~7.8.0",
     "three": "^0.134.0",
     "tslib": "^2.6.2",
     "util": "^0.12.5",
     "uuidv4": "^6.2.13",
+    "uuidv5": "^1.0.0",
     "zone.js": "~0.14.3"
   },
   "devDependencies": {

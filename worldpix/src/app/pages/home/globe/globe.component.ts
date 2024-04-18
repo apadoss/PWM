@@ -3,6 +3,8 @@ import * as THREE from "three";
 import {
   OrbitControls,
 } from "three/examples/jsm/controls/OrbitControls";
+import { Album } from '../../../services/home/AlbumManager/album-manager.service';
+import { AlbumManagerService } from '../../../services/home/AlbumManager/album-manager.service';
 /*import * as ut from "./utility.js";
 import * as sh from "./shaders.js";
 import * as dt from "./data.js";
@@ -18,6 +20,40 @@ import * as ab from "./albums.js";*/
 export class GlobeComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     run();
+  }
+
+  renderAll(manager: AlbumManagerService) {
+    let buffer = manager.getAlbums();
+    for (let i in buffer) {
+      console.log(buffer[i])
+      this.renderAlbum(buffer[i]);
+    }
+  }
+
+  deRenderAll(manager: AlbumManagerService) {
+    let buffer = manager.getAlbums();
+    for (let i in buffer) {
+      this.deRenderAlbum(buffer[i]);
+    }
+  }
+
+  //Recibe un dict de álbum y lo renderiza
+  renderAlbum(album: Album) {
+    if (album.albumID in renderedAlbums) {
+      this.deRenderAlbum(album);
+    }
+    let pin = addAlbumPin(album);
+    renderedAlbums[album.albumID] = pin;
+  }
+
+  //Recibe un dict de álbum y lo derenderiza, true si lo ha quitado false si no existía
+  deRenderAlbum(album: Album) {
+    if (album["albumID"] in renderedAlbums) {
+      renderedAlbums[album["albumID"]].parent.removeFromParent();
+      delete renderedAlbums[album["albumID"]];
+      return true;
+    }
+    return false;
   }
 }
 
@@ -45,6 +81,7 @@ let tloader = new THREE.TextureLoader();
 let json;
 let globeContainer = "globe";
 let container: HTMLElement | null;
+let bufferInitAlbums: [Album, number, number, string][] = [];
 //let bodies = bodies;
 
 let uniforms;
@@ -53,9 +90,16 @@ let uniforms;
 //let renderedAlbums: any[] = {};
 let renderedAlbums: { [id: string]: any } = {};
 
+//NOTE: this function is not duplicate-safe; it assumes that whatever was passed from database is already sanitized
 async function run() {
   console.log("Running");
   await init();
+  if (bufferInitAlbums.length != 0) {
+    for (let i in bufferInitAlbums) {
+      let pin = addAlbumPin(bufferInitAlbums[i][0], bufferInitAlbums[i][1], bufferInitAlbums[i][2], bufferInitAlbums[i][3]);
+      renderedAlbums[bufferInitAlbums[i][0]["albumID"]] = pin;
+    }
+  }
   animationLoop();
 }
 
@@ -297,25 +341,6 @@ async function generateMainBodies() {
   }
 }
 
-//Recibe un dict de álbum y lo renderiza
-function renderAlbum(album: { albumID: any; name?: any; coordinates?: any; }) {
-  if (album.albumID in renderedAlbums) {
-    deRenderAlbum(album);
-  }
-  let pin = addAlbumPin(album.name, album.albumID, album.coordinates);
-  renderedAlbums[album.albumID] = pin;
-}
-
-//Recibe un dict de álbum y lo derenderiza, true si lo ha quitado false si no existía
-function deRenderAlbum(album: { albumID: string | number; }) {
-  if (album.albumID in renderedAlbums) {
-    renderedAlbums[album.albumID].parent.removeFromParent();
-    delete renderedAlbums[album.albumID];
-    return true;
-  }
-  return false;
-}
-
 //Recibe un dict de álbum, lo guarda en la lista general de álbumes y (dependiendo de parámetro) lo renderiza directamente o no
 /*function loadAlbum(album, render=true) {
   if (albums.hasKey(album.albumID)) {
@@ -337,11 +362,14 @@ function deRenderAlbum(album: { albumID: string | number; }) {
 //}
 
 //Renderiza un pin de álbum sobre el mapa y retorna específicamente la mesh del icono
-function addAlbumPin(name = "Default", id = "ID error", coordinates = [48.856697,2.351462], distance = 0.43, size = 0.02, iconLink = 'https%3A%2F%2Ficons.iconarchive.com%2Ficons%2Fpaomedia%2Fsmall-n-flat%2F256%2Fmap-marker-icon.png') {
+function addAlbumPin(album: Album, distance = 0.43, size = 0.02, iconLink = 'https%3A%2F%2Ficons.iconarchive.com%2Ficons%2Fpaomedia%2Fsmall-n-flat%2F256%2Fmap-marker-icon.png') {
+  if (!!!bodies["earth"]["object"]) {
+    bufferInitAlbums.push([album, distance, size, iconLink]);
+    return;
+  }
   let line = normalLine(distance);
-  rotateToCoordinates(coordinates, line);
-  if (!!bodies["earth"]["object"]) bodies["earth"]["object"].add(line);
-
+  rotateToCoordinates(album["coordinates"], line);
+  bodies["earth"]["object"].add(line);
   let geom = new THREE.PlaneBufferGeometry(size, size);
   let mat = new THREE.ShaderMaterial({
     fragmentShader: fragmentShader_alwayslit(),
@@ -362,7 +390,8 @@ function addAlbumPin(name = "Default", id = "ID error", coordinates = [48.856697
   icon.rotateX(Math.PI / 2.0);
   icon.rotateZ(Math.PI);
 
-  icon.albumID = id;
+  icon.albumID = album["albumID"];
+  console.log("b",icon)
   return icon;
 }
 

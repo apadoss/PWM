@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Image } from '../ImageManager/image-manager.service';
-import { uuid } from 'uuidv4';
+import { v4 as uuid } from 'uuid';
 
 export interface Album {
   "name": string,
@@ -23,14 +23,15 @@ export let albums : { [id: string]: Album; };
 export class AlbumManagerService {
   
   constructor() {
+
     albums = {};
-    this.generateAlbumDict(true, "John","01","01","18/04/2024","18/07/2024","Paris",[48.8566, 2.3522], "Description");
-    this.generateAlbumDict(true, "John","01","02","18/04/2024","18/07/2024","Washington",[47.7511, 120.7401], "Description");
-    this.generateAlbumDict(true, "John","01","02","18/04/2024","18/07/2024","Tokyo",[35.6764, 139.6500], "Description");
+    this.generateAlbum(true, "John","01","01","18/04/2024","18/07/2024","Paris",[48.8566, 2.3522], "Description");
+    this.generateAlbum(true, "John","01","02","18/04/2024","18/07/2024","Washington",[38.9072, -77.0369], "Description");
+    this.generateAlbum(true, "John","01","03","18/04/2024","18/07/2024","Tokyo",[35.6764, 139.6500], "Description");
   }
 
   //Returns array containing created dictionary and result of potential auto-add operation 
-  generateAlbumDict(autoAdd=true, name='No user name', userID='No user ID', albumID='No album ID', datestart='No start date', dateend='No end date', cityname='No city', coordinates=[0.0,0.0], description='No description', images: {[id: string]: Image} = {}) {
+  generateAlbum(autoAdd=true, name='No user name', userID='No user ID', albumID='No album ID', datestart='No start date', dateend='No end date', cityname='No city', coordinates=[0.0,0.0], description='No description', images: {[id: string]: Image} = {}) {
     let returner: Album = {
         "name": name,
         "userID": userID,
@@ -46,6 +47,10 @@ export class AlbumManagerService {
     if (autoAdd && !this.addAlbum(returner)) return [returner, false];
 
     return [returner, true];
+}
+
+getAlbums() {
+  return albums;
 }
 
 addAlbum(album: Album, force = false) {
