@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Output } from '@angular/core';
 import * as THREE from "three";
 import {
   OrbitControls,
@@ -10,6 +10,29 @@ import * as sh from "./shaders.js";
 import * as dt from "./data.js";
 import * as ab from "./albums.js";*/
 
+interface Texture {
+  [id: string]: string;
+}
+
+interface Body {
+  parent: string | null;
+  size: number;
+  distance: number;
+  speed: number;
+  xccentricity: number;
+  yccentricity: number;
+  orbit_rotation: number[];
+  axis_rotation: number[];
+  rotation_speed: number;
+  textures: Texture;
+  definition: number;
+  versh: any; // Assuming vertexShader_generic and other similar types are string
+  fragsh: any; // Assuming fragmentShader_generic and other similar types are string
+  object: THREE.Mesh | null;
+  orbit_container: any | null;
+  orbit_position: any | null;
+}
+
 @Component({
   selector: 'app-globe',
   standalone: true,
@@ -17,121 +40,226 @@ import * as ab from "./albums.js";*/
   templateUrl: './globe.component.html',
   styleUrl: './globe.component.css'
 })
+
 export class GlobeComponent implements AfterViewInit {
-  ngAfterViewInit(): void {
-    run();
-  }
+  @Output() clickAlbum = new EventEmitter();
 
-  renderAll(manager: AlbumManagerService) {
-    let buffer = manager.getAlbums();
-    for (let i in buffer) {
-      console.log(buffer[i])
-      this.renderAlbum(buffer[i]);
-    }
-  }
+  //const sh = require('./shaders.js');
 
-  deRenderAll(manager: AlbumManagerService) {
-    let buffer = manager.getAlbums();
-    for (let i in buffer) {
-      this.deRenderAlbum(buffer[i]);
-    }
-  }
+scene: any
+renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer;
+camera: any;
+earthCamera: any;
+fakeCamera: any;
+//t0 = 0;
+accglobal = 0.001;
+camcontrols: any;
+dummy = new THREE.Object3D();
+//code_generator = makeRandomRange(1000);
+fov = 60;
+aspect = window.innerWidth / window.innerHeight;
+near = 0.1;
+far = 1000;
+tloader = new THREE.TextureLoader();
+globeContainer = "globe";
+container!: HTMLElement | null;
+bufferInitAlbums: [Album, number, number, string][] = [];
+uniforms: any;
+mDragging: boolean;
+mDown: boolean;
+timestamp: any;
+bodies: {[id: string]:  Body} = {
+  "baseline": {
+    parent: null,
+    size: 1,
+    distance: 1,
+    speed: 1,
+    xccentricity: 1,
+    yccentricity: 1,
+    orbit_rotation: [0, 1, 0],
+    axis_rotation: [0, 0, 0],
+    rotation_speed: 0.05,
+    textures: {
+      texture1: "https://cdn.glitch.global/7bb54dbb-ebd4-4a1b-8f14-dcda7da4af29/sun_surface.jpg?v=1698331403365"
+    },
+    definition: 20,
+    object: null,
+    orbit_container: null,
+    orbit_position: null,
+    versh: vertexShader_generic(),
+    fragsh: fragmentShader_generic
+  },
+  "earth": {
+    parent: null,
+    size: 0.4,
+    distance: 0,
+    speed: 0,
+    xccentricity: 1,
+    yccentricity: 1,
+    orbit_rotation: [0, 0, 0],
+    axis_rotation: [0, 0, (Math.PI * 2) * (23 / 360)],
+    rotation_speed: 0,
+    textures: {
+      texture1: "https://cdn.glitch.global/7bb54dbb-ebd4-4a1b-8f14-dcda7da4af29/earth_surface.jpg?v=1698341331340",
+      texture2: "https://cdn.glitch.global/87772de1-82e4-4e11-9e28-c8a686b86d4c/2k_earth_nightmap.jpg?v=1699888576325",
+      dispmap: "https://cdn.glitch.global/87772de1-82e4-4e11-9e28-c8a686b86d4c/x1um653wa2r8hw9pn64drm8aljvv.jpg?v=1700053101311",
+      specular: "https://cdn.glitch.global/7bb54dbb-ebd4-4a1b-8f14-dcda7da4af29/earthspec1k.jpg?v=1699204881315",
+    },
+    definition: 200,
+    object: null,
+    orbit_container: null,
+    orbit_position: null,
+    versh: vertexShader_earth(), 
+    fragsh: fragmentShader_alwayslit()
+  },
+};
 
-  //Recibe un dict de álbum y lo renderiza
-  renderAlbum(album: Album) {
-    if (album.albumID in renderedAlbums) {
-      this.deRenderAlbum(album);
-    }
-    let pin = addAlbumPin(album);
-    renderedAlbums[album.albumID] = pin;
-  }
-
-  //Recibe un dict de álbum y lo derenderiza, true si lo ha quitado false si no existía
-  deRenderAlbum(album: Album) {
-    if (album["albumID"] in renderedAlbums) {
-      renderedAlbums[album["albumID"]].parent.removeFromParent();
-      delete renderedAlbums[album["albumID"]];
-      return true;
-    }
-    return false;
-  }
-}
-
-//const sh = require('./shaders.js');
-
-let scene: any, renderer: THREE.WebGLRenderer;
-let camera;
-let earthCamera: any, fakeCamera: any;
-let info;
-let grid;
-let estrella,
-  Planetas = [],
-  Lunas = [];
-let t0 = 0;
-let accglobal = 0.001;
-let camcontrols;
-const dummy = new THREE.Object3D();
-let timestamp;
-let code_generator = makeRandomRange(1000);
-const fov = 60;
-const aspect = window.innerWidth / window.innerHeight;
-const near = 0.1;
-const far = 1000;
-let tloader = new THREE.TextureLoader();
-let json;
-let globeContainer = "globe";
-let container: HTMLElement | null;
-let bufferInitAlbums: [Album, number, number, string][] = [];
-//let bodies = bodies;
-
-let uniforms;
+//let clickAlbum: EventEmitter<any>;
 
 //let albums: any[] = [];
 //let renderedAlbums: any[] = {};
-let renderedAlbums: { [id: string]: any } = {};
+renderedAlbums: { [id: string]: any } = {};
 
 //NOTE: this function is not duplicate-safe; it assumes that whatever was passed from database is already sanitized
-async function run() {
-  console.log("Running");
-  await init();
-  if (bufferInitAlbums.length != 0) {
-    for (let i in bufferInitAlbums) {
-      let pin = addAlbumPin(bufferInitAlbums[i][0], bufferInitAlbums[i][1], bufferInitAlbums[i][2], bufferInitAlbums[i][3]);
-      renderedAlbums[bufferInitAlbums[i][0]["albumID"]] = pin;
-    }
-  }
-  animationLoop();
+
+constructor() {
+  this.mDragging = false;
+  this.mDown = false;
 }
 
-async function init() {
+ngAfterViewInit(): void {
 
-  container = document.getElementById(globeContainer);
-  if (!!container) {
-    scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(
+  this.container = document.getElementById(this.globeContainer);
+
+  if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    window.addEventListener( 'touchmove', (e) => {
+      this.onPointerMove(e, "mobile") 
+    });
+
+    window.addEventListener('touchstart', (e) => {
+      this.mDown = true;
+      this.onPointerMove(e, "mobile");
+    });
+    
+    
+    window.addEventListener('touchmove', () => {
+
+      if(this.mDown) {
+          this.mDragging = true;
+      }
+    });
+    
+    window.addEventListener('touchend', (e) => {
+
+      // If not dragging, then it's a click!
+      if(!this.mDragging) {
+          this.mouseRaycast();
+      }
+      // Reset variables
+      this.mDown = false;
+      this.mDragging = false;
+    });
+  } else {
+    window.addEventListener( 'pointermove', this.onPointerMove );
+
+    window.addEventListener('mousedown', () => {
+      this.mDown = true;
+    });
+    
+    
+    window.addEventListener('mousemove', () => {
+      if(this.mDown) {
+          this.mDragging = true;
+      }
+    });
+    
+    window.addEventListener('mouseup', () => {
+      // If not dragging, then it's a click!
+      if(!this.mDragging) {
+          this.mouseRaycast();
+      }
+      // Reset variables
+      this.mDown = false;
+      this.mDragging = false;
+    });
+  }
+  
+  this.run();
+}
+
+renderAll(manager: AlbumManagerService) {
+  let buffer = manager.getAlbums();
+  for (let i in buffer) {
+    this.renderAlbum(buffer[i]);
+  }
+}
+
+deRenderAll(manager: AlbumManagerService) {
+  let buffer = manager.getAlbums();
+  for (let i in buffer) {
+    this.deRenderAlbum(buffer[i]);
+  }
+}
+
+//Recibe un dict de álbum y lo renderiza
+renderAlbum(album: Album) {
+  if (album.albumID in this.renderedAlbums) {
+    this.deRenderAlbum(album);
+  }
+  let pin = this.addAlbumPin(album);
+  this.renderedAlbums[album.albumID] = pin;
+}
+
+//Recibe un dict de álbum y lo derenderiza, true si lo ha quitado false si no existía
+deRenderAlbum(album: Album) {
+  if (album["albumID"] in this.renderedAlbums) {
+    this.renderedAlbums[album["albumID"]].parent.removeFromParent();
+    delete this.renderedAlbums[album["albumID"]];
+    return true;
+  }
+  return false;
+}
+
+private async run() {
+  console.log("Running");
+  await this.init();
+  if (this.bufferInitAlbums.length != 0) {
+    for (let i in this.bufferInitAlbums) {
+      let pin = this.addAlbumPin(this.bufferInitAlbums[i][0], this.bufferInitAlbums[i][1], this.bufferInitAlbums[i][2], this.bufferInitAlbums[i][3]);
+      this.renderedAlbums[this.bufferInitAlbums[i][0]["albumID"]] = pin;
+    }
+  }
+  this.animationLoop();
+}
+
+private async init() {
+
+  if (!!this.container) {
+    this.scene = new THREE.Scene();
+    this.camera = new THREE.PerspectiveCamera(
       75,
-      container.offsetWidth / container.offsetHeight,
+      this.container.offsetWidth / this.container.offsetHeight,
       0.1,
       1000
     );
-    camera.position.set(45, 30, 45);
-    earthCamera = new THREE.PerspectiveCamera(
+    this.camera.position.set(45, 30, 45);
+    this.earthCamera = new THREE.PerspectiveCamera(
       75,
-      container.offsetWidth / container.offsetHeight,
+      this.container.offsetWidth / this.container.offsetHeight,
       0.1,
       1000
     );
 
-    renderer = new THREE.WebGLRenderer({
+    this.renderer = new THREE.WebGLRenderer({
       antialias: true,
       //opacity: 0.5,
       //shadowMap: true
     });
     //console.log("AAAAAA", renderer)
-    container.appendChild(renderer.domElement)
-    renderer.autoClear = true;
-    renderer.setPixelRatio(1);
-    renderer.setClearColor(0x000000, 0.0);
+    this.container.appendChild(this.renderer.domElement)
+    this.renderer.autoClear = true;
+    this.renderer.setPixelRatio(1);
+    this.renderer.setClearColor(0x000000, 0.0);
 
     const skyboxTexture = new THREE.TextureLoader().load(
       "https://cdn.glitch.global/7bb54dbb-ebd4-4a1b-8f14-dcda7da4af29/8k_stars_milky_way.jpg?v=1699045832743"
@@ -142,9 +270,9 @@ async function init() {
     });
     const skyboxGeometry = new THREE.SphereGeometry(200, 30, 30);
     const skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial);
-    scene.add(skybox);
+    this.scene.add(skybox);
 
-    uniforms = {
+    this.uniforms = {
       u_time: {
         type: "f",
         value: 1.0,
@@ -158,24 +286,24 @@ async function init() {
         value: new THREE.Vector2(),
       },
     };
-    await generateMainBodies();
+    await this.generateMainBodies();
 
     let minitarget = "earth";
     let distance = 0.4;
     let vector = [0.6, 0.6, 2];
-    bodies[minitarget]["orbit_position"].add(earthCamera);
-    earthCamera.position.set(
+    this.bodies[minitarget]["orbit_position"].add(this.earthCamera);
+    this.earthCamera.position.set(
       vector[0] * distance,
       vector[1] * distance,
       vector[2] * distance
     );
-    fakeCamera = earthCamera.clone(); // parent becomes null
-    camcontrols = new OrbitControls(fakeCamera, renderer.domElement);
-    camcontrols.enablePan = false;
-    camcontrols.enableRotate = true;
-    camcontrols.enableZoom = true;
-    camcontrols.minDistance = 0.6;
-    camcontrols.maxDistance = 1;
+    this.fakeCamera = this.earthCamera.clone(); // parent becomes null
+    this.camcontrols = new OrbitControls(this.fakeCamera, this.renderer.domElement);
+    this.camcontrols.enablePan = false;
+    this.camcontrols.enableRotate = true;
+    this.camcontrols.enableZoom = true;
+    this.camcontrols.minDistance = 0.6;
+    this.camcontrols.maxDistance = 1;
     //camcontrols.enabled = true/false;
   
     //loadAlbums();
@@ -183,19 +311,18 @@ async function init() {
 
     //loadAlbum(generateAlbumJSON());
 
-    window.addEventListener("resize", onWindowResize, false);
-    onWindowResize();
+    window.addEventListener("resize", this.onWindowResize, false);
+    this.onWindowResize();
 
     //const renderScene = new RenderPass(scene, camera);
 
-    t0 = Date.now();
-    console.log("a", renderer)
+    //this.t0 = Date.now();
   } else {
     console.log("No container buddy")
   }
 }
 
-function rotateToCoordinates(coordinates: number[], object: any) {
+private rotateToCoordinates(coordinates: number[], object: any) {
   object.rotation.x = 0.0;
   object.rotation.y = 0.0;
   object.rotation.z = 0.0;
@@ -203,7 +330,7 @@ function rotateToCoordinates(coordinates: number[], object: any) {
   object.rotateX(Math.PI * (Math.abs(coordinates[0] - 90.0) / 180.0));
 }
 
-function generateUniformsFrom(data: Body) {
+private generateUniformsFrom(data: Body) {
   return new Promise((resolve, reject) => {
     try {
       let returner: { [string: string] : {} } = {};
@@ -214,7 +341,7 @@ function generateUniformsFrom(data: Body) {
         let texturePromise = Promise.resolve(data["textures"][i]);
         promises.push(
           texturePromise.then((textureUrl) => {
-            returner[i] = { value: tloader.load(textureUrl) };
+            returner[i] = { value: this.tloader.load(textureUrl) };
           })
         );
       }
@@ -233,10 +360,10 @@ function generateUniformsFrom(data: Body) {
   });
 }
 
-async function generateMaterial(data: Body) {
+private async generateMaterial(data: Body) {
   return new Promise<any>(async (resolve, reject) => {
     try {
-      const uniforms = await generateUniformsFrom(data);
+      const uniforms = await this.generateUniformsFrom(data);
       resolve(
         /*@ts-ignore*/ new THREE.ShaderMaterial({
           uniforms: uniforms,
@@ -251,10 +378,10 @@ async function generateMaterial(data: Body) {
   });
 }
 
-async function generateBody(input_data: string, drawOrbit = true) {
+private async generateBody(input_data: string, drawOrbit = true) {
   return new Promise(async (resolve, reject) => {
     try {
-      const data = bodies[input_data];
+      const data = this.bodies[input_data];
       if (input_data !== "baseline") {
         const orbit_container = new THREE.Object3D();
         const orbit_position = new THREE.Object3D();
@@ -268,10 +395,11 @@ async function generateBody(input_data: string, drawOrbit = true) {
             data["definition"],
             data["definition"]
           );
-          /*@ts-ignore*/ material = await generateMaterial(data);
+          /*@ts-ignore*/ material = await this.generateMaterial(data);
           /*@ts-ignore*/ body = new THREE.Mesh(geometry, material);
 
-          data["distance"] = bodies[data["parent"]] == null ? 0 : data["distance"] + bodies[data["parent"]]["size"];
+          console.log("huh?!", data);
+          data["distance"] = data["parent"] == null || this.bodies[data["parent"]] == null ? 0 : data["distance"] + this.bodies[data["parent"]]["size"];
 
           orbit_container.add(orbit_position);
           orbit_position.add(body);
@@ -291,9 +419,9 @@ async function generateBody(input_data: string, drawOrbit = true) {
         body.rotation.z += data["axis_rotation"][2];
 
         if (data["parent"] == null) {
-          scene.add(orbit_container);
+          this.scene.add(orbit_container);
         } else {
-          bodies[data["parent"]]["orbit_position"].add(orbit_container);
+          this.bodies[data["parent"]]["orbit_position"].add(orbit_container);
 
           if (drawOrbit) {
             /*const curve = new THREE.EllipseCurve(
@@ -335,9 +463,9 @@ async function generateBody(input_data: string, drawOrbit = true) {
   });
 }
 
-async function generateMainBodies() {
-  for (let i in bodies) {
-    await generateBody(i);
+private async generateMainBodies() {
+  for (let i in this.bodies) {
+    await this.generateBody(i);
   }
 }
 
@@ -362,21 +490,22 @@ async function generateMainBodies() {
 //}
 
 //Renderiza un pin de álbum sobre el mapa y retorna específicamente la mesh del icono
-function addAlbumPin(album: Album, distance = 0.43, size = 0.02, iconLink = 'https%3A%2F%2Ficons.iconarchive.com%2Ficons%2Fpaomedia%2Fsmall-n-flat%2F256%2Fmap-marker-icon.png') {
-  if (!!!bodies["earth"]["object"]) {
-    bufferInitAlbums.push([album, distance, size, iconLink]);
+private addAlbumPin(album: Album, distance = 0.43, size = 0.02, iconLink = 'https%3A%2F%2Ficons.iconarchive.com%2Ficons%2Fpaomedia%2Fsmall-n-flat%2F256%2Fmap-marker-icon.png') {
+  if (!!!this.bodies["earth"]["object"]) {
+    this.bufferInitAlbums.push([album, distance, size, iconLink]);
     return;
   }
-  let line = normalLine(distance);
-  rotateToCoordinates(album["coordinates"], line);
-  bodies["earth"]["object"].add(line);
+  let line = this.normalLine(distance);
+  this.rotateToCoordinates(album["coordinates"], line);
+  this.bodies["earth"]["object"].add(line);
+
   let geom = new THREE.PlaneBufferGeometry(size, size);
   let mat = new THREE.ShaderMaterial({
     fragmentShader: fragmentShader_alwayslit(),
     vertexShader: vertexShader_generic(),
     uniforms: {
       texture1: {
-        value: tloader.load(
+        value: this.tloader.load(
           `https://corsproxy.io/?` + iconLink
         ),
       },
@@ -384,118 +513,121 @@ function addAlbumPin(album: Album, distance = 0.43, size = 0.02, iconLink = 'htt
     side: THREE.DoubleSide,
     transparent: true,
   });
-  const icon: any = new THREE.Mesh(geom, mat);
-  line.add(icon);
+  const icon = new THREE.Mesh(geom, mat) as THREE.Mesh & { albumID?: string };;
   icon.position.y += distance;
   icon.rotateX(Math.PI / 2.0);
+  line.add(icon);
   icon.rotateZ(Math.PI);
 
+  const text = this.dcText(
+    album["name"],
+    size / 2.5,
+    0.01,
+    200,
+    "FFFFFF",
+    "222222"
+  );
+  icon.add(text);
+  text.rotateY( Math.PI)
+  text.position.y += size;
+
+  /*let pin = new THREE.Group() as THREE.Group & { albumID?: string };
+  pin.albumID = album["albumID"];
+  pin.add(icon);
+  pin.add(text);
+  text.position.y += size;
+
+  line.add(pin);
+  pin.position.y += distance;
+  pin.rotateX(Math.PI / 2.0);
+  pin.rotateY( Math.PI);
+  pin.rotateZ(Math.PI);*/
+
   icon.albumID = album["albumID"];
-  console.log("b",icon)
   return icon;
 }
 
-const raycaster = new THREE.Raycaster();
-const pointer = new THREE.Vector2();
-let intersecting: any;
+raycaster = new THREE.Raycaster();
+pointer = new THREE.Vector2();
+intersecting: any;
 
-function onPointerMove( event: any ) {
-  if (!!container) {
-    const rect = renderer.domElement.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
+private onPointerMove = (event: any, toggle: string = "desktop") => {
+  if (!!this.container) {
+    let x,y;
+    const rect = this.renderer.domElement.getBoundingClientRect();
 
-    pointer.x = ( x / container.offsetWidth ) *  2 - 1;
-    pointer.y = ( y / container.offsetHeight ) * - 2 + 1;
+    if (toggle == "desktop") {
+      x = event.clientX - rect.left;
+      y = event.clientY - rect.top;
+    } else {
+      x = event.touches[0].clientX - rect.left;
+      y = event.touches[0].clientY - rect.top;
+    }
 
-    raycaster.setFromCamera( pointer, earthCamera );
-    //scene.add(new THREE.ArrowHelper(raycaster.ray.direction, raycaster.ray.origin, 300, 0xff0000) );
-    const intersects = raycaster.intersectObjects( Object.values(renderedAlbums) );
+    this.pointer.x = (x / this.container.offsetWidth) * 2 - 1;
+    this.pointer.y = (y / this.container.offsetHeight) * -2 + 1;
 
-    if (intersects.length > 0) {
-      if (intersecting != intersects[0].object) {
-        intersecting = intersects[0].object;
-        intersecting.scale.set(1.3, 1.3, 1.);
+    this.raycaster.setFromCamera(this.pointer, this.earthCamera);
+
+    const intersects = this.raycaster.intersectObjects(Object.values(this.renderedAlbums), false);
+
+    if (intersects.length > 0 && toggle == "desktop") {
+      if (this.intersecting != intersects[0].object) {
+        this.intersecting = intersects[0].object;
+        this.intersecting.scale.set(1.3, 1.3, 1.);
       }
-    } else if (typeof intersecting !== "undefined") {
-      intersecting.scale.set(1.0, 1.0, 1.0);
-      intersecting = undefined;
+    } else if (typeof this.intersecting !== "undefined") {
+      this.intersecting.scale.set(1.0, 1.0, 1.0);
+      this.intersecting = undefined;
     }
   }
 }
 
-function mouseRaycast() {
-  raycaster.setFromCamera( pointer, earthCamera );
+private mouseRaycast() {
+  this.raycaster.setFromCamera( this.pointer, this.earthCamera );
   //scene.add(new THREE.ArrowHelper(raycaster.ray.direction, raycaster.ray.origin, 300, 0xff0000) );
-	const intersects = raycaster.intersectObjects( Object.values(renderedAlbums) );
+	const intersects = this.raycaster.intersectObjects( Object.values(this.renderedAlbums) );
   if (intersects.length > 0) {
-    console.log(intersects[0])
+    let buffer: any = intersects[0].object;
+    //console.log(this.clickAlbum);
+    this.clickAlbum.emit(buffer.albumID);
+    //console.log(buffer.albumID)
   }
 }
-
-window.addEventListener( 'pointermove', onPointerMove );
-//window.addEventListener( 'click', mouseRaycast );
-
-var mDragging = false;
-var mDown = false;
-
-window.addEventListener('mousedown', function () {
-  mDown = true;
-});
-
-window.addEventListener('mousemove', function () {
-  if(mDown) {
-      mDragging = true;
-  }
-});
-
-window.addEventListener('mouseup', function() {
-  // If not dragging, then it's a click!
-  if(!mDragging) {
-      mouseRaycast();
-  }
-  // Reset variables
-  mDown = false;
-  mDragging = false;
-});
 /*function mouseCollide() {
 
 let mouseCast = new THREE.Vector4();
 
 }*/
 
-function onWindowResize() {
-  if (!!container && !!renderer && !!fakeCamera) {
+private onWindowResize() {
+  if (!!this.container && !!this.renderer && !!this.fakeCamera) {
       let x, y, w, h;
 
     //Efecto similar al de defecto, ocupa toda la ventana
-    x = Math.floor(container.offsetWidth * 0.0);
-    y = Math.floor(container.offsetHeight * 0.0);
-    w = Math.floor(container.offsetWidth * 1);
-    h = Math.floor(container.offsetHeight * 1);
+    x = Math.floor(this.container.offsetWidth * 0.0);
+    y = Math.floor(this.container.offsetHeight * 0.0);
+    w = Math.floor(this.container.offsetWidth * 1);
+    h = Math.floor(this.container.offsetHeight * 1);
 
     //renderer.setViewport(x, y, w, h);
-    renderer.setSize(container.offsetWidth, container.offsetHeight);
-    renderer.setScissor(x, y, w, h);
-    renderer.setScissorTest(true);
+    this.renderer.setSize(this.container.offsetWidth, this.container.offsetHeight);
+    this.renderer.setScissor(x, y, w, h);
+    this.renderer.setScissorTest(true);
     
-    fakeCamera.aspect = container.offsetWidth / container.offsetHeight;
-    fakeCamera.updateProjectionMatrix();
+    this.fakeCamera.aspect = this.container.offsetWidth / this.container.offsetHeight;
+    this.fakeCamera.updateProjectionMatrix();
     //uniforms.u_resolution.value.x = renderer.domElement.width;
     //uniforms.u_resolution.value.y = renderer.domElement.height;
   }
 }
 
 //Bucle de animación
-function animationLoop() {
-  timestamp = (Date.now() - t0) * accglobal;
+private animationLoop = () => {
+  this.renderer.render(this.scene, this.earthCamera);
 
-  //console.log(renderer)
-  renderer.render(scene, earthCamera);
-
-  requestAnimationFrame(animationLoop);
-  earthCamera.copy(fakeCamera);
-  //mouseRaycast();
+  requestAnimationFrame(this.animationLoop);
+  this.earthCamera.copy(this.fakeCamera);
 }
 
 //UTILITY
@@ -514,18 +646,18 @@ import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';*/
 //import * as th from './globe.js';
 
 //General utility functions
-export function randomBetween(start: number, end: number) {
+private randomBetween(start: number, end: number) {
   return (Math.random() < 0.5 ? -1 : 1) * (Math.random()*(end-start) + start);
 }
 
-export function normalFromRotation(vector: any) {
+private normalFromRotation(vector: any) {
   const euler = new THREE.Euler(vector[0], vector[1], vector[2], 'XYZ');
   const quaternion = new THREE.Quaternion();
   quaternion.setFromEuler(euler);
   return new THREE.Vector3(0, 0, 1).applyQuaternion(quaternion);
 }
 
-export function normalLine(length=5.0) {
+private normalLine(length=5.0) {
   const material = new THREE.LineBasicMaterial({
   color: 0x0000ff
   });
@@ -538,7 +670,7 @@ export function normalLine(length=5.0) {
   return new THREE.Line( geometry, material );
 }
 
-export function makeRandomRange(x: number) {
+private makeRandomRange(x: number) {
     var range = new Array(x),
         pointer = x;
     return function getRandom() {
@@ -551,7 +683,7 @@ export function makeRandomRange(x: number) {
 }
 
 //More specific
-export async function probeBackend() {
+private async probeBackend() {
   try {
     let response : any = await fetch('/handshake');
     response = await response.text();
@@ -563,7 +695,7 @@ export async function probeBackend() {
   }
 }
 
-export async function fetchFromBackend(url: string) {
+private async fetchFromBackend(url: string) {
   try {
     const response = await fetch(url);
 
@@ -580,7 +712,7 @@ export async function fetchFromBackend(url: string) {
   }
 }
 
-export async function fetchEndpoint(endpoint : any, keypart : any, keyname : any, expectedType="json",refresh=-1) {
+private async fetchEndpoint(endpoint : any, keypart : any, keyname : any, expectedType="json",refresh=-1) {
   const delay = (ms : any) => new Promise((resolve) => setTimeout(resolve, ms));
   const url =
     '/search?ep=' +
@@ -624,7 +756,7 @@ export async function fetchEndpoint(endpoint : any, keypart : any, keyname : any
   }
 }
 
-export function dcText(txt: string, hWorldTxt: number, hWorldAll: number, hPxTxt: number, fgcolor: { toString: (arg0: number) => string; }, bgcolor: { toString: (arg0: number) => string; } | undefined) { // the routine
+private dcText(txt: string, hWorldTxt: number, hWorldAll: number, hPxTxt: number, fgcolor: { toString: (arg0: number) => string; }, bgcolor: { toString: (arg0: number) => string; } | undefined) { // the routine
   // txt is the text.
   // hWorldTxt is world height of text in the plane.
   // hWorldAll is world height of whole rectangle containing the text.
@@ -677,141 +809,13 @@ export function dcText(txt: string, hWorldTxt: number, hWorldAll: number, hPxTxt
   return mesh;
 }
 
-export function parseWeatherInCity(idata: any) {
+private parseWeatherInCity(idata: any) {
   return {
     "name": idata["name"],
     "coordinates": [idata["coord"]["lat"],idata["coord"]["lon"]],
     "temperature": `${(idata["main"]["temp"] - 273.15).toFixed(0)} ºC`,
     "weatherIcon": idata["weather"][0]["icon"],
   };
-}
-
-//SHADERS
-export function vertexShader_generic() {
-  return `
-                varying vec2 vUv;
-        varying vec3 v_Normal;
-        varying vec3 v_vertToLight;
-        
-                void main() {
-                  vUv = uv;
-                  vec4 modelViewPosition = modelViewMatrix * vec4(position, 1.0);
-          vec4 viewSunPos = viewMatrix * vec4(0.0, 0.0, 0.0, 1.0);
-          v_Normal = normalize( normalMatrix * normal );
-          v_vertToLight = normalize(viewSunPos.xyz - modelViewPosition.xyz);
-                  gl_Position = projectionMatrix * modelViewPosition;
-                }
-              `;
-}
-
-export function vertexShader_earth() {
-  return `
-        uniform sampler2D dispmap;
-                varying vec2 vUv;
-        varying vec3 v_Normal;
-        varying vec3 v_vertToLight;
-        
-                void main() {
-                  vUv = uv;
-                  vec4 modelViewPosition = modelViewMatrix * vec4(position, 1.0);
-          vec4 viewSunPos = viewMatrix * vec4(0.0, 0.0, 0.0, 1.0);
-          v_Normal = normalize( normalMatrix * normal );
-          v_vertToLight = normalize(viewSunPos.xyz - modelViewPosition.xyz);
-                  gl_Position = projectionMatrix * (modelViewPosition + 0.04 * vec4( length(texture(dispmap, vUv).rgb / 3.0) * v_Normal, 0.0));
-                }
-              `;
-}
-
-export function fragmentShader_generic() {
-  return `
-        uniform sampler2D texture1;
-        varying vec2 vUv;
-        varying vec3 v_vertToLight;
-        varying vec3 v_Normal;
-
-        void main() {
-            float colorintensity = 1.0; 
-            vec4 colorbias =  vec4 (0.0, 0.0, 0.0, 0.0);
-            
-            float light = dot(v_vertToLight, v_Normal);
-            float kd = min(1.0, abs(light) * 2.0);
-            gl_FragColor = vec4( texture2D(texture1, vUv).rgb * kd * colorintensity * (1.0 - min(0.0,light)/light) + 0.0, 1.0) + colorbias;
-          }
-              `;
-}
-
-export function fragmentShader_earth() {
-  return `
-        uniform sampler2D texture1;
-        uniform sampler2D texture2;
-        varying vec2 vUv;
-        varying vec3 v_vertToLight;
-        varying vec3 v_Normal;
-
-        void main() {
-            float colorintensity = 1.0; 
-            vec4 colorbias =  vec4 (0.0, 0.0, 0.0, 0.0);
-            
-            float light = dot(v_vertToLight, v_Normal);
-            float kd = min(1.0, abs(light) * 2.0);
-            if (light > 0.0) {
-              gl_FragColor = vec4( texture2D(texture1, vUv).rgb * kd * colorintensity + 0.0, 1.0) + colorbias;
-            } else {
-              gl_FragColor = vec4( texture2D(texture2, vUv).rgb * kd * colorintensity + 0.0, 1.0) + colorbias;
-            }
-          }
-              `;
-}
-
-export function fragmentShader_earth_clouds() {
-  return `
-        uniform sampler2D texture1;
-        //uniform sampler2D texture2;
-        //uniform sampler2D texture3;
-        //uniform sampler2D texture4;
-        varying vec2 vUv;
-        varying vec3 v_vertToLight;
-        varying vec3 v_Normal;
-
-        void main() {
-            float colorintensity = 1.0; 
-            vec4 colorbias =  vec4 (0.0, 0.0, 0.0, 1.0);
-            
-            float light = dot(v_vertToLight, v_Normal);
-            float kd = min(1.0, abs(light) * 2.0);
-            gl_FragColor = vec4( texture2D(texture1, vUv).rgb * kd * colorintensity * (1.0 - min(0.0,light)/light) + 0.0, 1.0) + colorbias;
-            gl_FragColor.a = texture2D(texture1, vUv).a;
-          }
-              `;
-}
-
-export function fragmentShader_sun() {
-  return `
-        uniform sampler2D texture1;
-        varying vec2 vUv;
-
-        void main() {
-            float colorintensity = 1.0; 
-            vec4 colorbias =  vec4 (0.0, 0.0, 0.0, 0.0);
-            float kd = 1.0;
-            gl_FragColor = vec4( texture2D(texture1, vUv).rgb * kd * colorintensity + 0.0, 1.0) + colorbias;
-          }
-              `;
-}
-
-export function fragmentShader_alwayslit() {
-  return `
-        uniform sampler2D texture1;
-        varying vec2 vUv;
-
-        void main() {
-            float colorintensity = 1.0; 
-            vec4 colorbias =  vec4 (0.0, 0.0, 0.0, 0.0);
-            float kd = 1.0;
-            gl_FragColor = vec4( texture2D(texture1, vUv).rgb * kd * colorintensity + 0.0, 1.0) + colorbias;
-            gl_FragColor.a = texture2D(texture1, vUv).a;
-          }
-              `;
 }
 
 //DATA
@@ -862,73 +866,134 @@ export function fragmentShader_alwayslit() {
  },
 };*/
 
-interface Texture {
-  [id: string]: string;
+
 }
 
-interface Body {
-  parent: string | null;
-  size: number;
-  distance: number;
-  speed: number;
-  xccentricity: number;
-  yccentricity: number;
-  orbit_rotation: number[];
-  axis_rotation: number[];
-  rotation_speed: number;
-  textures: Texture;
-  definition: number;
-  versh: any; // Assuming vertexShader_generic and other similar types are string
-  fragsh: any; // Assuming fragmentShader_generic and other similar types are string
-  object: THREE.Mesh | null;
-  orbit_container: any | null;
-  orbit_position: any | null;
+//SHADERS
+function vertexShader_generic() {
+  return `
+                varying vec2 vUv;
+        varying vec3 v_Normal;
+        varying vec3 v_vertToLight;
+        
+                void main() {
+                  vUv = uv;
+                  vec4 modelViewPosition = modelViewMatrix * vec4(position, 1.0);
+          vec4 viewSunPos = viewMatrix * vec4(0.0, 0.0, 0.0, 1.0);
+          v_Normal = normalize( normalMatrix * normal );
+          v_vertToLight = normalize(viewSunPos.xyz - modelViewPosition.xyz);
+                  gl_Position = projectionMatrix * modelViewPosition;
+                }
+              `;
 }
 
-const bodies: {[id: string]:  Body} = {
-  "baseline": {
-    parent: null,
-    size: 1,
-    distance: 1,
-    speed: 1,
-    xccentricity: 1,
-    yccentricity: 1,
-    orbit_rotation: [0, 1, 0],
-    axis_rotation: [0, 0, 0],
-    rotation_speed: 0.05,
-    textures: {
-      texture1: "https://cdn.glitch.global/7bb54dbb-ebd4-4a1b-8f14-dcda7da4af29/sun_surface.jpg?v=1698331403365"
-    },
-    definition: 20,
-    object: null,
-    orbit_container: null,
-    orbit_position: null,
-    versh: vertexShader_generic,
-    fragsh: fragmentShader_generic
-  },
-  "earth": {
-    parent: null,
-    size: 0.4,
-    distance: 0,
-    speed: 0,
-    xccentricity: 1,
-    yccentricity: 1,
-    orbit_rotation: [0, 0, 0],
-    axis_rotation: [0, 0, (Math.PI * 2) * (23 / 360)],
-    rotation_speed: 0,
-    textures: {
-      texture1: "https://cdn.glitch.global/7bb54dbb-ebd4-4a1b-8f14-dcda7da4af29/earth_surface.jpg?v=1698341331340",
-      texture2: "https://cdn.glitch.global/87772de1-82e4-4e11-9e28-c8a686b86d4c/2k_earth_nightmap.jpg?v=1699888576325",
-      dispmap: "https://cdn.glitch.global/87772de1-82e4-4e11-9e28-c8a686b86d4c/x1um653wa2r8hw9pn64drm8aljvv.jpg?v=1700053101311",
-      specular: "https://cdn.glitch.global/7bb54dbb-ebd4-4a1b-8f14-dcda7da4af29/earthspec1k.jpg?v=1699204881315",
-    },
-    definition: 200,
-    object: null,
-    orbit_container: null,
-    orbit_position: null,
-    versh: vertexShader_earth(), 
-    fragsh: fragmentShader_alwayslit()
-  },
-};
+function vertexShader_earth() {
+  return `
+        uniform sampler2D dispmap;
+                varying vec2 vUv;
+        varying vec3 v_Normal;
+        varying vec3 v_vertToLight;
+        
+                void main() {
+                  vUv = uv;
+                  vec4 modelViewPosition = modelViewMatrix * vec4(position, 1.0);
+          vec4 viewSunPos = viewMatrix * vec4(0.0, 0.0, 0.0, 1.0);
+          v_Normal = normalize( normalMatrix * normal );
+          v_vertToLight = normalize(viewSunPos.xyz - modelViewPosition.xyz);
+                  gl_Position = projectionMatrix * (modelViewPosition + 0.04 * vec4( length(texture(dispmap, vUv).rgb / 3.0) * v_Normal, 0.0));
+                }
+              `;
+}
 
-export let cities = {};
+function fragmentShader_generic() {
+  return `
+        uniform sampler2D texture1;
+        varying vec2 vUv;
+        varying vec3 v_vertToLight;
+        varying vec3 v_Normal;
+
+        void main() {
+            float colorintensity = 1.0; 
+            vec4 colorbias =  vec4 (0.0, 0.0, 0.0, 0.0);
+            
+            float light = dot(v_vertToLight, v_Normal);
+            float kd = min(1.0, abs(light) * 2.0);
+            gl_FragColor = vec4( texture2D(texture1, vUv).rgb * kd * colorintensity * (1.0 - min(0.0,light)/light) + 0.0, 1.0) + colorbias;
+          }
+              `;
+}
+
+function fragmentShader_earth() {
+  return `
+        uniform sampler2D texture1;
+        uniform sampler2D texture2;
+        varying vec2 vUv;
+        varying vec3 v_vertToLight;
+        varying vec3 v_Normal;
+
+        void main() {
+            float colorintensity = 1.0; 
+            vec4 colorbias =  vec4 (0.0, 0.0, 0.0, 0.0);
+            
+            float light = dot(v_vertToLight, v_Normal);
+            float kd = min(1.0, abs(light) * 2.0);
+            if (light > 0.0) {
+              gl_FragColor = vec4( texture2D(texture1, vUv).rgb * kd * colorintensity + 0.0, 1.0) + colorbias;
+            } else {
+              gl_FragColor = vec4( texture2D(texture2, vUv).rgb * kd * colorintensity + 0.0, 1.0) + colorbias;
+            }
+          }
+              `;
+}
+
+function fragmentShader_earth_clouds() {
+  return `
+        uniform sampler2D texture1;
+        //uniform sampler2D texture2;
+        //uniform sampler2D texture3;
+        //uniform sampler2D texture4;
+        varying vec2 vUv;
+        varying vec3 v_vertToLight;
+        varying vec3 v_Normal;
+
+        void main() {
+            float colorintensity = 1.0; 
+            vec4 colorbias =  vec4 (0.0, 0.0, 0.0, 1.0);
+            
+            float light = dot(v_vertToLight, v_Normal);
+            float kd = min(1.0, abs(light) * 2.0);
+            gl_FragColor = vec4( texture2D(texture1, vUv).rgb * kd * colorintensity * (1.0 - min(0.0,light)/light) + 0.0, 1.0) + colorbias;
+            gl_FragColor.a = texture2D(texture1, vUv).a;
+          }
+              `;
+}
+
+function fragmentShader_sun() {
+  return `
+        uniform sampler2D texture1;
+        varying vec2 vUv;
+
+        void main() {
+            float colorintensity = 1.0; 
+            vec4 colorbias =  vec4 (0.0, 0.0, 0.0, 0.0);
+            float kd = 1.0;
+            gl_FragColor = vec4( texture2D(texture1, vUv).rgb * kd * colorintensity + 0.0, 1.0) + colorbias;
+          }
+              `;
+}
+
+function fragmentShader_alwayslit() {
+  return `
+        uniform sampler2D texture1;
+        varying vec2 vUv;
+
+        void main() {
+            float colorintensity = 1.0; 
+            vec4 colorbias =  vec4 (0.0, 0.0, 0.0, 0.0);
+            float kd = 1.0;
+            gl_FragColor = vec4( texture2D(texture1, vUv).rgb * kd * colorintensity + 0.0, 1.0) + colorbias;
+            gl_FragColor.a = texture2D(texture1, vUv).a;
+          }
+              `;
+}
+

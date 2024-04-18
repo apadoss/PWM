@@ -22,7 +22,6 @@ export class HomeComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     let albumManager = new AlbumManagerService;
-    console.log(albumManager.getAlbums());
     this.globe.renderAll(albumManager);
   }
 }
