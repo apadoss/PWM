@@ -14,7 +14,7 @@ export interface Album {
   "images": {[id: string]: Image},
 }
 
-let albums : { [id: string]: Album; };
+export let albums : { [id: string]: Album; };
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +25,8 @@ export class AlbumManagerService {
   constructor() {
     albums = {};
     this.generateAlbumDict(true, "John","01","01","18/04/2024","18/07/2024","Paris",[48.8566, 2.3522], "Description");
+    this.generateAlbumDict(true, "John","01","02","18/04/2024","18/07/2024","Washington",[47.7511, 120.7401], "Description");
+    this.generateAlbumDict(true, "John","01","02","18/04/2024","18/07/2024","Tokyo",[35.6764, 139.6500], "Description");
   }
 
   //Returns array containing created dictionary and result of potential auto-add operation 
@@ -76,57 +78,29 @@ JSONToDict(json: string) {
 }
 
 //I get the feeling that defining UUIDs client-side is the mother of all bad ideas
-//Also, does not come with safety checks other than existence of album- it just happens
-addImage(albumID: string, imageJSON: Image, imageID = albumID + '-' + uuid()) {
-  if (albumID in albums) {
-    let newImage = imageJSON;
-    newImage["imageID"] = imageID;
-    albums[albumID]["images"][imageID] = newImage;
-    return true;
-  }
-  return false;
+//Also, does not come with safety checks- it just happens
+addImage(album: Album, imageJSON: Image, imageID = album["albumID"] + '-' + uuid()) {
+  let newImage = imageJSON;
+  newImage["imageID"] = imageID;
+  album["images"][imageID] = newImage;
 }
 
-removeImage(album: Album, ID: string) {
-  if (album["images"] && album["images"].hasOwnProperty(ID)) {
-      delete album["images"][ID];
+removeImage(album: Album, image: Image) {
+  if (album["images"] && album["images"].hasOwnProperty(image["imageID"])) {
+      delete album["images"][image["imageID"]];
       return true;
   }
   return false;
 }
 
+//Missing safety check
 getImage(album: Album, ID: string) {
   return album["images"][ID];
 }
 
-replaceImage(album: Album, replacedID: string, iNewImage: Image) {
-  let newImage = iNewImage;
-  newImage["imageID"] = replacedID;
-  album["images"][replacedID] = newImage;
+replaceImage(album: Album, replacedImage: Image, newImage: Image) {
+  newImage["imageID"] = replacedImage["imageID"];
+  album["images"][newImage["imageID"]] = newImage;
 }
 
-//Basic structure of album JSON
-/*
-{
-    name: string,
-    userID: string,
-    albumID: string,
-    date-start: Date,
-    date-end: Date,
-    city-name: string,
-    description: string,
-    coordinates: [float, float],
-    images: {image JSONs},
-}
-
-//Basic structure of image JSON
-
-{
-    imageID: string,
-    filename: string,
-    date: Date,
-    description: string,
-    image: ArrayBuffer,
-}
-*/
 }
