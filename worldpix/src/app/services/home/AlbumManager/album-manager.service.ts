@@ -25,9 +25,6 @@ export class AlbumManagerService {
   constructor() {
 
     albums = {};
-    this.generateAlbum(true, "Paris 24","01","01","18/04/2024","18/07/2024","Paris",[48.8566, 2.3522], "Description");
-    this.generateAlbum(true, "Washington 24","01","02","18/04/2024","18/07/2024","Washington",[38.9072, -77.0369], "Description");
-    this.generateAlbum(true, "Tokyo 24","01","03","18/04/2024","18/07/2024","Tokyo",[35.6764, 139.6500], "Description");
   }
 
   //Returns array containing created dictionary and result of potential auto-add operation 
@@ -47,6 +44,11 @@ export class AlbumManagerService {
     if (autoAdd && !this.addAlbum(returner)) return [returner, false];
 
     return [returner, true];
+}
+
+getAlbum(id: string) {
+  if (id in albums) return albums[id];
+  return null;
 }
 
 getAlbums() {

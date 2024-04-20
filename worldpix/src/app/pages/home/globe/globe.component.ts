@@ -43,6 +43,7 @@ interface Body {
 
 export class GlobeComponent implements AfterViewInit {
   @Output() clickAlbum = new EventEmitter();
+  @Output() hoverAlbum = new EventEmitter();
 
   //const sh = require('./shaders.js');
 
@@ -398,7 +399,6 @@ private async generateBody(input_data: string, drawOrbit = true) {
           /*@ts-ignore*/ material = await this.generateMaterial(data);
           /*@ts-ignore*/ body = new THREE.Mesh(geometry, material);
 
-          console.log("huh?!", data);
           data["distance"] = data["parent"] == null || this.bodies[data["parent"]] == null ? 0 : data["distance"] + this.bodies[data["parent"]]["size"];
 
           orbit_container.add(orbit_position);
@@ -575,10 +575,12 @@ private onPointerMove = (event: any, toggle: string = "desktop") => {
       if (this.intersecting != intersects[0].object) {
         this.intersecting = intersects[0].object;
         this.intersecting.scale.set(1.3, 1.3, 1.);
+        this.hoverAlbum.emit(this.intersecting.albumID);
       }
     } else if (typeof this.intersecting !== "undefined") {
       this.intersecting.scale.set(1.0, 1.0, 1.0);
       this.intersecting = undefined;
+      this.hoverAlbum.emit(null);
     }
   }
 }
@@ -589,9 +591,7 @@ private mouseRaycast() {
 	const intersects = this.raycaster.intersectObjects( Object.values(this.renderedAlbums) );
   if (intersects.length > 0) {
     let buffer: any = intersects[0].object;
-    //console.log(this.clickAlbum);
     this.clickAlbum.emit(buffer.albumID);
-    //console.log(buffer.albumID)
   }
 }
 /*function mouseCollide() {
@@ -740,7 +740,6 @@ private async fetchEndpoint(endpoint : any, keypart : any, keyname : any, expect
         const buffer = await response.arrayBuffer();
         const blob = new Blob([buffer]);
         const imageUrl = URL.createObjectURL(blob);
-        //console.log('AAAAAA', imageUrl);
         return imageUrl;
       } else {
         return await response.text();
