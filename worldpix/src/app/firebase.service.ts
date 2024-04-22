@@ -4,11 +4,15 @@ import { initializeApp } from 'firebase/app';
 import { enviroment } from './app.config';
 import { CollectionReference, DocumentData, QuerySnapshot, addDoc, collection, deleteDoc, doc, getDocs, getFirestore, onSnapshot, updateDoc } from 'firebase/firestore';
 import { Subject } from 'rxjs';
+import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import { FirebaseApp } from '@angular/fire/app';
+import fs from "fs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
+  app: FirebaseApp;
   database: Firestore;
   userTable: CollectionReference<DocumentData>;
   albumTable: CollectionReference<DocumentData>;
@@ -17,7 +21,7 @@ export class FirebaseService {
   private updatedSnapshot = new Subject<QuerySnapshot<DocumentData>>();
 
   constructor() {
-    initializeApp(enviroment);
+    this.app = initializeApp(enviroment);
     this.database = getFirestore();
 
     this.userTable = collection(this.database, 'User');
@@ -147,5 +151,22 @@ export class FirebaseService {
       description
     });
     return;
+  }
+
+  async uploadImage(event: Event) {
+    const storage = getStorage(this.app);
+    const fileInput = document.getElementById("test") as HTMLInputElement;
+    var file: File;
+
+    if (fileInput.files) { 
+      file = fileInput.files[0];
+      const storageRef = ref(storage, `images/${file.name}`)
+      uploadBytes(storageRef, file).then((snapshot) => {
+        console.log('Uploaded');
+      });
+    }
+
+
+    //let blob = new Blob([buffer]);
   }
 }

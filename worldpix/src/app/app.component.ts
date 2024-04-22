@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { FirebaseService } from './firebase.service';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +10,11 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'worldpix';
+[x: string]: any;
+  constructor (private firebaseService: FirebaseService) {}
+
+  uploadTest(event: Event) {
+    this.firebaseService.uploadImage(event);
+    //console.log(document.getElementById("test"));
+  }
 }
