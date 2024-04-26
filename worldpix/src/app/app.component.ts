@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { WorldpixLogoComponent } from './worldpix-logo/worldpix-logo.component';
+import { WorldpixHeaderComponent } from './worldpix-header/worldpix-header.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, WorldpixLogoComponent],
+  imports: [RouterOutlet, WorldpixHeaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
