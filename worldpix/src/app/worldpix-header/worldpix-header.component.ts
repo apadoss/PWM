@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component} from '@angular/core';
 import { WorldpixLogoComponent } from '../worldpix-logo/worldpix-logo.component';
 import { HamburgerMenuComponent } from "./hamburger-menu/hamburger-menu.component";
 import { NgIf } from '@angular/common';
@@ -12,7 +12,7 @@ import { NgIf } from '@angular/common';
 })
 export class WorldpixHeaderComponent {
   showMenu = false;
-  @Input() image = "assets/hamburger-menu.png";
+  image = "assets/hamburger-menu.png";
 
   constructor() { }
 
