@@ -1,0 +1,20 @@
+.sidebar-button {
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .sidebar-button:hover {
+    background-color: #f0f0f0; /* Gris claro al pasar el ratón */
+  }
+  
+  .sidebar-button:active,
+  .sidebar-button:focus {
+    background-color: #e0e0e0; /* Gris un poco más oscuro mientras se hace clic */
+    outline: none; /* Evita el resaltado del botón al hacer clic */
+  }
+  
