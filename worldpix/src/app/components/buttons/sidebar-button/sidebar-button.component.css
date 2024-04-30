@@ -2,10 +2,14 @@
     background-color: white;
     color: black;
     border: none;
-    border-radius: 20px;
-    padding: 10px 20px;
+    border-radius: 50px;
+    padding: 15px 30px; /* Aumenta el espacio interno del botón */
     cursor: pointer;
     transition: background-color 0.3s ease;
+    width: 100%; /* Calcula el ancho del botón restando 40px para los márgenes izquierdo y derecho */
+    margin: 0px; /* Margen izquierdo y derecho de 20px */
+    font-size: 150%;
+    font-family:'Times New Roman', Times, serif; 
   }
   
   .sidebar-button:hover {
@@ -17,4 +21,3 @@
     background-color: #e0e0e0; /* Gris un poco más oscuro mientras se hace clic */
     outline: none; /* Evita el resaltado del botón al hacer clic */
   }
-  
