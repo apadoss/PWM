@@ -3,12 +3,12 @@ import { RouterOutlet } from '@angular/router';
 import { TransparentButtonComponent } from './components/buttons/transparent-button/transparent-button.component';
 import { GenericButtonComponent } from './components/buttons/generic-button/generic-button.component';
 import { SidebarButtonComponent } from './components/buttons/sidebar-button/sidebar-button.component';
-
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TransparentButtonComponent, GenericButtonComponent, SidebarButtonComponent],
+  imports: [RouterOutlet, TransparentButtonComponent, GenericButtonComponent, SidebarButtonComponent, SidebarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

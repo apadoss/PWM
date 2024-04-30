@@ -1,0 +1,17 @@
+.sidebar {
+    width: 200px; /* Ancho de la barra lateral */
+    background-color: rgb(243, 203, 203);
+    padding: 20px;
+    height: 100vh; /* Establece la altura al 100% de la altura de la ventana */
+    position: fixed; /* Fija la barra lateral en su posición */
+    top: 0; /* Coloca la barra lateral en la parte superior */
+    left: 0; /* Coloca la barra lateral en la parte izquierda */
+    display: flex; /* Usa Flexbox para alinear el contenido verticalmente */
+    flex-direction: column; /* Apila el contenido verticalmente */
+    justify-content: flex-start; /* Alinea el contenido al principio del eje principal (vertical) */
+  }
+  
+  .button {
+    margin-bottom: 10px; /* Espacio entre los botones */
+  }
+  
