@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SidebarButtonComponent } from '../components/buttons/sidebar-button/sidebar-button.component';
+import { SidebarButtonComponent } from '../buttons/sidebar-button/sidebar-button.component';
 
 @Component({
   selector: 'app-sidebar',

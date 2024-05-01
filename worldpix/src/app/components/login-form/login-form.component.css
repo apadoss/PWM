@@ -1,0 +1,38 @@
+.login-container {
+    width: 300px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: rgba(240, 240, 240, 0.75);
+    border-radius: 15px;
+    text-align: center;
+    margin-left: 65%; 
+    margin-top: 8%;
+  }
+  
+  .login-title {
+    font-size: 48px;
+    margin-bottom: 20px;
+    margin-top: 0px;
+    text-align: left;
+    padding-left: 5%;
+  }
+  
+  .divider {
+    width: 90%;
+    margin: auto;
+    margin-bottom: 40px;
+  }
+  
+  .input-container {
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .input-field {
+    width: calc(100% - 12px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    text-align: start;
+  }
+  
