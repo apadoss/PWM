@@ -1,20 +1,51 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { FirebaseService } from './firebase.service';
+import { UserService } from './services/user.service';
+import { AlbumService } from './services/album.service';
+import { ImageService } from './services/image.service';
+import { FormsModule, NgForm } from '@angular/forms';
+import { User } from './interfaces/user';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-[x: string]: any;
-  constructor (private firebaseService: FirebaseService) {}
+  user: User = {email: '', username: '', password: ''}
+  currentUserId: string = 'acuqsbqqFs1GDjY32SiW';
+  constructor (private userService: UserService, private albumService: AlbumService, private imageService: ImageService) {}
 
   uploadTest(event: Event) {
-    this.firebaseService.uploadImage(event);
-    //console.log(document.getElementById("test"));
+    this.imageService.uploadImage(event);
+  }
+
+  createUser(form: NgForm) {
+    this.userService.addUser(form.value)
+    .then((docRef) => this.currentUserId = docRef.id)
+    .then(() => form.reset());
+  }
+
+  getUser() {
+    this.userService.getUser(this.currentUserId).subscribe(res => {
+      this.user = res;
+    });
+    console.log(this.user);
+  }
+
+  deleteUser() {
+    this.userService.deleteUser(this.currentUserId);
+  }
+
+  updateUser(form: NgForm) {
+    console.log(form.value.newEmail);
+    this.userService.modifyUserEmail(this.currentUserId, form.value.newEmail)
+    .then(() => form.reset());
+  }
+
+  getAlbums() {
+    console.log(this.albumService.getUserAlbums(this.currentUserId));
   }
 }

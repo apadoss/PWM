@@ -1,2 +1,38 @@
-<input id="test" type="file" (change)="uploadTest($event)">
-<button type="submit" accept="image/*">Prueba</button>
+<div>
+    <form #userForm = "ngForm" (ngSubmit)="createUser(userForm)">
+        <div class="form-group">
+            <input class="form-control" name="email" #email = "ngModel"
+            [(ngModel)] = "user.email" placeholder="E-mail" required>
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="username" #username = "ngModel"
+            [(ngModel)] = "user.username" placeholder="Username" required>
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="password" #password = "ngModel"
+            [(ngModel)] = "user.password" placeholder="Password" required>
+        </div>
+        <div class="form-group float-right">
+            <button type="submit" class="btn btn-success"
+            [disabled]="!userForm.valid" [disabled]="userForm.invalid">
+            <i class="bi bi-plus"></i>Add User</button>
+        </div>
+    </form>
+
+    <button (click)="getUser()">Get User</button>
+    <button (click)="deleteUser()">Delete User</button>
+
+    <form #updateEmailForm = "ngForm" (ngSubmit)="updateUser(updateEmailForm)">
+        <div class="form-group">
+            <input class="form-control" name="newEmail" #newEmail = "ngModel"
+            [(ngModel)] = "user.email" placeholder="E-mail" required>
+        </div>
+        <div class="form-group float-right">
+            <button type="submit" class="btn btn-success"
+            [disabled]="!updateEmailForm.valid" [disabled]="updateEmailForm.invalid">
+            <i class="bi bi-plus"></i>Update Email</button>
+        </div>
+    </form>
+
+    <button (click)="getAlbums()">Get albums</button>
+</div>
