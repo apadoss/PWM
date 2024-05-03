@@ -71,3 +71,9 @@ ancho)), y si la tenemos (ocupa la fila de en medio, las dos últimas columnas, 
 .body-sidebar.mobile.map {
     height:var(--min-body-height-mobile);
 }
+
+@media(max-width: 390px) {
+    .desktop-container {
+        display: none;
+    }
+}

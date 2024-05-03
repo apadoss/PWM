@@ -1,1 +1,10 @@
-<ng-template></ng-template>
+<ng-content select="app-header"></ng-content>
+<ng-content select=":not(app-header):not(app-sidebar):not(app-footer)"></ng-content>
+
+<div class="desktop-container" *ngIf="window.screen.width > 390">
+    <p>DORIME</p>
+</div>
+
+<div class="mobile-container" *ngIf="window.screen.width <= 390">
+    <P>AMENO</P>
+</div>

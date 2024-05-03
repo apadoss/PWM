@@ -2,11 +2,12 @@ import { Component, ContentChild } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FooterComponent } from '../footer/footer.component';
+import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-body',
   standalone: true,
-  imports: [],
+  imports: [NgIf, CommonModule],
   templateUrl: './body.component.html',
   styleUrl: './body.component.css'
 })
@@ -17,7 +18,15 @@ export class BodyComponent {
   //@ViewChild('app-header', { static: true }) sidebarTemplateRef: TemplateRef<any>;
 
   ngAfterViewInit() {
-    console.log(this.header);
+    if (this.header !== undefined) {
+
+    }
+    if (this.sidebar !== undefined) {
+
+    }
+    if (this.footer !== undefined) {
+
+    }
   }
 
 }
