@@ -13,15 +13,18 @@ import { SidebarButtonComponent } from './components/buttons/sidebar-button/side
 import { SidebarComponent } from './components/structure/sidebar/sidebar.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { HomeComponent } from "./pages/home/home.component";
+import { BodyComponent } from "./components/structure/body/body.component";
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, FormsModule, FooterComponent, HeaderComponent, LoginFormComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+    selector: 'app-root',
+    standalone: true,
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css',
+    imports: [RouterOutlet, FormsModule, FooterComponent, HeaderComponent, LoginFormComponent, BodyComponent]
 })
 export class AppComponent {
+  title = 'worldpix';
+  
   user: User = {email: '', username: '', password: ''}
   currentUserId: string = 'acuqsbqqFs1GDjY32SiW';
   constructor (private userService: UserService, private albumService: AlbumService, private imageService: ImageService) {}
