@@ -312,7 +312,10 @@ private async init() {
 
     //loadAlbum(generateAlbumJSON());
 
-    window.addEventListener("resize", this.onWindowResize, false);
+    //window.addEventListener("resize", this.onWindowResize, false);
+    window.addEventListener("resize", () => {
+      this.onWindowResize();
+    }, false);
     this.onWindowResize();
 
     //const renderScene = new RenderPass(scene, camera);
@@ -602,13 +605,15 @@ let mouseCast = new THREE.Vector4();
 
 private onWindowResize() {
   if (!!this.container && !!this.renderer && !!this.fakeCamera) {
-      let x, y, w, h;
+    let x, y, w, h;
 
     //Efecto similar al de defecto, ocupa toda la ventana
     x = Math.floor(this.container.offsetWidth * 0.0);
     y = Math.floor(this.container.offsetHeight * 0.0);
     w = Math.floor(this.container.offsetWidth * 1);
     h = Math.floor(this.container.offsetHeight * 1);
+
+    console.log(x,y,w,h, this.container)
 
     //renderer.setViewport(x, y, w, h);
     this.renderer.setSize(this.container.offsetWidth, this.container.offsetHeight);

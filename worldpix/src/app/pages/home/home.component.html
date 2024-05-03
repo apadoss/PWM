@@ -15,15 +15,24 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
     </head>
-    <body class="no-footer home-body" style="background: black;">
+    <app-body>
+        <app-header></app-header>
+        <app-sidebar></app-sidebar>
+        <app-globe
+            (clickAlbum)="clicked($event)"
+            (hoverAlbum)="hovered($event)"
+        ></app-globe>
+    </app-body>
+
+    <!--body class="no-footer home-body" style="background: black;"-->
         <!--header xlu-include-file="/html/components/structure-components/header.html"></header-->
         
-        <div class="body-sidebar map" style="width: 1000px; height: 1000px;">
+        <!--div class="body-sidebar map" style="width: 1000px; height: 1000px;">
             <app-globe
             (clickAlbum)="clicked($event)"
             (hoverAlbum)="hovered($event)"
             ></app-globe>
         </div>  
-      </body>
+      </body-->
 </html>
 <script>xLuIncludeFile()</script>

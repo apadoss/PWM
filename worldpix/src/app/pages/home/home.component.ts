@@ -3,14 +3,17 @@ import { GlobeComponent } from "./globe/globe.component";
 //import { AlbumLoaderComponent } from "./album-loader/album-loader.component";
 import { AlbumManagerService } from '../../services/home/AlbumManager/album-manager.service';
 import { ImageManagerService } from '../../services/home/ImageManager/image-manager.service';
+import { BodyComponent } from "../../components/structure/body/body.component";
+import { SidebarComponent } from '../../components/structure/sidebar/sidebar.component';
+import { HeaderComponent } from '../../components/structure/header/header.component';
 
 @Component({
     selector: 'app-home',
     standalone: true,
     templateUrl: './home.component.html',
     styleUrl: './home.component.css',
-    imports: [GlobeComponent],
-    providers: [AlbumManagerService, ImageManagerService]
+    providers: [AlbumManagerService, ImageManagerService],
+    imports: [GlobeComponent, BodyComponent, SidebarComponent, HeaderComponent]
 })
 
 export class HomeComponent implements AfterViewInit {
