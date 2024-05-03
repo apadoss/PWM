@@ -4,13 +4,13 @@ import { HamburgerMenuComponent } from "./hamburger-menu/hamburger-menu.componen
 import { NgIf } from '@angular/common';
 
 @Component({
-    selector: 'app-worldpix-header',
+    selector: 'app-header',
     standalone: true,
-    templateUrl: './worldpix-header.component.html',
-    styleUrl: './worldpix-header.component.css',
+    templateUrl: './header.component.html',
+    styleUrl: './header.component.css',
     imports: [WorldpixLogoComponent, HamburgerMenuComponent, NgIf]
 })
-export class WorldpixHeaderComponent {
+export class HeaderComponent {
   showMenu = false;
   image = "assets/hamburger-menu.png";
 
