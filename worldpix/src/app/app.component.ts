@@ -18,8 +18,9 @@ export class AppComponent {
   currentUserId: string = 'acuqsbqqFs1GDjY32SiW';
   constructor (private userService: UserService, private albumService: AlbumService, private imageService: ImageService) {}
 
-  uploadTest(event: Event) {
-    this.imageService.uploadImage(event);
+  uploadTest() {
+    const url = this.imageService.uploadImage();
+    console.log(url);
   }
 
   createUser(form: NgForm) {

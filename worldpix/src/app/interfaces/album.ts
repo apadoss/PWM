@@ -4,6 +4,7 @@ export interface Album {
     description: string;
     dateStart: Date;
     dateEnd: Date;
-    coordinate: GeolocationCoordinates;
+    cityName: string;
+    coordinates: GeolocationCoordinates;
     userId: string;
 }

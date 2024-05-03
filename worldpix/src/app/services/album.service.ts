@@ -35,9 +35,19 @@ export class AlbumService {
     const q = query(this.albumDoc, where("userId", "==", userId));
     const querySnapshot = await getDocs(q);
   
-    var result: Object[] = [];
+    var result: Album[] = [];
     querySnapshot.forEach((doc) => {
-      result.push(doc.data());
+      const album: Album = {
+        id: doc.id,
+        name: doc.data()["name"],
+        description: doc.data()["description"],
+        dateStart: doc.data()["date-start"],
+        dateEnd: doc.data()["date-end"],
+        cityName: doc.data()["city-name"],
+        coordinates: doc.data()["coordinates"],
+        userId: doc.data()["userId"]
+      }
+      result.push(album);
     });
     return result;
   }
