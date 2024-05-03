@@ -12,7 +12,7 @@ export class TransparentButtonComponent implements OnInit{
   ngOnInit(): void {
   }
   clickAddTodo() {
-    alert('hola!');
+    alert('button pressed');
   }
 }
   

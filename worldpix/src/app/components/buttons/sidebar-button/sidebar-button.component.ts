@@ -13,6 +13,6 @@ export class SidebarButtonComponent implements OnInit{
   ngOnInit(): void {
   }
   clickAddTodo() {
-    alert(this.label);
+    alert("button pressed");
   }
 }

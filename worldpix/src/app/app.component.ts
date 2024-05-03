@@ -10,13 +10,14 @@ import { WorldpixHeaderComponent } from './worldpix-header/worldpix-header.compo
 import { TransparentButtonComponent } from './components/buttons/transparent-button/transparent-button.component';
 import { GenericButtonComponent } from './components/buttons/generic-button/generic-button.component';
 import { SidebarButtonComponent } from './components/buttons/sidebar-button/sidebar-button.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { LoginFormComponent } from './components/login-form/login-form.component';
 import { HomeComponent } from "./pages/home/home.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, FormsModule, WorldpixFooterComponent, WorldpixHeaderComponent],
+  imports: [RouterOutlet, FormsModule, WorldpixFooterComponent, WorldpixHeaderComponent, LoginFormComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

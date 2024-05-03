@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 
 @Component({
   selector: 'app-generic-button',
@@ -8,10 +8,11 @@ import { Component, OnInit} from '@angular/core';
   styleUrl: './generic-button.component.css'
 })
 export class GenericButtonComponent implements OnInit{
+  @Input() label: string = ' ';
   constructor(){}
   ngOnInit(): void {
   }
   clickAddTodo() {
-    alert('hola 2!');
+    alert('button pressed');
   }
 }
