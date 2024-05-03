@@ -4,7 +4,7 @@ import { CollectionReference, DocumentData, Firestore, docData } from '@angular/
 import { initializeApp } from 'firebase/app';
 import { enviroment } from '../app.config';
 import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, query, updateDoc, where } from 'firebase/firestore';
-import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Image } from '../interfaces/image';
 import { Observable } from 'rxjs';
 
@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
 export class ImageService {
   app: FirebaseApp;
   database: Firestore;
-  imageDoc: CollectionReference<DocumentData>
+  imageDoc: CollectionReference<DocumentData>;
 
   constructor() { 
     this.app = initializeApp(enviroment);
@@ -35,9 +35,17 @@ export class ImageService {
     const q = query(this.imageDoc, where("albumId", "==", albumId));
     const querySnapshot = await getDocs(q);
 
-    var result: Object[] = [];
+    var result: Image[] = [];
     querySnapshot.forEach((doc) => {
-       result.push(doc.data());
+      const image: Image = {
+        id: doc.id,
+        name: doc.data()["name"],
+        description: doc.data()["description"],
+        imageURL: doc.data()["image"],
+        date: doc.data()["date"],
+        albumId: doc.data()["albumId"]
+      }
+      result.push(image);
     });
 
     if (howMany != -1 && howMany < result.length) {
@@ -62,17 +70,25 @@ export class ImageService {
     return updateDoc(albumRef, { description: newDescription });
   }
 
-  async uploadImage(event: Event) {
+  async uploadImage() {
     const storage = getStorage(this.app);
-    const fileInput = document.getElementById("test") as HTMLInputElement;
+    const fileInput = document.getElementById("image-upload") as HTMLInputElement;
     var file: File;
+    var imageURL: string = '';
 
     if (fileInput.files) { 
       file = fileInput.files[0];
       const storageRef = ref(storage, `images/${file.name}`)
-      uploadBytes(storageRef, file).then((snapshot) => {
-        console.log('Uploaded');
+
+      await uploadBytes(storageRef, file)
+      .then(async (snapshot) => {
+        await getDownloadURL(snapshot.ref).then((url) => {
+          console.log(url);
+          imageURL = url;
+        })
       });
     }
+
+    return imageURL;
   }
 }
