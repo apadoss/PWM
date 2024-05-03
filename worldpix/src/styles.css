@@ -25,18 +25,4 @@ p {
 
 fieldset {
     border: none;
-}@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
-
-:root {
-    --min-body-height-desktop: calc(100vh - 3.25em);
-    --min-body-height-mobile: calc(100vh - 6.5em);
-    --structure-element-background: rgb(228, 228, 228);
-    --structure-element-button-selected: rgb(200, 200, 200);
-    --structure-element-button-hover: rgb(172, 172, 172);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    font-family: "Figtree",sans-serif;
 }
