@@ -5,12 +5,12 @@ import { AlbumService } from './services/album.service';
 import { ImageService } from './services/image.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { User } from './interfaces/user';
-import { WorldpixFooterComponent } from './components/structure/worldpix-footer/worldpix-footer.component';
-import { WorldpixHeaderComponent } from './worldpix-header/worldpix-header.component';
+import { WorldpixFooterComponent } from './components/structure/footer/worldpix-footer.component';
+import { WorldpixHeaderComponent } from './components/structure/worldpix-header/worldpix-header.component';
 import { TransparentButtonComponent } from './components/buttons/transparent-button/transparent-button.component';
 import { GenericButtonComponent } from './components/buttons/generic-button/generic-button.component';
 import { SidebarButtonComponent } from './components/buttons/sidebar-button/sidebar-button.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { SidebarComponent } from './components/structure/sidebar/sidebar.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { HomeComponent } from "./pages/home/home.component";
 
