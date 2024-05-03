@@ -27,7 +27,6 @@ function configTabs() {
     buttons.forEach(button => {
 
         button.addEventListener("click", function() {
-            console.log("AAAAAAAAAAA");
             // Remove 'clicked' class from all buttons
             buttons.forEach(btn => {
                 btn.classList.remove('clicked');

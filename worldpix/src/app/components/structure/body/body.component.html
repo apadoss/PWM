@@ -3,8 +3,8 @@
 <ng-template #sidebar><ng-content select="app-sidebar"></ng-content></ng-template>
 <ng-template #contents><ng-content select=":not(app-header):not(app-sidebar):not(app-footer)"></ng-content></ng-template>
 <ng-template #footer><ng-content select="app-footer"></ng-content></ng-template>
-
 <div class="body-container">
+    <div class="background"></div>
     <!--*ngIf="this.context === 'desktop'"-->
     <div class="desktop-container" *ngIf="this.context === 'desktop'">
         <!--So that the footer is at least under the screen-->

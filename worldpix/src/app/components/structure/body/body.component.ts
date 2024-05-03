@@ -42,12 +42,4 @@ export class BodyComponent {
     this.context = ResponsiveService.getDevice();
   }
 
-
-
-  @HostListener('window:resize', ['$event'])
-  onResize() {
-    console.log("a")
-    this.context = ResponsiveService.getDevice();
-  }
-
 }

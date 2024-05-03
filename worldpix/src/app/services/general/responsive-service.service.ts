@@ -11,7 +11,6 @@ export class ResponsiveService {
   static getDevice() {
     let returner: String;
     if (window.innerWidth >= this.mobileWidth) {
-      console.log(window.innerWidth)
       returner = "desktop";
     } else {
       returner = "mobile";
