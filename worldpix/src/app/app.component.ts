@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { UserService } from './services/user.service';
+import { AlbumService } from './services/album.service';
+import { ImageService } from './services/image.service';
+import { FormsModule, NgForm } from '@angular/forms';
+import { User } from './interfaces/user';
 import { WorldpixFooterComponent } from './worldpix-footer/worldpix-footer.component';
 import { WorldpixHeaderComponent } from './worldpix-header/worldpix-header.component';
 import { TransparentButtonComponent } from './components/buttons/transparent-button/transparent-button.component';
@@ -11,10 +16,43 @@ import { HomeComponent } from "./pages/home/home.component";
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, WorldpixFooterComponent, WorldpixHeaderComponent],
+  imports: [RouterOutlet, FormsModule, WorldpixFooterComponent, WorldpixHeaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'worldpix';
+  user: User = {email: '', username: '', password: ''}
+  currentUserId: string = 'acuqsbqqFs1GDjY32SiW';
+  constructor (private userService: UserService, private albumService: AlbumService, private imageService: ImageService) {}
+
+  uploadTest(event: Event) {
+    this.imageService.uploadImage(event);
+  }
+
+  createUser(form: NgForm) {
+    this.userService.addUser(form.value)
+    .then((docRef) => this.currentUserId = docRef.id)
+    .then(() => form.reset());
+  }
+
+  getUser() {
+    this.userService.getUser(this.currentUserId).subscribe(res => {
+      this.user = res;
+    });
+    console.log(this.user);
+  }
+
+  deleteUser() {
+    this.userService.deleteUser(this.currentUserId);
+  }
+
+  updateUser(form: NgForm) {
+    console.log(form.value.newEmail);
+    this.userService.modifyUserEmail(this.currentUserId, form.value.newEmail)
+    .then(() => form.reset());
+  }
+
+  getAlbums() {
+    console.log(this.albumService.getUserAlbums(this.currentUserId));
+  }
 }

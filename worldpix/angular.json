@@ -88,6 +88,23 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "worldpix:build:production",
+              "serveTarget": "worldpix:serve:production"
+            },
+            "development": {
+              "buildTarget": "worldpix:build:development",
+              "serveTarget": "worldpix:serve:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }
