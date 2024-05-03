@@ -1,79 +1,22 @@
-body {
-    display:grid;
-    /*
-    Primera fila: su altura será el máximo entre 10% de la altura de pantalla, y lo que requiera el contenido
-    Segunda fila: su altura será el máximo entre 90% de la altura de pantalla, y lo que requiera el contenido
-    Tercera fila: su altura será el máximo entre 10% de la altura de pantalla, y lo que requiera el contenido
-    Este enlace explica cómo trabajar con las grids: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout
-    */
-    grid-template-rows: 3.25em min-content 0px minmax(7em, auto);
-    grid-template-columns: minmax(10vw,auto) 1fr 1fr;
-    background: url("https://wallpapers.com/images/hd/world-globe-tyjrsnehdnbzey0v.jpg") no-repeat center center fixed;
-    background-size: cover;
-    backdrop-filter: blur(4px);
-    overflow:auto;
-}
+.body-container {
+    min-width: 100vw;
+    min-height: 100vh;
+    width: auto;
+    height: auto;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  
 
-body.no-footer {
-    grid-template-rows: 3.25em min-content 0px 0px;
-}
-
-body.mobile {
-    grid-template-rows: 3.25em min-content 3.25em minmax(7em,auto);
-    grid-template-columns: 1fr 1fr 1fr;
-}
-
-body.mobile.no-footer {
-    grid-template-rows: 3.25em min-content 3.25em 0px;
-}
-
-body.home-body.desktop {
-    grid-template-rows: 3.25em min-content 0px 0px;
-}
-
-body.home-body.mobile {
-    grid-template-rows: 3.25em min-content 3.25em 0px;
-    grid-template-columns: 1fr 1fr 1fr;
-}
-
-
-/*Body está dividido en una grid de 3x3. Las tres filas son para header, body y footer, y las tres columnas son para tenerlas si nos 
-hace falta, por ejemplo para el ancho del body si hay sidebar o no. El ancho de las columnas es el máximo entre 1/3 del espacio 
-disponible y lo que requiera el contenido*/
-
-/*
-Estas dos clases son para el contenido del body si no tenemos sidebar (ocupa la fila de en medio, las tres columnas (es decir todo el 
-ancho)), y si la tenemos (ocupa la fila de en medio, las dos últimas columnas, dejando la primera para el sidebar). 
-*/
-.body-full {
-    grid-column: 1 / 4;
-    grid-row: 2;
-    align-items: center;
-    height:fit-content;
-    min-height: var(--min-body-height-desktop);
-}
-
-.body-sidebar {
-    grid-column: 2 / 4;
-    grid-row: 2;
-    align-items: center;
-    min-height: var(--min-body-height-desktop);
-}
-
-.body-sidebar.mobile {
-    grid-column: 1 / 4;
-    grid-row: 2;
-    align-items: center;
-    min-height: var(--min-body-height-mobile);
-    height:fit-content;
-}
-
-.body-sidebar.mobile.map {
-    height:var(--min-body-height-mobile);
-}
-
-@media(max-width: 390px) {
     .desktop-container {
-        display: none;
+        display: contents;
+    }
+
+    .mobile-container {
+        display: contents;
+    }
+
+    .content-container {
+        flex: 1; 
+        overflow-y: auto;
     }
 }

@@ -20,7 +20,7 @@ import { BodyComponent } from "./components/structure/body/body.component";
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-    imports: [RouterOutlet, FormsModule, FooterComponent, SidebarComponent, HeaderComponent, LoginFormComponent, BodyComponent]
+    imports: [RouterOutlet, FormsModule, FooterComponent, SidebarComponent, HeaderComponent, LoginFormComponent, BodyComponent, HomeComponent]
 })
 export class AppComponent {
   title = 'worldpix';
