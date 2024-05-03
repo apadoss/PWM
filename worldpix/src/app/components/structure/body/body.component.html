@@ -7,14 +7,17 @@
 <div class="body-container">
     <!--*ngIf="this.context === 'desktop'"-->
     <div class="desktop-container" *ngIf="this.context === 'desktop'">
-        <!--Has to be inside of a div, else if missing it will affect the structure-->
-        <div>
-            <ng-container *ngTemplateOutlet="header"></ng-container>
-        </div>
-        <div style="display: flex">
-            <ng-container *ngTemplateOutlet="sidebar"></ng-container>
-            <div class="content-container">
-                <ng-container *ngTemplateOutlet="contents"></ng-container>
+        <!--So that the footer is at least under the screen-->
+        <div class="screen-size">
+            <!--Has to be inside of a div, else if missing it will affect the structure-->
+            <div>
+                <ng-container *ngTemplateOutlet="header"></ng-container>
+            </div>
+            <div style="display: flex;">
+                <ng-container *ngTemplateOutlet="sidebar"></ng-container>
+                <div class="content-container">
+                    <ng-container *ngTemplateOutlet="contents"></ng-container>
+                </div>
             </div>
         </div>
         <div>
@@ -23,16 +26,16 @@
     </div>
     
     <div class="mobile-container" *ngIf="this.context === 'mobile'">
-        <div>
-            <ng-container *ngTemplateOutlet="header"></ng-container>
-        </div>
-        <div style="display: flex">
+        <div class="screen-size">
+            <div>
+                <ng-container *ngTemplateOutlet="header"></ng-container>
+            </div>
             <div class="content-container">
                 <ng-container *ngTemplateOutlet="contents"></ng-container>
             </div>
-        </div>
-        <div>
-            <ng-container *ngTemplateOutlet="sidebar"></ng-container>
+            <div>
+                <ng-container *ngTemplateOutlet="sidebar"></ng-container>
+            </div>
         </div>
         <div>
             <ng-container *ngTemplateOutlet="footer"></ng-container>

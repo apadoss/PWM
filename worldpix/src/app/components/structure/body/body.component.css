@@ -1,10 +1,9 @@
 .body-container {
-    min-width: 100vw;
     min-height: 100vh;
     width: auto;
     height: auto;
     display: grid;
-    grid-template-rows: auto 1fr auto;
+    grid-auto-rows: auto;
   
 
     .desktop-container {
@@ -13,6 +12,12 @@
 
     .mobile-container {
         display: contents;
+    }
+
+    .screen-size {
+        min-height: 100vh;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
     }
 
     .content-container {
