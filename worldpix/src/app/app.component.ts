@@ -20,11 +20,11 @@ import { BodyComponent } from "./components/structure/body/body.component";
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-    imports: [RouterOutlet, FormsModule, FooterComponent, HeaderComponent, LoginFormComponent, BodyComponent]
+    imports: [RouterOutlet, FormsModule, FooterComponent, SidebarComponent, HeaderComponent, LoginFormComponent, BodyComponent]
 })
 export class AppComponent {
   title = 'worldpix';
-  
+
   user: User = {email: '', username: '', password: ''}
   currentUserId: string = 'acuqsbqqFs1GDjY32SiW';
   constructor (private userService: UserService, private albumService: AlbumService, private imageService: ImageService) {}
