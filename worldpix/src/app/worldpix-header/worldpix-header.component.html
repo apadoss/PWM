@@ -1,0 +1,14 @@
+<header>
+    <span style="overflow: hidden; height: 100%; width: 100%;">
+        <nav>
+            <app-worldpix-logo class="header-logo"></app-worldpix-logo>
+            <ul class="header-ul">
+                <li><a href="#">Contact</a></li>
+                <li><a href="/worldpix/old/html/pages/about-us.html">About us</a></li>
+                <li><a href="#">News</a></li>
+            </ul>
+            <img src="{{image}}" class="hamburger-menu" (click)="toggleMenu()">
+        </nav>
+    </span>
+    <app-hamburger-menu class="menu" *ngIf="showMenu"></app-hamburger-menu>
+</header>

@@ -8,42 +8,60 @@ header {
     position: relative;
 }
 
-header nav {
+nav {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 100%;
     height: 100%;
     width: 100%;
-    /*height: 100%;
-    display: flex;*/
 }
 
-header ul.header-ul {
+p {
+    font-size: 1.06em;
+    display: inline-block;
+    margin: 12px 20px;
+}
+
+li {
+    display: inline;
+}
+
+a {
+    font-size: 1.06em;
+    padding: 14px 16px;
+}
+
+a:hover {
+    background-color: var(--structure-element-button-selected);
+}
+
+ul.header-ul {
     position: absolute;
     top: 50%;
     transform: translateY(-100%);
     float: right;
     right: 0;
     margin: 10px 40px;
+    grid-column: 2;
 }
 
-header .hamburger-menu {
-    display: none;
-}
-
-header .header-logo {
+.header-logo {
     margin-left:20px;
     display: flex;
     align-items: center;
     grid-column: 1;
 }
 
+.hamburger-menu {
+    display: none;
+}
+
 @media(max-width: 38em){
-    header ul {
+    ul {
         display: none;
     }
 
-    header .hamburger-menu {
+    .hamburger-menu {
         position: absolute;
         display: block;
         padding: 5px 5px;
@@ -52,22 +70,7 @@ header .header-logo {
         cursor: pointer;
     }
 
-    header .hamburger-menu:hover {
+    .hamburger-menu:hover {
         background-color: #b9b9b9;
     }
-}
-
-header ul.header-menu {
-    display:grid;
-}
-
-header li {
-    display: inline;
-}
-
-header p {
-    font-size: 1.06em;
-    display: inline-block;
-    margin: 12px 20px;
-    
 }
