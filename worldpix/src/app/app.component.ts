@@ -5,7 +5,7 @@ import { AlbumService } from './services/album.service';
 import { ImageService } from './services/image.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { User } from './interfaces/user';
-import { WorldpixFooterComponent } from './worldpix-footer/worldpix-footer.component';
+import { WorldpixFooterComponent } from './components/structure/worldpix-footer/worldpix-footer.component';
 import { WorldpixHeaderComponent } from './worldpix-header/worldpix-header.component';
 import { TransparentButtonComponent } from './components/buttons/transparent-button/transparent-button.component';
 import { GenericButtonComponent } from './components/buttons/generic-button/generic-button.component';
@@ -32,7 +32,7 @@ export class AppComponent {
 
   createUser(form: NgForm) {
     this.userService.addUser(form.value)
-    .then((docRef) => this.currentUserId = docRef.id)
+    .then((docRef: { id: string; }) => this.currentUserId = docRef.id)
     .then(() => form.reset());
   }
 
