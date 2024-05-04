@@ -5,11 +5,12 @@ import { GenericButtonComponent } from './components/buttons/generic-button/gene
 import { SidebarButtonComponent } from './components/buttons/sidebar-button/sidebar-button.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
+import { Generic2ButtonComponent } from './components/buttons/generic2-button/generic2-button.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TransparentButtonComponent, GenericButtonComponent, SidebarButtonComponent, SidebarComponent, LoginFormComponent],
+  imports: [RouterOutlet, TransparentButtonComponent, GenericButtonComponent, SidebarButtonComponent, SidebarComponent, LoginFormComponent, Generic2ButtonComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

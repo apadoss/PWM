@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { GenericButtonComponent } from '../buttons/generic-button/generic-button.component';
+import { Generic2ButtonComponent } from '../buttons/generic2-button/generic2-button.component';
 
 @Component({
   selector: 'app-login-form',
   standalone: true,
-  imports: [ GenericButtonComponent],
+  imports: [ Generic2ButtonComponent],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.css'
 })
