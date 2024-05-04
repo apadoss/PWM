@@ -22,6 +22,21 @@ export class UserService {
     this.userDoc = collection(this.database, "User");
   }
 
+  async registerUser(user: User) {
+    var username = user.username;
+    var password = user.password;
+    console.log("a")
+    
+    try {
+      // Create user document in Firestore
+      await addDoc(this.userDoc, {username , password });
+      console.log("User registered successfully");
+    } catch (error) {
+      console.error("Error registering user:", error);
+      throw error;
+    }
+  }
+
   addUser(user: User) {
     return addDoc(this.userDoc, user);
   }

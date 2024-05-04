@@ -12,7 +12,4 @@ export class GenericButtonComponent implements OnInit{
   constructor(){}
   ngOnInit(): void {
   }
-  clickAddTodo() {
-    alert('button pressed');
-  }
 }

@@ -7,6 +7,6 @@
     <div class="input-container">
       <input type="password" placeholder="Password" class="input-field">
     </div>
-    <app-generic-button [label]="'Log in'"></app-generic-button>
+    <app-generic-button (click)="this.tryLogin()" [label]="'Log in'"></app-generic-button>
     <p>Don't have an account? <a href="#" (click)="this.switchForms()">Sign up</a></p>
   </div>
