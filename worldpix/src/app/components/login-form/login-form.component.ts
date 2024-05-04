@@ -16,6 +16,7 @@ import { User } from '../../interfaces/user';
 
 export class LoginFormComponent {
   @Output() switchForm: EventEmitter<any> = new EventEmitter();
+  @Output() loggedIn: EventEmitter<any> = new EventEmitter();
 
   username: Valid = {value: '', valid: true};
   password: Valid = {value: '', valid: true};;
@@ -25,7 +26,22 @@ export class LoginFormComponent {
 
   async tryLogin() {
     var user: User = {email: '', username: this.username.value, password: this.userService.hash(this.password.value)};
-    console.log("hmm", await this.userService.authenticateUser(user));
+    var response = await this.userService.authenticateUser(user);
+    if (response === "user") {
+      this.username.valid = false;
+    } else if (response === "pass") {
+      this.password.valid = false;
+    } else {
+      this.loggedIn.emit(response);
+    }
+  }
+
+  async validateUserName() {
+    if (await !this.userService.userNameExists(this.username.value)) {
+      this.username.valid = false;
+      return false;
+    }
+    return true;
   }
 
   switchForms() {

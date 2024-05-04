@@ -23,6 +23,6 @@
         <p style="position: relative; top: 20px; color: red; font-size: 12px;">Username already exists</p>
       </div-->
     </div>
-    <app-generic-button (click)="this.tryLogin()" [label]="'Log in'"></app-generic-button>
+    <app-generic-button (click)="$event.stopPropagation()" (clicked)="this.tryLogin()" [label]="'Log in'"></app-generic-button>
     <p>Don't have an account? <a href="#" (click)="this.switchForms()">Sign up</a></p>
   </div>

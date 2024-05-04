@@ -55,6 +55,7 @@
             name="passwordField"
             [(ngModel)]="password.value"
             (focus)="password.valid = true"
+            (focusout)="validatePassword()"
             pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" 
             title="Password must contain 8 characters, letters and numbers and an special character."
             class="input-field-password"
@@ -65,10 +66,10 @@
             placeholder="Confirm password"
             name="confirmPassword"
             [(ngModel)]="confirmPassword.value"
-            (focus)="confirmPassword.valid = true"
+            (focus)="password.valid = true"
             (focusout)="validatePassword()"
             class="input-field-password">
     </div>
-    <app-generic-button (click)="register()" [label]="'Log in'"></app-generic-button>
+    <app-generic-button (click)="$event.stopPropagation()" (clicked)="register()" [label]="'Log in'"></app-generic-button>
     <p>Already have an account? <a href="#" (click)="this.switchForms()">Log in</a></p>
   </div>

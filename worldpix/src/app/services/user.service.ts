@@ -7,6 +7,7 @@ import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, query, updat
 import { User } from '../interfaces/user';
 import { Observable } from 'rxjs';
 import bcrypt from 'bcryptjs';
+import jsSHA from 'jssha';
 
 @Injectable({
   providedIn: 'root'
@@ -38,13 +39,19 @@ export class UserService {
     }
   }*/
 
-  hash(password: string) {
+  /*hash(password: string) {
+    this.hash2(password);
     return bcrypt.hashSync(password, this.salt);
+  }*/
+
+  hash(password: string) {
+    var hashObj = new jsSHA("SHA-512", "TEXT", {numRounds: 1});
+    hashObj.update(password);
+    return hashObj.getHash("HEX");
   }
 
-  addUser(user: User) {
-    user.password = this.hash(user.password);
-    return addDoc(this.userDoc, user);
+  async addUser(user: User) {
+    return (await addDoc(this.userDoc, user)).id;
   }
 
   /*async addUser(user: User): Promise<string> {
@@ -82,8 +89,7 @@ export class UserService {
       const userData = userSnapshot.docs[0].data() as User;
 
       if (password === userData.password) {
-        console.log(userData.id);
-        return userData.id!;
+        return userSnapshot.docs[0].id;
       } else {
         return "pass"
       }
@@ -95,7 +101,7 @@ export class UserService {
 
   getUser(id: string) {
     const userRef = doc(this.userDoc, `${id}`);
-    const userSnapshot = docData(userRef, {idField: 'id'}) as Observable<User>;
+    return docData(userRef, {idField: 'id'}) as Observable<User>;
   }
 
   async userNameExists(username: string) {

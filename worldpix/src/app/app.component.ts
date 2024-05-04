@@ -25,42 +25,14 @@ import { IndexComponent } from "./pages/index/index.component";
 })
 export class AppComponent {
   title = 'worldpix';
-
-  user: User = {email: '', username: '', password: ''}
-  currentUserId: string = 'acuqsbqqFs1GDjY32SiW';
+  currentUserId: string = '';
+  currentPage = "index";
+  
   constructor (private userService: UserService, private albumService: AlbumService, private imageService: ImageService) {}
 
-  uploadTest() {
-    const url = this.imageService.uploadImage();
-    console.log(url);
+  loggedIn(id: string) {
+    this.currentUserId = id;
+    this.currentPage = "home";
   }
 
-  /*createUser(form: NgForm) {
-    console.log(form.value)
-    this.userService.addUser(form.value)
-    .then((docRef: { id: string; }) => this.currentUserId = docRef.id)
-    .then(() => form.reset())
-    .then(() => console.log(this.currentUserId));
-  }*/
-
-  getUser() {
-    this.userService.getUser(this.currentUserId).subscribe(res => {
-      this.user = res;
-    });
-    console.log(this.user);
-  }
-
-  deleteUser() {
-    this.userService.deleteUser(this.currentUserId);
-  }
-
-  updateUser(form: NgForm) {
-    console.log(form.value.newEmail);
-    this.userService.modifyUserEmail(this.currentUserId, form.value.newEmail)
-    .then(() => form.reset());
-  }
-
-  getAlbums() {
-    console.log(this.albumService.getUserAlbums(this.currentUserId));
-  }
 }

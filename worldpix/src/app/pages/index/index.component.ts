@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { BodyComponent } from "../../components/structure/body/body.component";
 import { HeaderComponent } from "../../components/structure/header/header.component";
 import { FooterComponent } from "../../components/structure/footer/footer.component";
@@ -14,5 +14,6 @@ import { CommonModule, NgIf } from '@angular/common';
     imports: [BodyComponent, HeaderComponent, FooterComponent, LoginFormComponent, RegisterFormComponent,NgIf, CommonModule]
 })
 export class IndexComponent {
+    @Output() loggedIn: EventEmitter<any> = new EventEmitter();
     login_register = true;
 }
