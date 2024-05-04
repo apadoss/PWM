@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { GenericButtonComponent } from '../buttons/generic-button/generic-button.component';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login-form',
@@ -12,7 +13,9 @@ import { GenericButtonComponent } from '../buttons/generic-button/generic-button
 export class LoginFormComponent {
   @Output() switchForm: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  constructor(private userService: UserService) {
+    demoUser = new User()
+  }
 
   switchForms() {
     this.switchForm.emit();
