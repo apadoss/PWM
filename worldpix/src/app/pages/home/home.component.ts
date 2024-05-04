@@ -7,6 +7,7 @@ import { BodyComponent } from "../../components/structure/body/body.component";
 import { SidebarComponent } from '../../components/structure/sidebar/sidebar.component';
 import { HeaderComponent } from '../../components/structure/header/header.component';
 import { GenericButtonComponent } from "../../components/buttons/generic-button/generic-button.component";
+import { TransparentButtonComponent } from "../../components/buttons/transparent-button/transparent-button.component";
 
 @Component({
     selector: 'app-home',
@@ -14,7 +15,7 @@ import { GenericButtonComponent } from "../../components/buttons/generic-button/
     templateUrl: './home.component.html',
     styleUrl: './home.component.css',
     providers: [AlbumManagerService, ImageManagerService],
-    imports: [GlobeComponent, BodyComponent, SidebarComponent, HeaderComponent, GenericButtonComponent, GenericButtonComponent]
+    imports: [GlobeComponent, BodyComponent, SidebarComponent, HeaderComponent, GenericButtonComponent, GenericButtonComponent, TransparentButtonComponent]
 })
 
 export class HomeComponent implements AfterViewInit {
