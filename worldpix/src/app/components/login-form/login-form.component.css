@@ -1,7 +1,7 @@
 .login-container {
-    width: 300px;
-    margin: 50px auto;
-    padding: 20px;
+    width: 20.3%;
+    margin: 6% auto;
+    padding: 2.5%;
     background-color: rgba(240, 240, 240, 0.75);
     border-radius: 15px;
     text-align: center;
@@ -10,7 +10,7 @@
   }
   
   .login-title {
-    font-size: 48px;
+    font-size: 4.25vw;
     margin-bottom: 20px;
     margin-top: 0px;
     text-align: left;
@@ -29,8 +29,8 @@
   }
   
   .input-field {
-    width: calc(100% - 12px);
-    padding: 10px;
+    width: calc(100% - 8%);
+    padding: 3.5%;
     border: 1px solid #ccc;
     border-radius: 15px;
     text-align: start;

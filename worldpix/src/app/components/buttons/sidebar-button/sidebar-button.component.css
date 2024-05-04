@@ -4,12 +4,12 @@
     border: none;
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;
-    padding: 15px 30px; /* Aumenta el espacio interno del botón */
+    padding: 15px 30px; 
     cursor: pointer;
     transition: background-color 0.3s ease;
-    width: 100%; /* Calcula el ancho del botón restando 40px para los márgenes izquierdo y derecho */
-    margin: 0px; /* Margen izquierdo y derecho de 20px */
-    font-size: 150%;
+    width: 100%; 
+    margin: 0px; 
+    font-size: 2vw;
     font-family:'Times New Roman', Times, serif; 
   }
   

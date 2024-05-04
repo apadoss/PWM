@@ -16,5 +16,4 @@ export class SidebarButtonComponent {
     console.log(this.label);
     this.buttonClick.emit();
   }
-  
 }
