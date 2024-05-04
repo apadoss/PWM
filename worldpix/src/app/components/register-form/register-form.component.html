@@ -1,0 +1,39 @@
+<!--h1>Registration</h1>
+
+<fieldset class="input_box">
+    <p><input type="text" placeholder="User name" name="userName" required></p>
+    <p><input type="email" placeholder="Email" name="email" required></p>
+    <p><input type="password" placeholder="Password" name="passwordField" 
+        pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" 
+        title="Password must contain 8 characters, letters and numbers and an special character."
+        onkeyup="validatePassword()"
+        required></p>
+    <p><input type="password" placeholder="Confirm password" name="confirmPassword" onkeyup="validatePassword()" required></p>
+</fieldset>
+
+<section class="btn_box">
+    <button type="submit" class="button">Sign up</button>
+</section>
+
+<p class="form_text">Already have an account? <a class="login_form_button" href="#">Login</a></p-->
+
+<div class="login-container">
+    <h2 class="login-title">Register</h2>
+    <hr class="divider">
+    <div class="input-container">
+        <p><input type="text" placeholder="User name" name="userName" class="input-field" required></p>
+    </div>
+    <div class="input-container">
+        <p><input type="email" placeholder="Email" name="email" class="input-field" required></p>
+    </div>
+    <div class="input-container">
+        <p><input type="password" placeholder="Password" name="passwordField" 
+            pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" 
+            title="Password must contain 8 characters, letters and numbers and an special character."
+            onkeyup="validatePassword()"
+            class="input-field"
+            required></p>
+    </div>
+    <app-generic-button [label]="'Log in'"></app-generic-button>
+    <p>Don't have an account <a href="#" (click)="signUp()">sign up</a></p>
+  </div>
