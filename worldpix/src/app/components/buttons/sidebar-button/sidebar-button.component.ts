@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Output, Input, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'app-sidebar-button',
@@ -7,12 +7,13 @@ import { Component, OnInit, Input } from '@angular/core';
   templateUrl: './sidebar-button.component.html',
   styleUrl: './sidebar-button.component.css'
 })
-export class SidebarButtonComponent implements OnInit{
+export class SidebarButtonComponent {
   @Input() label: string = ' ';
-  constructor(){}
-  ngOnInit(): void {
-  }
-  clickAddTodo() {
-    alert("button pressed");
+  @Input() active: boolean = false;
+  @Output() buttonClick: EventEmitter<void> = new EventEmitter<void>();
+
+  clickAddTodo(): void{
+    console.log(this.label);
+    this.buttonClick.emit();
   }
 }

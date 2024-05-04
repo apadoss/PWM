@@ -1,17 +1,26 @@
 .sidebar {
-    width: 200px; /* Ancho de la barra lateral */
+    width: 10.5vw; 
     background-color: rgb(255, 255, 255);
-    padding: 0; /* Elimina el padding para que los botones estén pegados a los márgenes */
-    height: 100vh; /* Establece la altura al 100% de la altura de la ventana */
-    position: fixed; /* Fija la barra lateral en su posición */
-    top: 0; /* Coloca la barra lateral en la parte superior */
-    left: 0; /* Coloca la barra lateral en la parte izquierda */
-    display: flex; /* Usa Flexbox para alinear el contenido verticalmente */
-    flex-direction: column; /* Apila el contenido verticalmente */
-    justify-content: flex-start; /* Alinea el contenido al principio del eje principal (vertical) */
+    padding: 0; 
+    height: 100vh; 
+    position: fixed; 
+    top: 0; 
+    left: 0;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: flex-start; 
   }
   
-  .button {
-    padding: 0px;
+  ::ng-deep .sidebar-button:hover {
+    background-color: #f0f0f0;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+  }
+  
+  ::ng-deep .sidebar-button:active,
+  ::ng-deep .sidebar-button:focus {
+    background-color: #e0e0e0;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
   }
   
