@@ -27,14 +27,13 @@
       .input-container {
         display: flex;
         flex-direction: column;
-        gap: 5px;
         text-align: left;
       }
 
       .input-container-password {
         display: flex;
         flex-direction: row;
-        gap: 5px;
+        gap: 0px;
         text-align: left;
       }
       
@@ -51,6 +50,21 @@
         border: 1px solid #ccc;
         border-radius: 15px;
         text-align: start;
+      }
+
+      .error-container {
+        position: relative;
+        width: 0;
+        height: 0;
+    
+        .error-message {
+          position: absolute;
+          left: 5px;
+          top: 3px;
+          width: max-content;
+          color: red;
+          font-size: 12px;
+        }
       }
 
       a {

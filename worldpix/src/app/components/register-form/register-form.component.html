@@ -21,30 +21,54 @@
     <h2 class="register-title">Sign up</h2>
     <hr class="divider">
     <div class="input-container">
-        <input type="text" placeholder="User name" name="userName" [(ngModel)]="username" class="input-field" required>
+        <input type="text" placeholder="User name" name="userName" [(ngModel)]="username.value" (focus)="username.valid = true" class="input-field" required>
+        <div class="error-container">
+            <p class="error-message"
+            *ngIf="!this.username.valid"
+            >
+            Username already exists
+          </p>
+        </div>
     </div>
     <div class="input-container">
-        <input type="email" placeholder="Email" name="email" [(ngModel)]="email" class="input-field" required>
+        <input type="email" placeholder="Email" name="email" [(ngModel)]="email.value" (focus)="email.valid = true" class="input-field" required>
+        <div class="error-container">
+            <p class="error-message"
+            *ngIf="!this.email.valid"
+            >
+            Email already registered
+          </p>
+        </div>
     </div>
     <div class="input-container-password">
+        <div class="error-container">
+            <p class="error-message"
+            style="top: 41px"
+            *ngIf="!(this.password.valid && this.confirmPassword.valid)"
+            >
+            {{this.passwordError}}
+            </p>
+        </div>
         <input 
             type="password"
             placeholder="Password"
             name="passwordField"
-            [(ngModel)]="password"
+            [(ngModel)]="password.value"
+            (focus)="password.valid = true"
             pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" 
             title="Password must contain 8 characters, letters and numbers and an special character."
             class="input-field-password"
             required>
+        <div style="width:10px;"></div>
         <input 
             type="password"
             placeholder="Confirm password"
             name="confirmPassword"
-            [(ngModel)]="confirmPassword"
-            (focus)="resetValidity()"
+            [(ngModel)]="confirmPassword.value"
+            (focus)="confirmPassword.valid = true"
             (focusout)="validatePassword()"
             class="input-field-password">
     </div>
-    <app-generic-button [label]="'Log in'"></app-generic-button>
+    <app-generic-button (click)="register()" [label]="'Log in'"></app-generic-button>
     <p>Already have an account? <a href="#" (click)="this.switchForms()">Log in</a></p>
   </div>

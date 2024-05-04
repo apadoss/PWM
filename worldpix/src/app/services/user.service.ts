@@ -68,28 +68,25 @@ export class UserService {
     }
   }*/
 
-  async authenticateUser(user: User): Promise<boolean> {
+  async authenticateUser(user: User): Promise<string> {
     var username = user.username;
     var password = user.password;
     try {
-      // Query user with the provided username
       const userQuery = query(this.userDoc, where("username", "==", username));
       const userSnapshot = await getDocs(userQuery);
 
-      // If username doesn't exist, return false
       if (userSnapshot.empty) {
-        console.log("pass")
-        return false;
+        return "user";
       }
 
-      // Retrieve the user document data
       const userData = userSnapshot.docs[0].data() as User;
-      console.log(userData)
 
-      // Compare passwords securely using bcrypt
-      const passwordsMatch = await bcrypt.compare(password, userData.password);
-
-      return passwordsMatch;
+      if (password === userData.password) {
+        console.log(userData.id);
+        return userData.id!;
+      } else {
+        return "pass"
+      }
     } catch (error) {
       console.error("Error authenticating user:", error);
       throw error;
@@ -98,7 +95,26 @@ export class UserService {
 
   getUser(id: string) {
     const userRef = doc(this.userDoc, `${id}`);
-    return docData(userRef, {idField: 'id'}) as Observable<User>;
+    const userSnapshot = docData(userRef, {idField: 'id'}) as Observable<User>;
+  }
+
+  async userNameExists(username: string) {
+    const userQuery = query(this.userDoc, where("username", "==", username));
+    const userSnapshot = await getDocs(userQuery);
+    if (userSnapshot.empty) {
+      return false;
+    }
+    const userData = userSnapshot.docs[0].data() as User;
+    return true;
+  }
+
+  async emailExists(email: string) {
+    const userQuery = query(this.userDoc, where("email", "==", email));
+    const userSnapshot = await getDocs(userQuery);
+    if (userSnapshot.empty) {
+      return false;
+    }
+    return true;
   }
 
   deleteUser(id: string) {

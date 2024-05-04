@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { GenericButtonComponent } from '../buttons/generic-button/generic-button.component';
 import { UserService } from '../../services/user.service';
-import { User } from 'firebase/auth';
 import { FormsModule } from '@angular/forms';
 import { Valid } from '../../interfaces/valid';
 import { CommonModule, NgIf } from '@angular/common';
+import { User } from '../../interfaces/user';
 
 @Component({
   selector: 'app-login-form',
@@ -24,7 +24,8 @@ export class LoginFormComponent {
   }
 
   async tryLogin() {
-    var user = {email: '', username: this.username, password: this.userService.hash(this.password.value)}
+    var user: User = {email: '', username: this.username.value, password: this.userService.hash(this.password.value)};
+    console.log("hmm", await this.userService.authenticateUser(user));
   }
 
   switchForms() {
