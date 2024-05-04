@@ -3,7 +3,7 @@
     <head>
         <title>Home page</title>
 
-        <script src="/js/responsive-design/responsive.js"></script>
+        <!--script src="/js/responsive-design/responsive.js"></script>
         <script type="text/javascript" src="/js/xlu-include-file.js"></script>
         <script>
             window.onload = function () {
@@ -11,7 +11,7 @@
             }
         </script>
 
-        <!--link href="/css/style-imports.css" rel="stylesheet"-->
+        <link href="/css/style-imports.css" rel="stylesheet"-->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
     </head>
@@ -22,6 +22,11 @@
             (clickAlbum)="clicked($event)"
             (hoverAlbum)="hovered($event)"
         ></app-globe>
+        <div style="position: absolute;">
+            <div style="position: absolute; top: 0; right: 0;">
+                <app-generic-button></app-generic-button>
+            </div>
+        </div>
     </app-body>
 
     <!--body class="no-footer home-body" style="background: black;"-->

@@ -63,7 +63,9 @@ near = 0.1;
 far = 1000;
 tloader = new THREE.TextureLoader();
 globeContainer = "globe";
+beaconContainer = "beacon";
 container!: HTMLElement | null;
+beacon!: HTMLElement | null;
 bufferInitAlbums: [Album, number, number, string][] = [];
 uniforms: any;
 mDragging: boolean;
@@ -131,6 +133,7 @@ constructor() {
 ngAfterViewInit(): void {
 
   this.container = document.getElementById(this.globeContainer);
+  this.beacon = document.getElementById(this.beaconContainer);
 
   if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     window.addEventListener( 'touchmove', (e) => {
@@ -604,23 +607,21 @@ let mouseCast = new THREE.Vector4();
 }*/
 
 private onWindowResize() {
-  if (!!this.container && !!this.renderer && !!this.fakeCamera) {
+  if (!!this.container && !!this.beacon && !!this.renderer && !!this.fakeCamera) {
     let x, y, w, h;
 
     //Efecto similar al de defecto, ocupa toda la ventana
-    x = Math.floor(this.container.offsetWidth * 0.0);
-    y = Math.floor(this.container.offsetHeight * 0.0);
-    w = Math.floor(this.container.offsetWidth * 1);
-    h = Math.floor(this.container.offsetHeight * 1);
-
-    console.log(x,y,w,h, this.container)
+    x = Math.floor(this.beacon.offsetWidth * 0.0);
+    y = Math.floor(this.beacon.offsetHeight * 0.0);
+    w = Math.floor(this.beacon.offsetWidth * 1);
+    h = Math.floor(this.beacon.offsetHeight * 1);
 
     //renderer.setViewport(x, y, w, h);
-    this.renderer.setSize(this.container.offsetWidth, this.container.offsetHeight);
+    this.renderer.setSize(this.beacon.offsetWidth, this.beacon.offsetHeight);
     this.renderer.setScissor(x, y, w, h);
     this.renderer.setScissorTest(true);
     
-    this.fakeCamera.aspect = this.container.offsetWidth / this.container.offsetHeight;
+    this.fakeCamera.aspect = this.beacon.offsetWidth / this.beacon.offsetHeight;
     this.fakeCamera.updateProjectionMatrix();
     //uniforms.u_resolution.value.x = renderer.domElement.width;
     //uniforms.u_resolution.value.y = renderer.domElement.height;

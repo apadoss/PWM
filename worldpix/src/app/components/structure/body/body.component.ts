@@ -21,21 +21,13 @@ export class BodyComponent {
   //@ViewChild('app-header', { static: true }) sidebarTemplateRef: TemplateRef<any>;
 
   //Note: may cause issues with slow components? Check with home
-  ngAfterContentInit() {
-    window.addEventListener('resize', this.updateDevice);
+  ngOnInit() {
+    window.addEventListener('resize', () => {
+      this.updateDevice()
+    });
     this.updateDevice();
 
     //this.context = ResponsiveService.getDevice();
-
-    if (this.header !== undefined) {
-
-    }
-    if (this.sidebar !== undefined) {
-
-    }
-    if (this.footer !== undefined) {
-
-    }
   }
 
   updateDevice() {
