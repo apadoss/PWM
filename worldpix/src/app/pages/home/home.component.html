@@ -2,19 +2,10 @@
 <html lang="en">
     <head>
         <title>Home page</title>
-
-        <!--script src="/js/responsive-design/responsive.js"></script>
-        <script type="text/javascript" src="/js/xlu-include-file.js"></script>
-        <script>
-            window.onload = function () {
-                startResponsive();
-            }
-        </script>
-
-        <link href="/css/style-imports.css" rel="stylesheet"-->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
     </head>
+
     <app-body>
         <app-header></app-header>
         <app-sidebar></app-sidebar>
@@ -22,20 +13,10 @@
             (clickAlbum)="clicked($event)"
             (hoverAlbum)="hovered($event)"
         ></app-globe>
-        <div style="position: absolute; top: 0; right: 0; z-index: 2;">
-            <app-generic-button></app-generic-button>
+        <div style="position: absolute; top: 0; right: 0; margin: 8px;">
+            <app-generic-button label="Add new album"></app-generic-button>
         </div>
     </app-body>
 
-    <!--body class="no-footer home-body" style="background: black;"-->
-        <!--header xlu-include-file="/html/components/structure-components/header.html"></header-->
-        
-        <!--div class="body-sidebar map" style="width: 1000px; height: 1000px;">
-            <app-globe
-            (clickAlbum)="clicked($event)"
-            (hoverAlbum)="hovered($event)"
-            ></app-globe>
-        </div>  
-      </body-->
 </html>
 <script>xLuIncludeFile()</script>
