@@ -11,19 +11,6 @@
   justify-content: flex-start; /* Alinea el contenido al principio del eje principal (vertical) */
 }
 
-/*
-.sidebar {
-    width: 200px;
-    background-color: var(--structure-element-background);
-    padding: 0;
-    height: 100%;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-  }
-  */
-
 ::ng-deep .sidebar-button:hover {
   background-color: #f0f0f0;
   border-top-left-radius: 50px;
