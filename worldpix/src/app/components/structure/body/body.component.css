@@ -1,4 +1,5 @@
 .body-container {
+    position: relative;
     min-height: 100vh;
     width: auto;
     height: auto;
