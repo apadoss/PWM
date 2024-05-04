@@ -2,9 +2,9 @@ export interface Album {
     id?: string;
     name: string;
     description: string;
-    dateStart: Date;
-    dateEnd: Date;
+    dateStart: string;
+    dateEnd: string;
     cityName: string;
-    coordinates: GeolocationCoordinates;
+    coordinates: number[];
     userId: string;
 }

@@ -3,6 +3,6 @@ export interface Image {
     name: string;
     description: string;
     imageURL: string;
-    date: Date;
-    albumId: String;
+    date: string;
+    albumId: string;
 }

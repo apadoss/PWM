@@ -3,8 +3,9 @@ import * as THREE from "three";
 import {
   OrbitControls,
 } from "three/examples/jsm/controls/OrbitControls";
-import { Album } from '../../../services/home/AlbumManager/album-manager.service';
+//import { Album } from '../../../services/home/AlbumManager/album-manager.service';
 import { AlbumManagerService } from '../../../services/home/AlbumManager/album-manager.service';
+import { Album } from '../../../interfaces/album';
 /*import * as ut from "./utility.js";
 import * as sh from "./shaders.js";
 import * as dt from "./data.js";
@@ -207,18 +208,18 @@ deRenderAll(manager: AlbumManagerService) {
 
 //Recibe un dict de álbum y lo renderiza
 renderAlbum(album: Album) {
-  if (album.albumID in this.renderedAlbums) {
+  if (album.id! in this.renderedAlbums) {
     this.deRenderAlbum(album);
   }
   let pin = this.addAlbumPin(album);
-  this.renderedAlbums[album.albumID] = pin;
+  this.renderedAlbums[album.id!] = pin;
 }
 
 //Recibe un dict de álbum y lo derenderiza, true si lo ha quitado false si no existía
 deRenderAlbum(album: Album) {
-  if (album["albumID"] in this.renderedAlbums) {
-    this.renderedAlbums[album["albumID"]].parent.removeFromParent();
-    delete this.renderedAlbums[album["albumID"]];
+  if (album.id! in this.renderedAlbums) {
+    this.renderedAlbums[album.id!].parent.removeFromParent();
+    delete this.renderedAlbums[album.id!];
     return true;
   }
   return false;
@@ -230,7 +231,7 @@ private async run() {
   if (this.bufferInitAlbums.length != 0) {
     for (let i in this.bufferInitAlbums) {
       let pin = this.addAlbumPin(this.bufferInitAlbums[i][0], this.bufferInitAlbums[i][1], this.bufferInitAlbums[i][2], this.bufferInitAlbums[i][3]);
-      this.renderedAlbums[this.bufferInitAlbums[i][0]["albumID"]] = pin;
+      this.renderedAlbums[this.bufferInitAlbums[i][0].id!] = pin;
     }
   }
   this.animationLoop();
@@ -502,7 +503,7 @@ private addAlbumPin(album: Album, distance = 0.43, size = 0.02, iconLink = 'http
     return;
   }
   let line = this.normalLine(distance);
-  this.rotateToCoordinates(album["coordinates"], line);
+  this.rotateToCoordinates([album.coordinates[0], album.coordinates[1]], line);
   this.bodies["earth"]["object"].add(line);
 
   let geom = new THREE.PlaneBufferGeometry(size, size);
@@ -549,7 +550,7 @@ private addAlbumPin(album: Album, distance = 0.43, size = 0.02, iconLink = 'http
   pin.rotateY( Math.PI);
   pin.rotateZ(Math.PI);*/
 
-  icon.albumID = album["albumID"];
+  icon.albumID = album.id;
   return icon;
 }
 

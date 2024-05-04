@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Image } from '../ImageManager/image-manager.service';
 import { v4 as uuid } from 'uuid';
+import { AlbumResponse } from '../../../interfaces/albumresponse';
+import { Album } from '../../../interfaces/album';
+import { Image } from '../../../interfaces/image';
 
-export interface Album {
+/*export interface Album {
   "name": string,
   "userID": string,
   "albumID": string,
@@ -12,7 +14,7 @@ export interface Album {
   "description": string,
   "coordinates": number[],
   "images": {[id: string]: Image},
-}
+}*/
 
 export let albums : { [id: string]: Album; };
 
@@ -28,22 +30,24 @@ export class AlbumManagerService {
   }
 
   //Returns array containing created dictionary and result of potential auto-add operation 
-  generateAlbum(autoAdd=true, name='No user name', userID='No user ID', albumID='No album ID', datestart='No start date', dateend='No end date', cityname='No city', coordinates=[0.0,0.0], description='No description', images: {[id: string]: Image} = {}) {
+  generateAlbum(autoAdd=true, name='No user name', userID='No user ID', albumID='No album ID', datestart='No start date', dateend='No end date', cityname='No city', coordinates=[0.0,0.0], description='No description') {
+    let coords = new GeolocationCoordinates;
     let returner: Album = {
         "name": name,
-        "userID": userID,
-        "albumID": albumID,
-        "date-start": datestart,
-        "date-end": dateend,
-        "city-name": cityname,
+        "userId": userID,
+        "id": albumID,
+        "dateStart": datestart,
+        "dateEnd": dateend,
+        "cityName": cityname,
         "coordinates": coordinates,
         "description": description,
-        "images": images,
     };
+    let returner2: AlbumResponse = {valid: true, album: returner};
+    if (autoAdd && !this.addAlbum(returner)) {
+      returner2.valid = false;
+    }
 
-    if (autoAdd && !this.addAlbum(returner)) return [returner, false];
-
-    return [returner, true];
+    return returner2;
 }
 
 getAlbum(id: string) {
@@ -56,11 +60,17 @@ getAlbums() {
 }
 
 addAlbum(album: Album, force = false) {
-  if (album["albumID"] in albums && !force) {
+  if (album.id! in albums && !force) {
     return false;
   }
-  albums[album["albumID"]] = album;
+  albums[album.id!] = album;
   return true;
+}
+
+addAlbums(ialbums: Album[]) {
+  for (let i in albums) {
+    console.log(i)
+  }
 }
 
 removeAlbum(albumID: string) {
@@ -86,13 +96,15 @@ JSONToDict(json: string) {
 
 //I get the feeling that defining UUIDs client-side is the mother of all bad ideas
 //Also, does not come with safety checks- it just happens
-addImage(album: Album, imageJSON: Image, imageID = album["albumID"] + '-' + uuid()) {
+addImage(album: Album, imageJSON: Image, imageID = album.id + '-' + uuid()) {
   let newImage = imageJSON;
-  newImage["imageID"] = imageID;
-  album["images"][imageID] = newImage;
+  newImage.id = imageID;
+  newImage.albumId = album.id!;
+  
 }
 
 removeImage(album: Album, image: Image) {
+  image.
   if (album["images"] && album["images"].hasOwnProperty(image["imageID"])) {
       delete album["images"][image["imageID"]];
       return true;

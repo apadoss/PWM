@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
-export interface Image {
+/*export interface Image {
   "imageID": string,
   "filename": string,
   "date": string,
   "description": string,
   "imageURL": string,
-}
+}*/
 
 @Injectable({
   providedIn: 'root'

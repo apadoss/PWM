@@ -7,6 +7,8 @@ import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, query, updat
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Image } from '../interfaces/image';
 import { Observable } from 'rxjs';
+import { uuid } from 'uuidv4';
+import { Album } from '../interfaces/album';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +24,27 @@ export class ImageService {
     this.imageDoc = collection(this.database, "Image");
   }
 
-  addImage(image: Image) {
-    return addDoc(this.imageDoc, image);
+  generateImage(ID="No image ID", name="No filename", date='No date', description='No description', image="/image/link", albumID = '') {
+    let returner: Image = {
+        "albumId": albumID,
+        "id": ID,
+        "name": name,
+        "date": date,
+        "description": description,
+        "imageURL": image,
+    };
+    return returner;
+}
+
+  addImage(album: Album, image: Image, imageID = album.id + '-' + uuid()) {
+    let newImage = image;
+    newImage.id = imageID;
+    newImage.albumId = album.id!;
+    return addDoc(this.imageDoc, newImage);
+  }
+
+  extractImageDate(file: File) {
+    return new Date(file.lastModified);
   }
 
   getImage(id: string) {
