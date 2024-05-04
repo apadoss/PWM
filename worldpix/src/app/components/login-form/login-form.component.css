@@ -5,8 +5,8 @@
     background-color: rgba(240, 240, 240, 0.75);
     border-radius: 15px;
     text-align: center;
-    margin-left: 65%; 
-    margin-top: 8%;
+    right: 40px; 
+    top: 40px;
   }
   
   .login-title {

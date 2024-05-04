@@ -1,85 +1,48 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<app-home></app-home>
 
-<!--app-body>
+<app-body>
     <app-header></app-header>
-    <app-sidebar></app-sidebar>
-</app-body-->
 
-<!--div style="width: 100%; min-height: 100vh; height: fit-content;">
-    <div style="position: relative; top: 0; height: 100px; width: 100%; background: blue">
-        "HEADER"
-    </div>
-    <div style="position: relative; left: 0; height: 100%; width: 100px; background-color: green">
-        "SIDEBAR"
-    </div>
-    <div style="position: relative; background-color: red;">
-        <h1>
-            "CONTENT"
-        </h1>
-    </div>
-    <div style="position: relative; bottom: 0; height: 100px; width: 100%; background-color: white">
-        "FOOTER"
-    </div>
-</div-->
+    <app-login-form></app-login-form>
 
-<!--div style="min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto auto;">
-    <div style="background: blue;">
-        HEADER
-    </div>
-    <div style="display: flex;">
-        <div style="width: 100px; background-color: green;">
-            SIDEBAR
-        </div>
-        <div style="flex: 1; background-color: red; overflow-y: auto;">
-            <h1>CONTENT</h1>
-        </div>
-    </div>
-    <div style="width: 100%; height: 50px; background-color: black">
+    <!--div>
+        <form #userForm = "ngForm" (ngSubmit)="createUser(userForm)">
+            <div class="form-group">
+                <input class="form-control" name="email" #email = "ngModel"
+                [(ngModel)] = "user.email" placeholder="E-mail" required>
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="username" #username = "ngModel"
+                [(ngModel)] = "user.username" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="password" #password = "ngModel"
+                [(ngModel)] = "user.password" placeholder="Password" required>
+            </div>
+            <div class="form-group float-right">
+                <button type="submit" class="btn btn-success"
+                [disabled]="!userForm.valid" [disabled]="userForm.invalid">
+                <i class="bi bi-plus"></i>Add User</button>
+            </div>
+        </form>
 
-    </div>
-    <div style="background-color: white;">
-        FOOTER
-    </div>
-</div-->
+        <button (click)="getUser()">Get User</button>
+        <button (click)="deleteUser()">Delete User</button>
 
-<!--div>
-    <form #userForm = "ngForm" (ngSubmit)="createUser(userForm)">
-        <div class="form-group">
-            <input class="form-control" name="email" #email = "ngModel"
-            [(ngModel)] = "user.email" placeholder="E-mail" required>
-        </div>
-        <div class="form-group">
-            <input class="form-control" name="username" #username = "ngModel"
-            [(ngModel)] = "user.username" placeholder="Username" required>
-        </div>
-        <div class="form-group">
-            <input class="form-control" name="password" #password = "ngModel"
-            [(ngModel)] = "user.password" placeholder="Password" required>
-        </div>
-        <div class="form-group float-right">
-            <button type="submit" class="btn btn-success"
-            [disabled]="!userForm.valid" [disabled]="userForm.invalid">
-            <i class="bi bi-plus"></i>Add User</button>
-        </div>
-    </form>
+        <form #updateEmailForm = "ngForm" (ngSubmit)="updateUser(updateEmailForm)">
+            <div class="form-group">
+                <input class="form-control" name="newEmail" #newEmail = "ngModel"
+                [(ngModel)] = "user.email" placeholder="E-mail" required>
+            </div>
+            <div class="form-group float-right">
+                <button type="submit" class="btn btn-success"
+                [disabled]="!updateEmailForm.valid" [disabled]="updateEmailForm.invalid">
+                <i class="bi bi-plus"></i>Update Email</button>
+            </div>
+        </form>
 
-    <button (click)="getUser()">Get User</button>
-    <button (click)="deleteUser()">Delete User</button>
+        <button (click)="getAlbums()">Get albums</button>
+    </div-->
 
-    <form #updateEmailForm = "ngForm" (ngSubmit)="updateUser(updateEmailForm)">
-        <div class="form-group">
-            <input class="form-control" name="newEmail" #newEmail = "ngModel"
-            [(ngModel)] = "user.email" placeholder="E-mail" required>
-        </div>
-        <div class="form-group float-right">
-            <button type="submit" class="btn btn-success"
-            [disabled]="!updateEmailForm.valid" [disabled]="updateEmailForm.invalid">
-            <i class="bi bi-plus"></i>Update Email</button>
-        </div>
-    </form>
-
-    <button (click)="getAlbums()">Get albums</button>
-</div>
-<app-header>
-<app-footer></app-footer-->
+    <app-footer></app-footer>
+</app-body>
