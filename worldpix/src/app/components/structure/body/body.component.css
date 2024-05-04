@@ -1,5 +1,4 @@
 .body-container {
-    position: relative;
     min-height: 100vh;
     width: auto;
     height: auto;
@@ -24,6 +23,7 @@
     }
 
     .content-container {
+        position: relative;
         flex: 1; 
         overflow-y: auto;
     }
