@@ -17,11 +17,12 @@
 
 <p class="form_text">Already have an account? <a class="login_form_button" href="#">Login</a></p-->
 
-<div class="login-container">
-    <h2 class="login-title">Register</h2>
+<div class="register-container">
+    <h2 class="register-title">Register</h2>
     <hr class="divider">
     <div class="input-container">
-        <p><input type="text" placeholder="User name" name="userName" class="input-field" required></p>
+        <p>Insert new username</p>
+        <input type="text" placeholder="User name" name="userName" class="input-field" required>
     </div>
     <div class="input-container">
         <p><input type="email" placeholder="Email" name="email" class="input-field" required></p>
@@ -35,5 +36,5 @@
             required></p>
     </div>
     <app-generic-button [label]="'Log in'"></app-generic-button>
-    <p>Don't have an account <a href="#" (click)="signUp()">sign up</a></p>
+    <p>Already have an account? <a href="#" (click)="signUp()">Log in</a></p>
   </div>
