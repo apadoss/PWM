@@ -26,11 +26,11 @@
   
   .input-container {
     display: flex;
-    text-align: center;
+    text-align: left;
+    flex-direction: column;
   }
   
   .input-field {
-    width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 15px;

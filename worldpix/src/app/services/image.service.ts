@@ -18,7 +18,7 @@ export class ImageService {
 
   constructor() { 
     this.app = initializeApp(enviroment);
-    this.database = getFirestore();
+    this.database = getFirestore(this.app);
     this.imageDoc = collection(this.database, "Image");
   }
 

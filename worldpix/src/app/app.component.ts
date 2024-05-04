@@ -35,11 +35,13 @@ export class AppComponent {
     console.log(url);
   }
 
-  createUser(form: NgForm) {
+  /*createUser(form: NgForm) {
+    console.log(form.value)
     this.userService.addUser(form.value)
     .then((docRef: { id: string; }) => this.currentUserId = docRef.id)
-    .then(() => form.reset());
-  }
+    .then(() => form.reset())
+    .then(() => console.log(this.currentUserId));
+  }*/
 
   getUser() {
     this.userService.getUser(this.currentUserId).subscribe(res => {

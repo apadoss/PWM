@@ -21,16 +21,17 @@
     <h2 class="register-title">Sign up</h2>
     <hr class="divider">
     <div class="input-container">
-        <input type="text" placeholder="User name" name="userName" class="input-field" required>
+        <input type="text" placeholder="User name" name="userName" [(ngModel)]="username" class="input-field" required>
     </div>
     <div class="input-container">
-        <input type="email" placeholder="Email" name="email" class="input-field" required>
+        <input type="email" placeholder="Email" name="email" [(ngModel)]="email" class="input-field" required>
     </div>
     <div class="input-container-password">
         <input 
             type="password"
             placeholder="Password"
-            name="passwordField" 
+            name="passwordField"
+            [(ngModel)]="password"
             pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" 
             title="Password must contain 8 characters, letters and numbers and an special character."
             class="input-field-password"
@@ -39,6 +40,8 @@
             type="password"
             placeholder="Confirm password"
             name="confirmPassword"
+            [(ngModel)]="confirmPassword"
+            (focus)="resetValidity()"
             (focusout)="validatePassword()"
             class="input-field-password">
     </div>

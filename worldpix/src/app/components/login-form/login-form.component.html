@@ -2,10 +2,26 @@
     <h2 class="login-title">Log in</h2>
     <hr class="divider">
     <div class="input-container">
-      <input type="text" placeholder="User name" class="input-field">
+      <input type="text" placeholder="User name" [(ngModel)]="username.value" (focus)="username.valid = true" class="input-field">
+      <div style="position: relative; width: 0; height: 0;">
+        <p style="position: absolute; left: 5px; top: 5px; width: max-content; color: red; font-size: 12px;"
+        *ngIf="!this.username.valid">
+        Username does not exist
+      </p>
+      </div>
     </div>
     <div class="input-container">
-      <input type="password" placeholder="Password" class="input-field">
+      <input type="password" placeholder="Password" [(ngModel)]="password.value" (focus)="password.valid = true" class="input-field">
+      <div style="position: relative; width: 0; height: 0;">
+        <p style="position: absolute; left: 5px; top: 5px; width: max-content; color: red; font-size: 12px;"
+        *ngIf="!this.password.valid"
+        >
+        Password incorrect
+      </p>
+      </div>
+      <!--div style="position: absolute;">
+        <p style="position: relative; top: 20px; color: red; font-size: 12px;">Username already exists</p>
+      </div-->
     </div>
     <app-generic-button (click)="this.tryLogin()" [label]="'Log in'"></app-generic-button>
     <p>Don't have an account? <a href="#" (click)="this.switchForms()">Sign up</a></p>

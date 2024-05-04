@@ -1,16 +1,22 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { GenericButtonComponent } from '../buttons/generic-button/generic-button.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-register-form',
   standalone: true,
-  imports: [ GenericButtonComponent],
+  imports: [ GenericButtonComponent, FormsModule],
   templateUrl: './register-form.component.html',
   styleUrl: './register-form.component.css'
 })
 
 export class RegisterFormComponent {
   @Output() switchForm: EventEmitter<any> = new EventEmitter();
+
+  username = '';
+  email = '';
+  password = '';
+  confirmPassword = '';
 
   constructor() { }
 
@@ -26,20 +32,23 @@ export class RegisterFormComponent {
     alert('sign up pressed');
   }
 
-  validatePassword() {
-    var password = <HTMLInputElement>document.querySelector("input[name='passwordField']");
-    var confirmPassword = <HTMLInputElement>document.querySelector("input[name='confirmPassword']");
+  resetValidity() {
+    var confirmPasswordField = <HTMLInputElement>document.querySelector("input[name='confirmPassword']");
+    confirmPasswordField.setCustomValidity('');
+  }
 
-    if(!!password.value && password.value != confirmPassword.value) {
-      if (confirmPassword.validationMessage === "Passwords don't match") {
-        confirmPassword.setCustomValidity('');
+  validatePassword() {
+    var confirmPasswordField = <HTMLInputElement>document.querySelector("input[name='confirmPassword']");
+    if(!!this.password && this.password != this.confirmPassword) {
+      if (confirmPasswordField.validationMessage === "Passwords don't match") {
+        confirmPasswordField.checkValidity();
       }  else {
-        confirmPassword.setCustomValidity("Passwords don't match");
-        confirmPassword.reportValidity();
+        confirmPasswordField.setCustomValidity("Passwords don't match");
+        confirmPasswordField.reportValidity();
       }
     } else {
-      confirmPassword.setCustomValidity('');
+      confirmPasswordField.setCustomValidity('');
     }
-    return(confirmPassword.validationMessage);
+    return confirmPasswordField.validationMessage;
 }
 }
