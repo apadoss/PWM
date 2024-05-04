@@ -18,7 +18,7 @@
 <p class="form_text">Already have an account? <a class="login_form_button" href="#">Login</a></p-->
 
 <div class="register-container">
-    <h2 class="register-title">Register</h2>
+    <h2 class="register-title">Sign up</h2>
     <hr class="divider">
     <div class="input-container">
         <input type="text" placeholder="User name" name="userName" class="input-field" required>
@@ -26,25 +26,22 @@
     <div class="input-container">
         <input type="email" placeholder="Email" name="email" class="input-field" required>
     </div>
-    <div class="input-container">
+    <div class="input-container-password">
         <input 
             type="password"
             placeholder="Password"
             name="passwordField" 
             pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" 
             title="Password must contain 8 characters, letters and numbers and an special character."
-            class="input-field"
+            class="input-field-password"
             required>
-    </div>
-    <div class="input-container" name="form">
         <input 
-        type="password"
-        placeholder="Confirm password"
-        name="confirmPassword"
-        (focusout)="validatePassword()"
-        class="input-field" 
-        required>
+            type="password"
+            placeholder="Confirm password"
+            name="confirmPassword"
+            (focusout)="validatePassword()"
+            class="input-field-password">
     </div>
     <app-generic-button [label]="'Log in'"></app-generic-button>
-    <p>Already have an account? <a href="#" (click)="this.signUp()">Log in</a></p>
+    <p>Already have an account? <a href="#" (click)="this.switchForms()">Log in</a></p>
   </div>

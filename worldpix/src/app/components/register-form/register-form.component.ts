@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { GenericButtonComponent } from '../buttons/generic-button/generic-button.component';
 
 @Component({
@@ -10,11 +10,16 @@ import { GenericButtonComponent } from '../buttons/generic-button/generic-button
 })
 
 export class RegisterFormComponent {
+  @Output() switchForm: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() {
 
+  }
+
+  switchForms() {
+    this.switchForm.emit();
   }
 
   signUp(): void {
@@ -24,20 +29,17 @@ export class RegisterFormComponent {
   validatePassword() {
     var password = <HTMLInputElement>document.querySelector("input[name='passwordField']");
     var confirmPassword = <HTMLInputElement>document.querySelector("input[name='confirmPassword']");
-    console.log("a")
 
-    if(!!password && !!confirmPassword && password.value != confirmPassword.value) {
+    if(!!password.value && password.value != confirmPassword.value) {
       if (confirmPassword.validationMessage === "Passwords don't match") {
         confirmPassword.setCustomValidity('');
       }  else {
         confirmPassword.setCustomValidity("Passwords don't match");
         confirmPassword.reportValidity();
       }
-      } else {
-        confirmPassword.setCustomValidity('');
-      }
-    
-    //password.onchange = validatePassword;
-    //confirmPassword.onkeyup = validatePassword;
+    } else {
+      confirmPassword.setCustomValidity('');
+    }
+    return(confirmPassword.validationMessage);
 }
 }

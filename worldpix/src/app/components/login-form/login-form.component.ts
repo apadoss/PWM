@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { GenericButtonComponent } from '../buttons/generic-button/generic-button.component';
 
 @Component({
@@ -10,10 +10,11 @@ import { GenericButtonComponent } from '../buttons/generic-button/generic-button
 })
 
 export class LoginFormComponent {
+  @Output() switchForm: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
-  signUp(): void {
-    alert('sign up pressed');
+  switchForms() {
+    this.switchForm.emit();
   }
 }
