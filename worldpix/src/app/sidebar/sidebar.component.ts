@@ -9,4 +9,9 @@ import { SidebarButtonComponent } from '../components/buttons/sidebar-button/sid
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
+  activeButton: string = 'home';
+
+  setActiveButton(button: string): void {
+    this.activeButton = button;
+  }
 }

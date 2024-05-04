@@ -11,7 +11,16 @@
     justify-content: flex-start; /* Alinea el contenido al principio del eje principal (vertical) */
   }
   
-  .button {
-    padding: 0px;
+  ::ng-deep .sidebar-button:hover {
+    background-color: #f0f0f0;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+  }
+  
+  ::ng-deep .sidebar-button:active,
+  ::ng-deep .sidebar-button:focus {
+    background-color: #e0e0e0;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
   }
   
