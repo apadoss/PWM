@@ -15,13 +15,14 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { HomeComponent } from "./pages/home/home.component";
 import { BodyComponent } from "./components/structure/body/body.component";
 import { IndexComponent } from "./pages/index/index.component";
+import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-root',
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-    imports: [RouterOutlet, FormsModule, FooterComponent, SidebarComponent, HeaderComponent, LoginFormComponent, BodyComponent, HomeComponent, IndexComponent]
+    imports: [NgIf, CommonModule, RouterOutlet, FormsModule, FooterComponent, SidebarComponent, HeaderComponent, LoginFormComponent, BodyComponent, HomeComponent, IndexComponent]
 })
 export class AppComponent {
   title = 'worldpix';

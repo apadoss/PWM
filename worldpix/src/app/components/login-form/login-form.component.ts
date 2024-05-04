@@ -27,6 +27,7 @@ export class LoginFormComponent {
   async tryLogin() {
     var user: User = {email: '', username: this.username.value, password: this.userService.hash(this.password.value)};
     var response = await this.userService.authenticateUser(user);
+    console.log(response);
     if (response === "user") {
       this.username.valid = false;
     } else if (response === "pass") {

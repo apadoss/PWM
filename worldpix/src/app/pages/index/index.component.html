@@ -4,12 +4,12 @@
     <app-login-form
     *ngIf="login_register"
     (switchForm)="this.login_register = !this.login_register;"
-    (loggedIn)="this.loggedIn.emit($event.target.value)"
+    (loggedIn)="this.loggedIn.emit($event)"
     ></app-login-form>
     <app-register-form
     *ngIf="!login_register"
     (switchForm)="this.login_register = !this.login_register;"
-    (registered)="this.loggedIn.emit($event.target.value)"
+    (registered)="this.loggedIn.emit($event)"
     ></app-register-form>
     <app-footer></app-footer>
 </app-body>
