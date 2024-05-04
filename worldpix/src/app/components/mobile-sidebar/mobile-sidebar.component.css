@@ -2,6 +2,7 @@
   grid-column: 1 / 4;
   grid-row: 3;
   display: flex;
+
 }
 
 .Home-section {
@@ -119,8 +120,8 @@
   .home,
   .profile {
     display: flex;
-    justify-content: center; /* Centra el contenido horizontalmente */
-    align-items: center; /* Centra el contenido verticalmente */
+    justify-content: center; 
+    align-items: center; 
     border: none;
     background-color: var(--structure-element-button-idle);
     flex-grow: 1;
@@ -145,5 +146,5 @@
 .Home-section button,
 .Profile-section button {
   display: block;
-  margin: 0 auto; /* Establece los márgenes laterales automáticos para centrar el botón */
+  margin: 0 auto; 
 }
