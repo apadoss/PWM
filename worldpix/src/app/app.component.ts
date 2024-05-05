@@ -31,6 +31,7 @@ import { IndexComponent } from './pages/index/index.component';
 })
 
 export class AppComponent {
+  [x: string]: any;
   //title = 'worldpix';
   
   //constructor(private userService: UserService, private albumService: AlbumService, private imageService: ImageService, private router: Router) {}

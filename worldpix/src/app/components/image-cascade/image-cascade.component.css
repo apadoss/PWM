@@ -3,7 +3,7 @@
     height: 100%;
     display: grid;
     overflow: auto;
-    grid-template-columns: repeat(3, 1fr);
+    grid-auto-columns: repeat(3, 1fr);
     grid-auto-rows: min-content;
     margin: 0px;
     background-color: #b6b5b5;

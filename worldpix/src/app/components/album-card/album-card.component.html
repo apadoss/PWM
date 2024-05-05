@@ -36,7 +36,7 @@
                             <app-icon-round-button (buttonClick)="uploading = true" [link]="'assets/plus.png'"></app-icon-round-button>
                         </div>
                     </div>
-                    <app-image-cascade [albumId]="this.album.id!"></app-image-cascade>
+                    <app-image-cascade *ngIf="!!this.album.id" [albumId]="this.album.id"></app-image-cascade>
                 </div>
                 <div class="flex-column" style="flex: 4; min-height: 100%; gap: 20px;">
                     <span>

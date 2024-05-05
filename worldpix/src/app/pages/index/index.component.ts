@@ -19,6 +19,7 @@ import { AlbumService } from '../../services/album.service';
 export class IndexComponent {
     //@Output() loggedIn: EventEmitter<any> = new EventEmitter();
     login_register = true;
+    title = 'home';
 
     constructor(private userService: UserService, private router: Router, private albumManager: AlbumService) {
         if (UserService.currentUser !== "default") {

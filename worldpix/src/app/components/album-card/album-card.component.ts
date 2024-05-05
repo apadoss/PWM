@@ -36,7 +36,7 @@ export class AlbumCardComponent {
 
   album: Album = {
     name: '',
-    id: '',
+    id: undefined,
     description: '',
     dateStart: '',
     dateEnd: '',

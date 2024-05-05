@@ -16,6 +16,10 @@ export class ImageCascadeComponent {
   images: Image[] = [];
   @Input() albumId: string = '';
 
+  ngAfterViewInit() {
+    this.loadImages();
+  }
+
   loadImages() {
     this.imageService.getAlbumImages(this.albumId).then(
       (images) => (this.images = images)

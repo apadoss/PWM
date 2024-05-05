@@ -18,7 +18,7 @@ describe('AppComponent', () => {
   it(`should have the 'worldpix' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('worldpix');
+    expect(app['title']).toEqual('worldpix');
   });
 
   it('should render title', () => {

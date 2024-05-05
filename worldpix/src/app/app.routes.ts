@@ -6,12 +6,12 @@ import { UnderConstructionComponent } from './pages/under-construction/under-con
 import { AlbumCardComponent } from './components/album-card/album-card.component';
 
 export const routes: Routes = [
-    { path: 'home', component: HomeComponent, children: [
+    { path: 'home', title:'Home', component: HomeComponent, children: [
         { path: ':albumId', component: AlbumCardComponent}
     ] },
-    { path: 'about-us', component: AboutUsComponent },
-    { path: 'under-construction', component:UnderConstructionComponent },
-    { path: 'index', title:'test', component: IndexComponent },
+    { path: 'about-us', title:'About us', component: AboutUsComponent },
+    { path: 'under-construction', title:'N/A', component:UnderConstructionComponent },
+    { path: 'index', title:'Login', component: IndexComponent },
     { path: '', redirectTo: 'index', pathMatch: 'full' },
     { path: '*', redirectTo: 'index' },
 
