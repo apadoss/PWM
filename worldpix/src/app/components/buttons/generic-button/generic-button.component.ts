@@ -8,7 +8,7 @@ import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
   styleUrl: './generic-button.component.css'
 })
 export class GenericButtonComponent implements OnInit{
-  @Input() label: string = ' ';
+  @Input() label: string = '';
   @Output() clicked: EventEmitter<any> = new EventEmitter();
   constructor(){}
   ngOnInit(): void {

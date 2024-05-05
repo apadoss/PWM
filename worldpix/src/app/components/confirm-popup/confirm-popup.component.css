@@ -42,8 +42,9 @@
     .flex-row {
         display: flex;
         flex-direction: row;
-        max-height: fit-content;
-        max-width: fit-content;
+        align-items: center;
+        height: 100%;
+        justify-content: center;
         gap: 5px;
     }
 

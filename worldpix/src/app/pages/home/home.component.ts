@@ -15,6 +15,8 @@ import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { AlbumCardComponent } from "../../components/album-card/album-card.component";
 import { Album } from '../../interfaces/album';
 import { CommonModule, NgIf } from '@angular/common';
+import { EventService } from '@app/services/general/event-service.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-home',
@@ -32,25 +34,22 @@ export class HomeComponent implements AfterViewInit {
 
   title = 'home';
   displayedAlbum: string = '';
+  private albumDeletedSubscription: Subscription = new Subscription;
   //albumManager = new AlbumManagerService;
 
 
-  constructor(private userManager: UserService, private router: Router, private route: ActivatedRoute, private albumManager: AlbumService) {
+  constructor(private userManager: UserService, private eventManager: EventService, private router: Router, private route: ActivatedRoute, private albumManager: AlbumService) {
     if (UserService.currentUser === "default") {
       //RESTORE FOR BETTER UX, DISABLED FOR DEV
       //window.alert("Error: not logged in");
       this.router.navigateByUrl("index");
     } else {
-      /*this.route.paramMap.subscribe(params => {
-        var buffer = params.get('albumId');
-        console.log("buffer", buffer)
-        if (!!buffer) {
-          this.displayedAlbum = buffer;
-        } else {
-          this.displayedAlbum = '';
+      this.albumDeletedSubscription = this.eventManager.albumDeleted$.subscribe((deleted) => {
+        // Handle the emitted albumDeleted event
+        if (deleted) {
+          this.removeAlbum(deleted);
         }
-        // Now you have access to the imageId parameter
-      });*/
+      });
 
       this.testAlbum();
     }

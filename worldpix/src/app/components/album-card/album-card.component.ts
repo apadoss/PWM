@@ -7,6 +7,7 @@ import { AlbumService } from '../../services/album.service';
 import { Generic2ButtonComponent } from "../buttons/generic2-button/generic2-button.component";
 import { IconRoundButtonComponent } from "../buttons/icon-round-button/icon-round-button.component";
 import { ConfirmPopupComponent } from "../confirm-popup/confirm-popup.component";
+import { EventService } from '@app/services/general/event-service.service';
 
 @Component({
     selector: 'app-album-card',
@@ -27,9 +28,11 @@ export class AlbumCardComponent {
   };*/
 
   @Output() albumDeleted: EventEmitter<any> = new EventEmitter();
+  deleting = false;
 
   album: Album = {
     name: '',
+    id: '',
     description: '',
     dateStart: '',
     dateEnd: '',
@@ -38,7 +41,7 @@ export class AlbumCardComponent {
     userId: ''
   };
 
-  constructor(private router: Router, private albumManager: AlbumService, private route: ActivatedRoute) {}
+  constructor(private router: Router, private albumManager: AlbumService, private eventManager: EventService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe(async params => {
@@ -56,8 +59,14 @@ export class AlbumCardComponent {
     this.router.navigateByUrl('home');
   }
 
-  deleteAlbum() {
-
+  resolveDelete(result: boolean) {
+    console.log("deleting")
+    this.deleting = false;
+    if (result && this.album.id) {
+      this.eventManager.albumDeleted(this.album.id);
+      this.return();
+      //this.router.navigate(['home', this.album.id, "deleting"])
+    }
   }
 
   onMouseMove(event: Event) {
