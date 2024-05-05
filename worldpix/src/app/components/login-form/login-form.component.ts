@@ -5,13 +5,14 @@ import { FormsModule } from '@angular/forms';
 import { Valid } from '../../interfaces/valid';
 import { CommonModule, NgIf } from '@angular/common';
 import { User } from '../../interfaces/user';
+import { GenericButtonComponent } from "../buttons/generic-button/generic-button.component";
 
 @Component({
-  selector: 'app-login-form',
-  standalone: true,
-  imports: [ Generic2ButtonComponent, FormsModule, NgIf, CommonModule ],
-  templateUrl: './login-form.component.html',
-  styleUrl: './login-form.component.css'
+    selector: 'app-login-form',
+    standalone: true,
+    templateUrl: './login-form.component.html',
+    styleUrl: './login-form.component.css',
+    imports: [Generic2ButtonComponent, FormsModule, NgIf, CommonModule, GenericButtonComponent]
 })
 
 export class LoginFormComponent {
