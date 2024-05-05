@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { ImageService } from '@app/services/image.service';
 
 @Component({
   selector: 'app-album-preview',
@@ -8,5 +9,20 @@ import { Component } from '@angular/core';
   styleUrl: './album-preview.component.css'
 })
 export class AlbumPreviewComponent {
+  constructor(private imageService: ImageService) {}
+  
+  @Input() albumId: string = '';
+  images: Image[] = [];
 
+  ngAfterViewInit() {
+    this.loadImages();
+  }
+
+  loadImages() {
+    this.imageService.getAlbumImages(this.albumId).then(
+      (images) => (this.images = images)
+    ).then(() => {
+      console.log(this.images)
+    });
+  }
 }
