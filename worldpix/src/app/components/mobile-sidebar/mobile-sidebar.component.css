@@ -1,6 +1,6 @@
 .sidebar.mobile {
-  grid-column: 1 / 4;
-  grid-row: 3;
+  /*grid-column: 1 / 4;
+  grid-row: 3;*/
   display: flex;
 
 }
