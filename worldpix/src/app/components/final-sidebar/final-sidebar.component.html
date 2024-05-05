@@ -1,0 +1,8 @@
+<app-sidebar class="sidebar" *ngIf="isLargeScreen">
+    <!-- Contenido del sidebar -->
+</app-sidebar>
+
+<!-- Mobile Sidebar para pantallas pequeñas -->
+<app-mobile-sidebar class="mobile-sidebar" *ngIf="!isLargeScreen">
+    <!-- Contenido del mobile-sidebar -->
+</app-mobile-sidebar>

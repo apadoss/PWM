@@ -2,22 +2,21 @@
     background-color: white;
     color: black;
     border: none;
-    border-radius: 50px;
-    padding: 15px 30px; /* Aumenta el espacio interno del botón */
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    padding: 15px 30px; 
     cursor: pointer;
     transition: background-color 0.3s ease;
-    width: 100%; /* Calcula el ancho del botón restando 40px para los márgenes izquierdo y derecho */
-    margin: 0px; /* Margen izquierdo y derecho de 20px */
-    font-size: 150%;
+    width: 100%; 
+    margin: 0px; 
+    font-size: 156%;
     font-family:'Times New Roman', Times, serif; 
   }
   
-  .sidebar-button:hover {
-    background-color: #f0f0f0; /* Gris claro al pasar el ratón */
+ .sidebar-button:hover {
+    background-color: #f0f0f0;
   }
   
-  .sidebar-button:active,
-  .sidebar-button:focus {
-    background-color: #e0e0e0; /* Gris un poco más oscuro mientras se hace clic */
-    outline: none; /* Evita el resaltado del botón al hacer clic */
+ .sidebar-button.active{
+    background-color: #e0e0e0;
   }

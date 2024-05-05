@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { GenericButtonComponent } from '../buttons/generic-button/generic-button.component';
+import { Generic2ButtonComponent } from '../buttons/generic2-button/generic2-button.component';
 import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { Valid } from '../../interfaces/valid';
@@ -9,7 +9,7 @@ import { User } from '../../interfaces/user';
 @Component({
   selector: 'app-login-form',
   standalone: true,
-  imports: [ GenericButtonComponent, FormsModule, NgIf, CommonModule ],
+  imports: [ Generic2ButtonComponent, FormsModule, NgIf, CommonModule ],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.css'
 })
