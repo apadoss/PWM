@@ -20,22 +20,17 @@ import { FinalSidebarComponent } from './components/final-sidebar/final-sidebar.
 import { BodyComponent } from './components/structure/body/body.component';
 import { HomeComponent } from './pages/home/home.component';
 import { IndexComponent } from './pages/index/index.component';
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule, TransparentButtonComponent, 
-    GenericButtonComponent, SidebarButtonComponent, 
-    SidebarComponent, LoginFormComponent, 
-    Generic2ButtonComponent, MobileSidebarComponent,
-    FinalSidebarComponent, CommonModule, NgIf, BodyComponent, HomeComponent, IndexComponent],
+  imports: [CommonModule, RouterOutlet, RouterLink],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
-  title = 'worldpix';
-  //currentUserId: string = '';
-  //currentPage = "index";
-  
-  //constructor (private userService: UserService, private albumService: AlbumService, private imageService: ImageService, private router: Router) {}
 
+export class AppComponent {
+  //title = 'worldpix';
+  
+  //constructor(private userService: UserService, private albumService: AlbumService, private imageService: ImageService, private router: Router) {}
 }

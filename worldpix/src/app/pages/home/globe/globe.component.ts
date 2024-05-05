@@ -6,6 +6,7 @@ import {
 //import { Album } from '../../../services/home/AlbumManager/album-manager.service';
 import { AlbumService } from '../../../services/album.service';
 import { Album } from '../../../interfaces/album';
+import { UserService } from '../../../services/user.service';
 /*import * as ut from "./utility.js";
 import * as sh from "./shaders.js";
 import * as dt from "./data.js";
@@ -43,7 +44,7 @@ interface Body {
 })
 
 export class GlobeComponent implements AfterViewInit {
-  @Input() userID: string = '';
+  //@Input() userID: string = '';
   @Output() clickAlbum = new EventEmitter();
   @Output() hoverAlbum = new EventEmitter();
 
@@ -127,7 +128,7 @@ renderedAlbums: { [id: string]: any } = {};
 
 //NOTE: this function is not duplicate-safe; it assumes that whatever was passed from database is already sanitized
 
-constructor(private albumManager: AlbumService) {
+constructor(private albumManager: AlbumService, private userManager: UserService) {
   this.mDragging = false;
   this.mDown = false;
 }
@@ -194,14 +195,14 @@ ngAfterViewInit(): void {
 }
 
 async renderAll() {
-  let buffer = await this.albumManager.getUserAlbums(this.userID);
+  let buffer = await this.albumManager.getUserAlbums(UserService.currentUser);
   for (let i in buffer) {
     this.renderAlbum(buffer[i]);
   }
 }
 
 async deRenderAll(manager: AlbumService) {
-  let buffer = await this.albumManager.getUserAlbums(this.userID);
+  let buffer = await this.albumManager.getUserAlbums(UserService.currentUser);
   for (let i in buffer) {
     this.deRenderAlbum(buffer[i]);
   }

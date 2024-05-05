@@ -23,7 +23,7 @@ import { Router } from '@angular/router';
 })
 
 export class HomeComponent implements AfterViewInit {
-  @Input() userID: string = '';
+  //@Input() userID: string = '';
   @ViewChild(GlobeComponent) globe: any;
 
   title = 'home';
@@ -41,10 +41,10 @@ export class HomeComponent implements AfterViewInit {
     //this.albumManager.generateAlbum(true, "Paris 24","01","01","18/04/2024","18/07/2024","Paris",[48.8566, 2.3522], "Description");
     //this.albumManager.generateAlbum(true, "Washington 24","01","02","18/04/2024","18/07/2024","Washington",[38.9072, -77.0369], "Description");
     //this.albumManager.generateAlbum(true, "Tokyo 24","01","03","18/04/2024","18/07/2024","Tokyo",[35.6764, 139.6500], "Description");
-    let na = this.albumManager.generateAlbum(undefined, this.userID)
+    let na = this.albumManager.generateAlbum(undefined, UserService.currentUser)
     this.albumManager.addAlbum(na)
-    var albums = this.albumManager.getUserAlbums(this.userID);
-    this.globe.renderAll(this.albumManager);
+    var albums = this.albumManager.getUserAlbums(UserService.currentUser);
+    this.globe.renderAll(albums);
   }
 
   clicked(e: Event) {
@@ -65,7 +65,7 @@ export class HomeComponent implements AfterViewInit {
   }
 
   newAlbum() {
-    this.addAlbum("Random", this.userID, "test", "test", "test", "Random", [randFloat(-90,90), randFloat(-90,90)], "description")
+    this.addAlbum("Random", UserService.currentUser, "test", "test", "test", "Random", [randFloat(-90,90), randFloat(-90,90)], "description")
   }
 
   addAlbum(name: string, userID: string, albumID: string, datestart: string, dateend: string, cityname: string, coordinates: number[], description: string) {

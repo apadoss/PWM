@@ -20,7 +20,9 @@ export class IndexComponent {
     login_register = true;
 
     constructor(private userService: UserService, private router: Router) {
-        
+        if (UserService.currentUser !== "default") {
+            this.router.navigateByUrl("home");
+        }
     }
 
     loggedIn(id: string) {
