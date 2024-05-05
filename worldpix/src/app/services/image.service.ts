@@ -7,7 +7,7 @@ import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, query, updat
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Image } from '../interfaces/image';
 import { Observable } from 'rxjs';
-import { uuid } from 'uuidv4';
+import { v4 as uuid } from 'uuid';
 import { Album } from '../interfaces/album';
 
 @Injectable({

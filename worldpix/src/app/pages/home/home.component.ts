@@ -8,6 +8,7 @@ import { GenericButtonComponent } from "../../components/buttons/generic-button/
 import { AlbumService } from '../../services/album.service';
 import { AlbumResponse } from '../../interfaces/albumresponse';
 import { ImageService } from '../../services/image.service';
+import { randFloat } from 'three/src/math/MathUtils';
 
 @Component({
     selector: 'app-home',
@@ -45,12 +46,17 @@ export class HomeComponent implements AfterViewInit {
     //this.addAlbum("Tokyo 24","01","03","18/04/2024","18/07/2024","Tokyo",[35.6764, 139.6500], "Description")
   }
 
-  hovered(e: string) {
+  async hovered(e: string) {
     if (e !== null) {
-      console.log("Currently previewing images of album: ", this.albumManager.getAlbum(e));
+      let thing = await this.albumManager.getAlbum(e);
+      console.log("Currently previewing images of album: ", thing);
     } else {
       console.log("No longer previewing");
     }
+  }
+
+  newAlbum() {
+    this.addAlbum("Random", this.userID, "test", "test", "test", "Random", [randFloat(-90,90), randFloat(-90,90)], "description")
   }
 
   addAlbum(name: string, userID: string, albumID: string, datestart: string, dateend: string, cityname: string, coordinates: number[], description: string) {
