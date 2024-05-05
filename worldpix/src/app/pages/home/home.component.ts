@@ -17,6 +17,7 @@ import { Album } from '../../interfaces/album';
 import { CommonModule, NgIf } from '@angular/common';
 import { EventService } from '@app/services/general/event-service.service';
 import { Subscription } from 'rxjs';
+import { AlbumPreviewComponent } from "../../components/album-preview/album-preview.component";
 
 @Component({
     selector: 'app-home',
@@ -25,7 +26,7 @@ import { Subscription } from 'rxjs';
     styleUrl: './home.component.css',
     providers: [AlbumService, ImageService],
     encapsulation: ViewEncapsulation.None,
-    imports: [NgIf, CommonModule, RouterOutlet, GlobeComponent, BodyComponent, SidebarComponent, HeaderComponent, GenericButtonComponent, GenericButtonComponent, FinalSidebarComponent, AlbumCardComponent]
+    imports: [NgIf, CommonModule, RouterOutlet, GlobeComponent, BodyComponent, SidebarComponent, HeaderComponent, GenericButtonComponent, GenericButtonComponent, FinalSidebarComponent, AlbumCardComponent, AlbumPreviewComponent]
 })
 
 export class HomeComponent implements AfterViewInit {
@@ -34,6 +35,7 @@ export class HomeComponent implements AfterViewInit {
 
   title = 'home';
   displayedAlbum: string = '';
+  hoveredAlbum: string = '';
   private albumDeletedSubscription: Subscription = new Subscription;
   //albumManager = new AlbumManagerService;
 
@@ -80,12 +82,18 @@ export class HomeComponent implements AfterViewInit {
   }
 
   async hovered(e: string) {
-    if (e !== null) {
+    this.hoveredAlbum = '';
+    if (!!e) {
       let thing = await this.albumManager.getAlbum(e);
-      console.log("Currently previewing images of album: ", thing);
-    } else {
-      console.log("No longer previewing");
-    }
+      this.hoveredAlbum = thing!['id'];
+    } /*else {
+      if (this.hoveredAlbum !== '') {
+        console.log("dispelling")
+        setTimeout(()=>{                           //<<<---using ()=> syntax
+          this.hoveredAlbum = '';
+        }, 500);
+      }
+    }*/
   }
 
   newAlbum() {

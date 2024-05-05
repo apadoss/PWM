@@ -579,7 +579,6 @@ private onPointerMove = (event: any, toggle: string = "desktop") => {
     this.raycaster.setFromCamera(this.pointer, this.earthCamera);
 
     const intersects = this.raycaster.intersectObjects(Object.values(this.renderedAlbums), false);
-
     if (intersects.length > 0 && toggle == "desktop") {
       if (this.intersecting != intersects[0].object) {
         this.intersecting = intersects[0].object;
@@ -589,7 +588,7 @@ private onPointerMove = (event: any, toggle: string = "desktop") => {
     } else if (typeof this.intersecting !== "undefined") {
       this.intersecting.scale.set(1.0, 1.0, 1.0);
       this.intersecting = undefined;
-      this.hoverAlbum.emit(null);
+      this.hoverAlbum.emit('');
     }
   }
 }

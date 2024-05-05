@@ -1,10 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { ImageService } from '@app/services/image.service';
+import { Image } from '../../interfaces/image';
+import { CommonModule, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-album-preview',
   standalone: true,
-  imports: [],
+  imports: [NgFor, CommonModule],
   templateUrl: './album-preview.component.html',
   styleUrl: './album-preview.component.css'
 })
@@ -22,7 +24,7 @@ export class AlbumPreviewComponent {
     this.imageService.getAlbumImages(this.albumId).then(
       (images) => (this.images = images)
     ).then(() => {
-      console.log(this.images)
+      this.images = this.images.slice(0,4);
     });
   }
 }
