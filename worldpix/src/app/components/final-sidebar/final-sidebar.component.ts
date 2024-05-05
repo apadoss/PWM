@@ -29,7 +29,6 @@ export class FinalSidebarComponent {
 
   checkScreenSize() {
     var dev = ResponsiveService.getDevice();
-    console.log(dev);
     this.isLargeScreen = (dev === "desktop")
   }
 

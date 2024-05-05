@@ -5,7 +5,7 @@ import { initializeApp } from 'firebase/app';
 import { enviroment } from '../app.config';
 import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, query, updateDoc, where } from 'firebase/firestore';
 import { Album } from '../interfaces/album';
-import { Observable } from 'rxjs';
+import { Observable, firstValueFrom, from, lastValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -47,13 +47,11 @@ export class AlbumService {
     return docData(albumRef, {idField: 'id'});
   }*/
 
-  async getAlbum(id: string) {
-    const albumRef = doc(this.albumDoc, `${id}`);
-    //const albumRef = doc(this.database, 'Album', id);
-    const returner = await docData(albumRef);
-    console.log(returner);
-    return returner;
-  }
+async getAlbum(id: string) {
+  const albumRef = doc(this.albumDoc, `${id}`);
+  const doc$ = docData(albumRef);
+  return await firstValueFrom(doc$);
+}
 
   async getUserAlbums(userId: string) {
     const q = query(this.albumDoc, where("userId", "==", userId));

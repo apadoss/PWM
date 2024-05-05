@@ -26,10 +26,8 @@ export class IndexComponent {
         }
     }
 
-    loggedIn(id: string) {
-        //UserService.currentUser = id;
-        //this.router.navigateByUrl("home");
-        let id2 = "ldNVGvptLjVprkL82CRC";
-        console.log(this.albumManager.getAlbum(id2));
+    async loggedIn(id: string) {
+        UserService.currentUser = id;
+        this.router.navigateByUrl("home");
       }
 }
