@@ -1,15 +1,66 @@
-<!--div class="popup-container">
+<div class="popup-container">
     <div class="overlay"></div>
     <div class="container flex-column">
+        <div style="position: absolute; top: 15px; right: 15px;">
+            <app-icon-round-button (buttonClick)="return()" [link]="'assets/close.png'"></app-icon-round-button>
+        </div>
         <span>
             <h2>
                 Create new album
             </h2>
         </span>
         <hr class="divider">
+        <div class="flex-column">
+            <span>
+                <h3>
+                    Album name
+                </h3>
+            </span>
+            <input type="text" placeholder="User name" [(ngModel)]="name.value" (focus)="name.valid = true" class="input-field">
+        </div>
+        <div class="flex-column">
+            <span>
+                <h3>
+                    City
+                </h3>
+            </span>
+            <input type="text" placeholder="User name" [(ngModel)]="city.value" (focus)="city.valid = true" class="input-field">
+        </div>
+        <div class="flex-column">
+            <span>
+                <h3>
+                    Description
+                </h3>
+            </span>
+            <textarea type="text" style="height: 60px;" placeholder="User name" [(ngModel)]="description.value" (focus)="description.valid = true" class="input-field"></textarea>
+        </div>
+        <hr class="divider">
         <div class="flex-row">
-            <app-generic2-button (buttonClick)="this.result.emit(true)" [label]="this.confirm"></app-generic2-button>
-            <app-generic2-button (buttonClick)="this.result.emit(false)" [label]="this.cancel"></app-generic2-button>
+            <div class="flex-column">
+                <div style="left: 0; margin: auto">
+                    <span>
+                        <h3>
+                            Start date
+                        </h3>
+                    </span>
+                    <input type="date" placeholder="User name" [(ngModel)]="dateStart.value" (focus)="dateStart.valid = true" class="input-field">
+                </div>
+            </div>
+            <div class="flex-column">
+                <div style="margin: auto">
+                    <span>
+                        <h3>
+                            End date
+                        </h3>
+                    </span>
+                    <input type="date" placeholder="User name" [(ngModel)]="dateEnd.value" (focus)="dateEnd.valid = true" class="input-field">
+    
+                </div>
+            </div>
+        </div>
+        <div class="flex-row">
+            <!--app-generic2-button (buttonClick)="this.result.emit(true)" [label]="this.confirm"></app-generic2-button-->
+            <!--app-generic2-button (buttonClick)="this.result.emit(false)" [label]="this.cancel"></app-generic2-button-->
         </div>
     </div>
-</div-->
+</div>

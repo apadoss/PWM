@@ -20,7 +20,7 @@ export class LoginFormComponent {
   @Output() loggedIn: EventEmitter<any> = new EventEmitter();
 
   username: Valid = {value: '', valid: true};
-  password: Valid = {value: '', valid: true};;
+  password: Valid = {value: '', valid: true};
 
   constructor(private userService: UserService) {
   }

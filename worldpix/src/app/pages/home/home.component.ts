@@ -18,6 +18,7 @@ import { CommonModule, NgIf } from '@angular/common';
 import { EventService } from '@app/services/general/event-service.service';
 import { Subscription } from 'rxjs';
 import { AlbumPreviewComponent } from "../../components/album-preview/album-preview.component";
+import { CreateAlbumComponent } from "../../components/create-album/create-album.component";
 
 @Component({
     selector: 'app-home',
@@ -26,7 +27,7 @@ import { AlbumPreviewComponent } from "../../components/album-preview/album-prev
     styleUrl: './home.component.css',
     providers: [AlbumService, ImageService],
     encapsulation: ViewEncapsulation.None,
-    imports: [NgIf, CommonModule, RouterOutlet, GlobeComponent, BodyComponent, SidebarComponent, HeaderComponent, GenericButtonComponent, GenericButtonComponent, FinalSidebarComponent, AlbumCardComponent, AlbumPreviewComponent]
+    imports: [NgIf, CommonModule, RouterOutlet, GlobeComponent, BodyComponent, SidebarComponent, HeaderComponent, GenericButtonComponent, GenericButtonComponent, FinalSidebarComponent, AlbumCardComponent, AlbumPreviewComponent, CreateAlbumComponent]
 })
 
 export class HomeComponent implements AfterViewInit {
@@ -36,6 +37,7 @@ export class HomeComponent implements AfterViewInit {
   title = 'home';
   displayedAlbum: string = '';
   hoveredAlbum: string = '';
+  creating: boolean = false;
   private albumDeletedSubscription: Subscription = new Subscription;
   //albumManager = new AlbumManagerService;
 
