@@ -1,3 +1,29 @@
+/*.sidebar {
+  width: 14.5vw; 
+  background-color: rgb(255, 255, 255);
+  padding: 0; 
+  height: 100vh; 
+  position: fixed; 
+  top: 0; 
+  left: 0;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: flex-start; 
+}
+
+::ng-deep .sidebar-button:hover {
+  background-color: #f0f0f0;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+}
+
+::ng-deep .sidebar-button:active,
+::ng-deep .sidebar-button:focus {
+  background-color: #e0e0e0;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+}*/
+
 .sidebar {
   width: 14.5vw; 
   background-color: rgb(255, 255, 255);
