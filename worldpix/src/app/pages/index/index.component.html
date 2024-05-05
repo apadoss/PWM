@@ -4,13 +4,13 @@
     <app-login-form
     *ngIf="login_register"
     (switchForm)="this.login_register = !this.login_register;"
-    (loggedIn)="this.loggedIn.emit($event)"
-    (dblclick)="this.loggedIn.emit('2UXakLHd7JUIjCxI4Aqr')"
+    (loggedIn)="this.loggedIn($event)"
+    (dblclick)="this.loggedIn('2UXakLHd7JUIjCxI4Aqr')"
     ></app-login-form>
     <app-register-form
     *ngIf="!login_register"
     (switchForm)="this.login_register = !this.login_register;"
-    (registered)="this.loggedIn.emit($event)"
+    (registered)="this.loggedIn($event)"
     ></app-register-form>
     <app-footer></app-footer>
 </app-body>

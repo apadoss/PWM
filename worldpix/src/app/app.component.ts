@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule, NgIf } from '@angular/common'; // Importa CommonModule
 
 import { UserService } from './services/user.service';
@@ -23,7 +23,7 @@ import { IndexComponent } from './pages/index/index.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, TransparentButtonComponent, 
+  imports: [RouterOutlet, RouterLink, CommonModule, TransparentButtonComponent, 
     GenericButtonComponent, SidebarButtonComponent, 
     SidebarComponent, LoginFormComponent, 
     Generic2ButtonComponent, MobileSidebarComponent,
@@ -33,14 +33,9 @@ import { IndexComponent } from './pages/index/index.component';
 })
 export class AppComponent {
   title = 'worldpix';
-  currentUserId: string = '';
-  currentPage = "index";
+  //currentUserId: string = '';
+  //currentPage = "index";
   
-  constructor (private userService: UserService, private albumService: AlbumService, private imageService: ImageService) {}
-
-  loggedIn(id: string) {
-    this.currentUserId = id;
-    this.currentPage = "home";
-  }
+  //constructor (private userService: UserService, private albumService: AlbumService, private imageService: ImageService, private router: Router) {}
 
 }

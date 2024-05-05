@@ -18,6 +18,7 @@ export class UserService {
   database: Firestore;
   userDoc: CollectionReference<DocumentData>
   salt = bcrypt.genSaltSync(10);
+  static currentUser: string = "default"; 
 
   constructor() { 
     this.app = initializeApp(enviroment);

@@ -10,6 +10,8 @@ import { AlbumResponse } from '../../interfaces/albumresponse';
 import { ImageService } from '../../services/image.service';
 import { randFloat } from 'three/src/math/MathUtils';
 import { FinalSidebarComponent } from "../../components/final-sidebar/final-sidebar.component";
+import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-home',
@@ -28,7 +30,11 @@ export class HomeComponent implements AfterViewInit {
   //albumManager = new AlbumManagerService;
 
 
-  constructor(private albumManager: AlbumService) {
+  constructor(private userManager: UserService, private router: Router, private albumManager: AlbumService) {
+    if (UserService.currentUser === "default") {
+      window.alert("Error: not logged in");
+      this.router.navigateByUrl("index");
+    }
   }
 
   ngAfterViewInit(): void {

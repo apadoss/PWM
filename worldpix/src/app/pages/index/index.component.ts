@@ -5,6 +5,8 @@ import { FooterComponent } from "../../components/structure/footer/footer.compon
 import { LoginFormComponent } from "../../components/login-form/login-form.component";
 import { RegisterFormComponent } from "../../components/register-form/register-form.component";
 import { CommonModule, NgIf } from '@angular/common';
+import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-index',
@@ -14,6 +16,17 @@ import { CommonModule, NgIf } from '@angular/common';
     imports: [BodyComponent, HeaderComponent, FooterComponent, LoginFormComponent, RegisterFormComponent,NgIf, CommonModule]
 })
 export class IndexComponent {
-    @Output() loggedIn: EventEmitter<any> = new EventEmitter();
+    //@Output() loggedIn: EventEmitter<any> = new EventEmitter();
     login_register = true;
+
+    constructor(private userService: UserService, private router: Router) {
+        
+    }
+
+    loggedIn(id: string) {
+        UserService.currentUser = id;
+        this.router.navigateByUrl("home");
+        //this.currentUserId = id;
+        //this.currentPage = "home";
+      }
 }
