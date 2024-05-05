@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { BodyComponent } from "../structure/body/body.component";
 import { Album } from '../../interfaces/album';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,13 +6,14 @@ import { CommonModule, NgIf } from '@angular/common';
 import { AlbumService } from '../../services/album.service';
 import { Generic2ButtonComponent } from "../buttons/generic2-button/generic2-button.component";
 import { IconRoundButtonComponent } from "../buttons/icon-round-button/icon-round-button.component";
+import { ConfirmPopupComponent } from "../confirm-popup/confirm-popup.component";
 
 @Component({
     selector: 'app-album-card',
     standalone: true,
     templateUrl: './album-card.component.html',
     styleUrl: './album-card.component.css',
-    imports: [BodyComponent, NgIf, CommonModule, Generic2ButtonComponent, IconRoundButtonComponent]
+    imports: [BodyComponent, NgIf, CommonModule, Generic2ButtonComponent, IconRoundButtonComponent, ConfirmPopupComponent]
 })
 export class AlbumCardComponent {
   /*@Input() album: Album = {
@@ -24,6 +25,8 @@ export class AlbumCardComponent {
     coordinates: [],
     userId: ''
   };*/
+
+  @Output() albumDeleted: EventEmitter<any> = new EventEmitter();
 
   album: Album = {
     name: '',
@@ -51,6 +54,10 @@ export class AlbumCardComponent {
 
   return() {
     this.router.navigateByUrl('home');
+  }
+
+  deleteAlbum() {
+
   }
 
   onMouseMove(event: Event) {
