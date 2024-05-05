@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ImageService } from '../services/image.service';
-import { Image } from '../interfaces/image';
+import { ImageService } from '../../services/image.service';
+import { Image } from '../../interfaces/image';
 import { NgFor } from '@angular/common';
 
 @Component({
