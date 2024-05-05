@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common'; // Importa CommonModule
+import { CommonModule, NgIf } from '@angular/common'; // Importa CommonModule
 
 import { UserService } from './services/user.service';
 import { AlbumService } from './services/album.service';
@@ -17,6 +17,9 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { Generic2ButtonComponent } from './components/buttons/generic2-button/generic2-button.component';
 import { MobileSidebarComponent } from './components/mobile-sidebar/mobile-sidebar.component';
 import { FinalSidebarComponent } from './components/final-sidebar/final-sidebar.component';
+import { BodyComponent } from './components/structure/body/body.component';
+import { HomeComponent } from './pages/home/home.component';
+import { IndexComponent } from './pages/index/index.component';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -24,7 +27,7 @@ import { FinalSidebarComponent } from './components/final-sidebar/final-sidebar.
     GenericButtonComponent, SidebarButtonComponent, 
     SidebarComponent, LoginFormComponent, 
     Generic2ButtonComponent, MobileSidebarComponent,
-    FinalSidebarComponent],
+    FinalSidebarComponent, CommonModule, NgIf, BodyComponent, HomeComponent, IndexComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
