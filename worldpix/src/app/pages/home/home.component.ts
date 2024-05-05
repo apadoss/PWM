@@ -48,7 +48,9 @@ export class HomeComponent implements AfterViewInit {
 
   async hovered(e: string) {
     if (e !== null) {
+      console.log("awaiting")
       let thing = await this.albumManager.getAlbum(e);
+      console.log("await done")
       console.log("Currently previewing images of album: ", thing);
     } else {
       console.log("No longer previewing");

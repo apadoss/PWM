@@ -40,33 +40,9 @@ export class AlbumService {
     return addDoc(this.albumDoc, album);
   }
 
-  /*async getAlbum(id: string) {
+  async getAlbum(id: string) {
     const albumRef = doc(this.albumDoc, `${id}`);
-    return docData(albumRef, {idField: 'id'})
-  }*/
-
-  /*async getAlbum(id: string): Promise<Album> {
-    try {
-      const albumRef = doc(this.albumDoc, id);
-      const albumData = await docData(albumRef).toPromise();
-      // Manually set the id field of the returned Album object
-      const album: Album = { ...albumData, id };
-      return album;
-    } catch (error) {
-      console.error('Error fetching album:', error);
-      throw error;
-    }
-  }*/
-
-  async getAlbum(id: string): Promise<Album> {
-    try {
-      const albumRef = doc(this.albumDoc, id);
-      const albumData = await docData(albumRef).toPromise();
-      return albumData as Album;
-    } catch (error) {
-      console.error('Error fetching album:', error);
-      throw error;
-    }
+    return docData(albumRef, {idField: 'id'});
   }
 
   async getUserAlbums(userId: string) {

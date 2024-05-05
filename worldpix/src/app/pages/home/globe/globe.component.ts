@@ -583,7 +583,6 @@ private onPointerMove = (event: any, toggle: string = "desktop") => {
       if (this.intersecting != intersects[0].object) {
         this.intersecting = intersects[0].object;
         this.intersecting.scale.set(1.3, 1.3, 1.);
-        console.log("intersect", this.intersecting)
         this.hoverAlbum.emit(this.intersecting.albumID);
       }
     } else if (typeof this.intersecting !== "undefined") {
