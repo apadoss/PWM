@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-mobile-sidebar',
@@ -8,4 +8,6 @@ import { Component } from '@angular/core';
   styleUrl: './mobile-sidebar.component.css'
 })
 export class MobileSidebarComponent {
+  @Input() activeTab: string = "home";
+  @Output() clickTab: EventEmitter<any> = new EventEmitter();
 }

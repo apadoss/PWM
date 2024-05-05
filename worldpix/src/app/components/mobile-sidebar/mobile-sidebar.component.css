@@ -16,8 +16,16 @@
   background-color: #f0f0f0;
 }
 
+.Home-section.active{
+  background-color: #e0e0e0;
+}
+
 .Profile-section:hover{
   background-color: #f0f0f0;
+}
+
+.Profile-section.active{
+  background-color: #e0e0e0;
 }
 
 .Profile-section {
@@ -113,8 +121,7 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    position: fixed;
-    margin-top: 90vh;
+    /*position: fixed*/;
   }
 
   .home,

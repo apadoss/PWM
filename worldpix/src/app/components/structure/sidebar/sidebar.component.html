@@ -1,4 +1,4 @@
 <div class="sidebar">
-    <app-sidebar-button class="sidebar-button" [label]="'Home'" [active]="activeButton === 'home'" (buttonClick)="setActiveButton('home')"></app-sidebar-button>
-    <app-sidebar-button class="sidebar-button" [label]="'Profile'" [active]="activeButton === 'profile'" (buttonClick)="setActiveButton('profile')"></app-sidebar-button>
+    <app-sidebar-button class="sidebar-button" [label]="'Home'" [active]="activeTab === 'home'" (buttonClick)="this.clickTab.emit('home')"></app-sidebar-button>
+    <app-sidebar-button class="sidebar-button" [label]="'Profile'" [active]="activeTab === 'profile'" (buttonClick)="this.clickTab.emit('profile')"></app-sidebar-button>
 </div>
