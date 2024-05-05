@@ -1,0 +1,16 @@
+.x-button {
+    background-color: #eae9e9;
+    color: #000; 
+    border: none;
+    border-radius: 15px; 
+    padding: 9px 24px; 
+    cursor: pointer;
+    transition: background-color 0.3s ease; 
+    margin: 5px; 
+    font-family: Arial, sans-serif;
+  }
+  
+  .x-button:hover {
+    background-color: #c0c0c0; 
+  }
+  
