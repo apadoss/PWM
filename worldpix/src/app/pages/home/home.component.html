@@ -10,6 +10,7 @@
         <app-header></app-header>
         <app-sidebar></app-sidebar>
         <app-globe
+            [userID]="this.userID"
             (clickAlbum)="clicked($event)"
             (hoverAlbum)="hovered($event)"
         ></app-globe>

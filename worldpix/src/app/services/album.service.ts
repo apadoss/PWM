@@ -22,6 +22,20 @@ export class AlbumService {
     this.albumDoc = collection(this.database, "Album");
   }
 
+  generateAlbum(name='No user name', userID='No user ID', albumID='No album ID', datestart='No start date', dateend='No end date', cityname='No city', coordinates=[0.0,0.0], description='No description') {
+    let returner: Album = {
+        "name": name,
+        "userId": userID,
+        "id": albumID,
+        "dateStart": datestart,
+        "dateEnd": dateend,
+        "cityName": cityname,
+        "coordinates": coordinates,
+        "description": description,
+    };
+    return returner;
+}
+
   addAlbum(album: Album) {
     return addDoc(this.albumDoc, album);
   }
