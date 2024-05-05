@@ -26,7 +26,6 @@ export class ImageService {
 
   async generateImage(image: File, description='No description') {
     let url = await this.uploadImage(image);
-    console.log("ureles", url, await url);
     let returner: Image = {
         "albumId": '',
         "id": '',
@@ -70,7 +69,7 @@ export class ImageService {
         id: doc.id,
         name: doc.data()["name"],
         description: doc.data()["description"],
-        imageURL: doc.data()["image"],
+        imageURL: doc.data()["imageURL"],
         date: doc.data()["date"],
         albumId: doc.data()["albumId"]
       }
