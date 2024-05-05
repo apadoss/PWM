@@ -5,13 +5,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule, NgIf } from '@angular/common';
 import { AlbumService } from '../../services/album.service';
 import { Generic2ButtonComponent } from "../buttons/generic2-button/generic2-button.component";
+import { IconRoundButtonComponent } from "../buttons/icon-round-button/icon-round-button.component";
 
 @Component({
     selector: 'app-album-card',
     standalone: true,
     templateUrl: './album-card.component.html',
     styleUrl: './album-card.component.css',
-    imports: [BodyComponent, NgIf, CommonModule, Generic2ButtonComponent]
+    imports: [BodyComponent, NgIf, CommonModule, Generic2ButtonComponent, IconRoundButtonComponent]
 })
 export class AlbumCardComponent {
   /*@Input() album: Album = {

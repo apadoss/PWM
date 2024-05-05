@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { XButtonComponent } from './x-button.component';
+import { IconRoundButtonComponent } from './icon-round-button.component';
 
-describe('XButtonComponent', () => {
-  let component: XButtonComponent;
-  let fixture: ComponentFixture<XButtonComponent>;
+describe('IconRoundButtonComponent', () => {
+  let component: IconRoundButtonComponent;
+  let fixture: ComponentFixture<IconRoundButtonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [XButtonComponent]
+      imports: [IconRoundButtonComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(XButtonComponent);
+    fixture = TestBed.createComponent(IconRoundButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

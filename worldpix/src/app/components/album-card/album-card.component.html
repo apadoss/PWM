@@ -1,17 +1,22 @@
 <div class="album-card-container" style="position: fixed; box-sizing: border-box; padding: 5%; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 4;" (pointermove)="onMouseMove($event)">
-    <div style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; background-color: gray; opacity: 0.4; z-index: 5"></div>
+    <div class="overlay"></div>
     <div style="position: relative; box-sizing: border-box; padding: 20px; width: 100%; height: 100%; border-radius: 20px; background-color: white; z-index: 6">
-        <div style="display: flex; flex-direction: column; gap: 10px; width: 100%; height: 100%;">
-            <span class="albumName">
-                <h1>
-                    {{this.album.name}}
-                </h1>
-            </span>
-            <span class="flex-column">
-                <h3>
-                    {{this.album.dateStart}} - {{this.album.dateEnd}}
-                </h3>
-            </span>
+        <div style="position: absolute; top: 15px; right: 15px;">
+            <app-icon-round-button (buttonClick)="return()" [link]="'@assets/cross.png'"></app-icon-round-button>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 20px; width: 100%; height: 100%;">
+            <div class="flex-column">
+                <span class="albumName">
+                    <h1>
+                        {{this.album.name}}
+                    </h1>
+                </span>
+                <span class="flex-column">
+                    <h3>
+                        {{this.album.dateStart}} - {{this.album.dateEnd}}
+                    </h3>
+                </span>
+            </div>
             <hr class="divider">
             <span class="flex-row" style="height: 100%; gap: 20px; max-height: fit-content; min-width: 100%;">
                 <div style="flex: 6; min-height: 100%;">
@@ -43,10 +48,6 @@
                         </p>
                     </span>
                 </div>
-            </span>
-            <span class="flex-column" style="margin-top:auto; gap: 10px;">
-                <hr class="divider">
-                    <app-generic2-button (buttonClick)="return()" [label]="'x'"></app-generic2-button>
             </span>
         </div>
     </div>
