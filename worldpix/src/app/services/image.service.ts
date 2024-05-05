@@ -25,13 +25,15 @@ export class ImageService {
   }
 
   async generateImage(image: File, description='No description') {
+    let url = await this.uploadImage(image);
+    console.log("ureles", url, await url);
     let returner: Image = {
         "albumId": '',
         "id": '',
         "name": image.name,
         "date": this.extractImageDate(image).toDateString(),
         "description": description,
-        "imageURL": await this.uploadImage(image),
+        "imageURL": await url,
     };
     return returner;
 }
@@ -104,18 +106,19 @@ export class ImageService {
     var imageURL: string = '';
 
     if (file) { 
-      const storageRef = ref(storage, `images/${file.name}`)
-      //const storageRef = ref(storage)
+      const storageRef = ref(storage, `images/${file.name}`);
 
-      await uploadBytes(storageRef, file)
-      .then(async (snapshot) => {
-        await getDownloadURL(snapshot.ref).then((url) => {
-          console.log(url);
+      try {
+          const snapshot = await uploadBytes(storageRef, file);
+          const url = await getDownloadURL(snapshot.ref);
+          console.log("url", url);
           imageURL = url;
-        })
-      });
+      } catch (error) {
+          console.error("Error uploading image:", error);
+      }
     }
 
+    console.log("imageURL", imageURL);
     return imageURL;
   }
 }

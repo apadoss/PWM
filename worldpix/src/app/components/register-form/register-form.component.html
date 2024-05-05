@@ -71,5 +71,5 @@
             class="input-field-password">
     </div>
     <app-generic-button (click)="$event.stopPropagation()" (clicked)="register()" [label]="'Log in'"></app-generic-button>
-    <p>Already have an account? <a href="#" (click)="this.switchForms()">Sign up</a></p>
+    <p>Already have an account? <a (click)="this.switchForms()">Sign up</a></p>
   </div>

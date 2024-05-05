@@ -24,5 +24,5 @@
       </div-->
     </div>
     <app-generic-button (click)="$event.stopPropagation()" (clicked)="this.tryLogin()" [label]="'Log in'"></app-generic-button>
-    <p>Don't have an account? <a href="#" (click)="this.switchForms()">Sign up</a></p>
+    <p>Don't have an account? <a (click)="this.switchForms()">Sign up</a></p>
   </div>

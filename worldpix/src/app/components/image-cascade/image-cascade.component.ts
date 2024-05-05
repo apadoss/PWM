@@ -23,6 +23,8 @@ export class ImageCascadeComponent {
   loadImages() {
     this.imageService.getAlbumImages(this.albumId).then(
       (images) => (this.images = images)
-    );
+    ).then(() => {
+      console.log(this.images)
+    });
   }
 }
