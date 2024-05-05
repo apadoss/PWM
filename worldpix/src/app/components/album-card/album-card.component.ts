@@ -9,13 +9,15 @@ import { IconRoundButtonComponent } from "../buttons/icon-round-button/icon-roun
 import { ConfirmPopupComponent } from "../confirm-popup/confirm-popup.component";
 import { EventService } from '@app/services/general/event-service.service';
 import { ImageCascadeComponent } from "../image-cascade/image-cascade.component";
+import { ImageUploadComponent } from "../image-upload/image-upload.component";
+import { ImageService } from '@app/services/image.service';
 
 @Component({
     selector: 'app-album-card',
     standalone: true,
     templateUrl: './album-card.component.html',
     styleUrl: './album-card.component.css',
-    imports: [BodyComponent, NgIf, CommonModule, Generic2ButtonComponent, IconRoundButtonComponent, ConfirmPopupComponent, ImageCascadeComponent]
+    imports: [BodyComponent, NgIf, CommonModule, Generic2ButtonComponent, IconRoundButtonComponent, ConfirmPopupComponent, ImageCascadeComponent, ImageUploadComponent]
 })
 export class AlbumCardComponent {
   /*@Input() album: Album = {
@@ -43,7 +45,7 @@ export class AlbumCardComponent {
     userId: ''
   };
 
-  constructor(private router: Router, private albumManager: AlbumService, private eventManager: EventService, private route: ActivatedRoute) {}
+  constructor(private router: Router, private albumManager: AlbumService, private imageManager: ImageService, private eventManager: EventService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe(async params => {
@@ -69,6 +71,14 @@ export class AlbumCardComponent {
       this.return();
       //this.router.navigate(['home', this.album.id, "deleting"])
     }
+  }
+
+  async resolveUpload(images: File[]) {
+    for (let i in images) {
+      let buffer = await this.imageManager.generateImage(images[i], this.album.id)
+      this.imageManager.addImage(this.album, buffer);
+    }
+    this.uploading = false;
   }
 
   onMouseMove(event: Event) {

@@ -26,8 +26,10 @@
         margin: auto;
         box-sizing: border-box;
         padding: 20px;
-        width: 30%;
-        height: 20%;
+        height: 30%;
+        width: 40%;
+        max-width: fit-content;
+        max-height: fit-content;
         border-radius: 20px;
         background-color: rgb(223, 223, 223);
         z-index: 9;

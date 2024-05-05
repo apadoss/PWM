@@ -12,6 +12,7 @@ export const routes: Routes = [
     { path: 'about-us', component: AboutUsComponent },
     { path: 'under-construction', component:UnderConstructionComponent },
     { path: 'index', title:'test', component: IndexComponent },
+    { path: '', redirectTo: 'index', pathMatch: 'full' },
     { path: '*', redirectTo: 'index' },
 
 ];

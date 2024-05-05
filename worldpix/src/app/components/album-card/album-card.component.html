@@ -4,6 +4,10 @@
     *ngIf="deleting"
     (result)="resolveDelete($event)"
     ></app-confirm-popup>
+    <app-image-upload
+    *ngIf="uploading"
+    (filesUploaded)="resolveUpload($event)"
+    ></app-image-upload>
     <div class="container">
         <div style="position: absolute; top: 15px; right: 15px;">
             <app-icon-round-button (buttonClick)="return()" [link]="'assets/close.png'"></app-icon-round-button>
@@ -27,7 +31,12 @@
             <hr class="divider">
             <span class="flex-row" style="height: 100%; gap: 20px; max-height: fit-content; min-width: 100%;">
                 <div style="flex: 6; min-height: 100%;">
-                    <app-image-cascade></app-image-cascade>
+                    <div style="position: absolute;">
+                        <div style="position: absolute; top: 5px; left: 5px;">
+                            <app-icon-round-button (buttonClick)="uploading = true" [link]="'assets/plus.png'"></app-icon-round-button>
+                        </div>
+                    </div>
+                    <app-image-cascade [albumId]="this.album.id!"></app-image-cascade>
                 </div>
                 <div class="flex-column" style="flex: 4; min-height: 100%; gap: 20px;">
                     <span>

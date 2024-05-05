@@ -1,12 +1,26 @@
 <div class="image-popup-container">
     <div class="overlay"></div>
-    <input type="file" accept="image/png, image/jpeg" multiple (change)="onFileSelected($event)">
-    <button (click)="uploadFiles()">Upload</button>
-    <div class="file-list" *ngIf="uploadedFiles.length > 0">
-        <p>Uploaded files:</p>
-        <ul>
-            <li *ngFor="let file of uploadedFiles">{{ file.name }}</li>
-        </ul>
+    <div class="container flex-column">
+        <div style="position: absolute; top: 15px; right: 15px;">
+            <app-icon-round-button (buttonClick)="return()" [link]="'assets/close.png'"></app-icon-round-button>
+        </div>
+        <span>
+            <h2>
+                Select images to upload
+            </h2>
+            <p>
+                Accepted formats are .jpg and .png
+            </p>
+        </span>
+        <hr class="divider">
+        <div class="flex-row">
+            <input type="file" accept="image/png, image/jpeg" multiple (change)="onFileSelected($event)">
+            <button (click)="uploadFiles()">Upload</button>
+            <div class="file-list" *ngIf="uploadedFiles.length > 0">
+                <p>Uploaded files:</p>
+                <p>{{ getUploadedFileNames() }}</p>
+            </div>
+        </div>
     </div>
 </div>
     <!--div class="container flex-column">

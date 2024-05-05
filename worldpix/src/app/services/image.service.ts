@@ -24,23 +24,29 @@ export class ImageService {
     this.imageDoc = collection(this.database, "Image");
   }
 
-  generateImage(ID="No image ID", name="No filename", date='No date', description='No description', image="/image/link", albumID = '') {
+  async generateImage(image: File, description='No description') {
     let returner: Image = {
-        "albumId": albumID,
-        "id": ID,
-        "name": name,
-        "date": date,
+        "albumId": '',
+        "id": '',
+        "name": image.name,
+        "date": this.extractImageDate(image).toDateString(),
         "description": description,
-        "imageURL": image,
+        "imageURL": await this.uploadImage(image),
     };
     return returner;
 }
 
-  addImage(album: Album, image: Image, imageID = album.id + '-' + uuid()) {
+  async addImage(album: Album, image: Image) {
     let newImage = image;
-    newImage.id = imageID;
     newImage.albumId = album.id!;
-    return addDoc(this.imageDoc, newImage);
+    let generatedID = (await addDoc(this.imageDoc, newImage)).id;
+    this.setImageId(generatedID);
+    return generatedID;
+  }
+
+  setImageId(inputid: string) {
+    const imageRef = doc(this.imageDoc, `${inputid}`);
+    return updateDoc(imageRef, { id: inputid });
   }
 
   extractImageDate(file: File) {
@@ -91,15 +97,15 @@ export class ImageService {
     return updateDoc(albumRef, { description: newDescription });
   }
 
-  async uploadImage() {
+  async uploadImage(file: File) {
     const storage = getStorage(this.app);
-    const fileInput = document.getElementById("image-upload") as HTMLInputElement;
-    var file: File;
+    //const fileInput = document.getElementById("image-upload") as HTMLInputElement;
+    //var file: File;
     var imageURL: string = '';
 
-    if (fileInput.files) { 
-      file = fileInput.files[0];
+    if (file) { 
       const storageRef = ref(storage, `images/${file.name}`)
+      //const storageRef = ref(storage)
 
       await uploadBytes(storageRef, file)
       .then(async (snapshot) => {

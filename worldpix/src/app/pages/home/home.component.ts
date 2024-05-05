@@ -68,7 +68,6 @@ export class HomeComponent implements AfterViewInit {
   }
 
   clicked(e: Event) {
-    console.log("home/" + e)
     this.router.navigate(['/home', e]);
     /*
         this.route.paramMap.subscribe(params => {
@@ -76,7 +75,6 @@ export class HomeComponent implements AfterViewInit {
       // Now you have access to the imageId parameter
     });
     */
-    console.log(e)
     //this.removeAlbum("02");
     //this.addAlbum("Tokyo 24","01","03","18/04/2024","18/07/2024","Tokyo",[35.6764, 139.6500], "Description")
   }
