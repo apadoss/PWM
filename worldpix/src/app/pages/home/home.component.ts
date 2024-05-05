@@ -69,9 +69,9 @@ export class HomeComponent implements AfterViewInit {
 
   async addAlbum(name: string, userID: string, albumID: string, datestart: string, dateend: string, cityname: string, coordinates: number[], description: string) {
     let newAlbum = this.albumManager.generateAlbum(name, userID, albumID, datestart, dateend, cityname, coordinates, description);
-    let newAlbum2 = await this.albumManager.getAlbum(await this.albumManager.addAlbum(newAlbum))
-    console.log(newAlbum2);
-    this.globe.renderAlbum(newAlbum2);
+    let newID = await this.albumManager.addAlbum(newAlbum);
+    let newAlbum2 = await this.albumManager.getAlbum(newID);
+    this.globe.renderAlbum(await newAlbum2);
   }
 
   removeAlbum(albumID: string) {

@@ -7,6 +7,7 @@ import { RegisterFormComponent } from "../../components/register-form/register-f
 import { CommonModule, NgIf } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import { AlbumService } from '../../services/album.service';
 
 @Component({
     selector: 'app-index',
@@ -19,16 +20,16 @@ export class IndexComponent {
     //@Output() loggedIn: EventEmitter<any> = new EventEmitter();
     login_register = true;
 
-    constructor(private userService: UserService, private router: Router) {
+    constructor(private userService: UserService, private router: Router, private albumManager: AlbumService) {
         if (UserService.currentUser !== "default") {
             this.router.navigateByUrl("home");
         }
     }
 
     loggedIn(id: string) {
-        UserService.currentUser = id;
-        this.router.navigateByUrl("home");
-        //this.currentUserId = id;
-        //this.currentPage = "home";
+        //UserService.currentUser = id;
+        //this.router.navigateByUrl("home");
+        let id2 = "ldNVGvptLjVprkL82CRC";
+        console.log(this.albumManager.getAlbum(id2));
       }
 }

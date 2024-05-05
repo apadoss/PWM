@@ -48,9 +48,11 @@ export class AlbumService {
   }*/
 
   async getAlbum(id: string) {
-    //const albumRef = doc(this.albumDoc, `${id}`);
-    const albumRef = doc(this.database, 'Album', id);
-    return await docData(albumRef);
+    const albumRef = doc(this.albumDoc, `${id}`);
+    //const albumRef = doc(this.database, 'Album', id);
+    const returner = await docData(albumRef);
+    console.log(returner);
+    return returner;
   }
 
   async getUserAlbums(userId: string) {
