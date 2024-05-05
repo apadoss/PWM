@@ -37,7 +37,7 @@ export class HomeComponent implements AfterViewInit {
     }
   }
 
-  ngAfterViewInit(): void {
+  async ngAfterViewInit(): Promise<void> {
     //this.albumManager.generateAlbum(true, "Paris 24","01","01","18/04/2024","18/07/2024","Paris",[48.8566, 2.3522], "Description");
     //this.albumManager.generateAlbum(true, "Washington 24","01","02","18/04/2024","18/07/2024","Washington",[38.9072, -77.0369], "Description");
     //this.albumManager.generateAlbum(true, "Tokyo 24","01","03","18/04/2024","18/07/2024","Tokyo",[35.6764, 139.6500], "Description");
@@ -55,7 +55,6 @@ export class HomeComponent implements AfterViewInit {
 
   async hovered(e: string) {
     if (e !== null) {
-      console.log("awaiting")
       let thing = await this.albumManager.getAlbum(e);
       console.log("await done")
       console.log("Currently previewing images of album: ", thing);
