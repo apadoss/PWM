@@ -36,13 +36,21 @@ export class AlbumService {
     return returner;
 }
 
-  addAlbum(album: Album) {
-    return addDoc(this.albumDoc, album);
+  async addAlbum(album: Album) {
+    var buffer = await addDoc(this.albumDoc, album);
+    this.setAlbumId(buffer.id);
+    return buffer.id;
   }
 
-  async getAlbum(id: string) {
+  /*async getAlbum(id: string) {
     const albumRef = doc(this.albumDoc, `${id}`);
     return docData(albumRef, {idField: 'id'});
+  }*/
+
+  async getAlbum(id: string) {
+    //const albumRef = doc(this.albumDoc, `${id}`);
+    const albumRef = doc(this.database, 'Album', id);
+    return await docData(albumRef);
   }
 
   async getUserAlbums(userId: string) {
@@ -69,6 +77,11 @@ export class AlbumService {
   deleteAlbum(id: string) {
     const docRef = doc(this.database, 'Album', id);
     return deleteDoc(docRef);
+  }
+
+  setAlbumId(inputid: string) {
+    const albumRef = doc(this.albumDoc, `${inputid}`);
+    return updateDoc(albumRef, { id: inputid });
   }
 
   modifyAlbumName(id: string, newName: string) {

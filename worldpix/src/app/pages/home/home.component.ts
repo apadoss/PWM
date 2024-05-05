@@ -56,7 +56,7 @@ export class HomeComponent implements AfterViewInit {
   async hovered(e: string) {
     if (e !== null) {
       let thing = await this.albumManager.getAlbum(e);
-      console.log("await done")
+      console.log("await done", await this.albumManager.getUserAlbums(UserService.currentUser));
       console.log("Currently previewing images of album: ", thing);
     } else {
       console.log("No longer previewing");
@@ -67,10 +67,11 @@ export class HomeComponent implements AfterViewInit {
     this.addAlbum("Random", UserService.currentUser, "test", "test", "test", "Random", [randFloat(-90,90), randFloat(-90,90)], "description")
   }
 
-  addAlbum(name: string, userID: string, albumID: string, datestart: string, dateend: string, cityname: string, coordinates: number[], description: string) {
+  async addAlbum(name: string, userID: string, albumID: string, datestart: string, dateend: string, cityname: string, coordinates: number[], description: string) {
     let newAlbum = this.albumManager.generateAlbum(name, userID, albumID, datestart, dateend, cityname, coordinates, description);
-    this.albumManager.addAlbum(newAlbum);
-    this.globe.renderAlbum(newAlbum)
+    let newAlbum2 = await this.albumManager.getAlbum(await this.albumManager.addAlbum(newAlbum))
+    console.log(newAlbum2);
+    this.globe.renderAlbum(newAlbum2);
   }
 
   removeAlbum(albumID: string) {
