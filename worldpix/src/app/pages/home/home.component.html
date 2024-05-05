@@ -16,6 +16,9 @@
         <div style="position: absolute; top: 0; right: 0; margin: 8px;">
             <app-generic-button (click)="$event.stopPropagation()" (clicked)="this.newAlbum()" label="Add new album"></app-generic-button>
         </div>
+        <div>
+            <router-outlet></router-outlet>
+        </div>
     </app-body>
 
 </html>

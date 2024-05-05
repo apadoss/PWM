@@ -1,0 +1,23 @@
+.album-card-container {
+    .divider {
+        width: 90%;
+      }
+
+      .albumName {
+        display: initial;
+      }
+    
+    .flex-column {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .flex-row {
+        display: flex;
+        flex-direction: row;
+        max-height: fit-content;
+        max-width: fit-content;
+        gap: 5px;
+    }
+}

@@ -26,6 +26,10 @@ export class IndexComponent {
         }
     }
 
+    ngOnInit() {
+        this.loggedIn('2UXakLHd7JUIjCxI4Aqr');
+    }
+
     async loggedIn(id: string) {
         UserService.currentUser = id;
         this.router.navigateByUrl("home");

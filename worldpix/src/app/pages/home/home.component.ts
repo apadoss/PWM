@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit, Input } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, Input, ViewEncapsulation } from '@angular/core';
 import { GlobeComponent } from "./globe/globe.component";
 //import { AlbumLoaderComponent } from "./album-loader/album-loader.component";
 import { BodyComponent } from "../../components/structure/body/body.component";
@@ -11,7 +11,10 @@ import { ImageService } from '../../services/image.service';
 import { randFloat } from 'three/src/math/MathUtils';
 import { FinalSidebarComponent } from "../../components/final-sidebar/final-sidebar.component";
 import { UserService } from '../../services/user.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { AlbumCardComponent } from "../../components/album-card/album-card.component";
+import { Album } from '../../interfaces/album';
+import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-home',
@@ -19,7 +22,8 @@ import { Router } from '@angular/router';
     templateUrl: './home.component.html',
     styleUrl: './home.component.css',
     providers: [AlbumService, ImageService],
-    imports: [GlobeComponent, BodyComponent, SidebarComponent, HeaderComponent, GenericButtonComponent, GenericButtonComponent, FinalSidebarComponent]
+    encapsulation: ViewEncapsulation.None,
+    imports: [NgIf, CommonModule, RouterOutlet, GlobeComponent, BodyComponent, SidebarComponent, HeaderComponent, GenericButtonComponent, GenericButtonComponent, FinalSidebarComponent, AlbumCardComponent]
 })
 
 export class HomeComponent implements AfterViewInit {
@@ -27,14 +31,35 @@ export class HomeComponent implements AfterViewInit {
   @ViewChild(GlobeComponent) globe: any;
 
   title = 'home';
+  displayedAlbum: string = '';
   //albumManager = new AlbumManagerService;
 
 
-  constructor(private userManager: UserService, private router: Router, private albumManager: AlbumService) {
+  constructor(private userManager: UserService, private router: Router, private route: ActivatedRoute, private albumManager: AlbumService) {
     if (UserService.currentUser === "default") {
-      window.alert("Error: not logged in");
+      //RESTORE FOR BETTER UX, DISABLED FOR DEV
+      //window.alert("Error: not logged in");
       this.router.navigateByUrl("index");
+    } else {
+      /*this.route.paramMap.subscribe(params => {
+        var buffer = params.get('albumId');
+        console.log("buffer", buffer)
+        if (!!buffer) {
+          this.displayedAlbum = buffer;
+        } else {
+          this.displayedAlbum = '';
+        }
+        // Now you have access to the imageId parameter
+      });*/
+
+      this.testAlbum();
     }
+  }
+
+  async testAlbum() {
+    //let thing = await this.albumManager.getAlbum("jQqinzYcBLIF31aL2Ffk");
+    this.router.navigate(['home', "jQqinzYcBLIF31aL2Ffk"])
+    //this.displayedAlbum = <Album> await thing;
   }
 
   async ngAfterViewInit(): Promise<void> {
@@ -48,6 +73,14 @@ export class HomeComponent implements AfterViewInit {
   }
 
   clicked(e: Event) {
+    console.log("home/" + e)
+    this.router.navigate(['/home', e]);
+    /*
+        this.route.paramMap.subscribe(params => {
+      this.imageId = params.get('imageId');
+      // Now you have access to the imageId parameter
+    });
+    */
     console.log(e)
     //this.removeAlbum("02");
     //this.addAlbum("Tokyo 24","01","03","18/04/2024","18/07/2024","Tokyo",[35.6764, 139.6500], "Description")
