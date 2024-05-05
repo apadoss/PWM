@@ -1,6 +1,6 @@
 import { Component, HostListener} from '@angular/core';
-import { SidebarComponent } from '../components/sidebar/sidebar.component';
-import { MobileSidebarComponent } from '../components/mobile-sidebar/mobile-sidebar.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { MobileSidebarComponent } from '../mobile-sidebar/mobile-sidebar.component';
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-final-sidebar',
