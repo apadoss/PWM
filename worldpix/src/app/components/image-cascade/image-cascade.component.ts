@@ -4,11 +4,11 @@ import { Image } from '../../interfaces/image';
 import { NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-image-cascade',
-  standalone: true,
-  imports: [NgFor],
-  templateUrl: './image-cascade.component.html',
-  styleUrl: './image-cascade.component.css'
+    selector: 'app-image-cascade',
+    standalone: true,
+    templateUrl: './image-cascade.component.html',
+    styleUrl: './image-cascade.component.css',
+    imports: [NgFor]
 })
 export class ImageCascadeComponent {
   constructor(private imageService: ImageService) {}

@@ -8,13 +8,14 @@ import { Generic2ButtonComponent } from "../buttons/generic2-button/generic2-but
 import { IconRoundButtonComponent } from "../buttons/icon-round-button/icon-round-button.component";
 import { ConfirmPopupComponent } from "../confirm-popup/confirm-popup.component";
 import { EventService } from '@app/services/general/event-service.service';
+import { ImageCascadeComponent } from "../image-cascade/image-cascade.component";
 
 @Component({
     selector: 'app-album-card',
     standalone: true,
     templateUrl: './album-card.component.html',
     styleUrl: './album-card.component.css',
-    imports: [BodyComponent, NgIf, CommonModule, Generic2ButtonComponent, IconRoundButtonComponent, ConfirmPopupComponent]
+    imports: [BodyComponent, NgIf, CommonModule, Generic2ButtonComponent, IconRoundButtonComponent, ConfirmPopupComponent, ImageCascadeComponent]
 })
 export class AlbumCardComponent {
   /*@Input() album: Album = {
@@ -29,6 +30,7 @@ export class AlbumCardComponent {
 
   @Output() albumDeleted: EventEmitter<any> = new EventEmitter();
   deleting = false;
+  uploading = false;
 
   album: Album = {
     name: '',
