@@ -1,6 +1,6 @@
 <!--This is necessary because otherwise it becomes very difficult to have several ng-content, even if only one exists at the moment-->
 <ng-template #header><ng-content select="app-header"></ng-content></ng-template>
-<ng-template #sidebar><ng-content select="app-sidebar"></ng-content></ng-template>
+<ng-template #sidebar><ng-content select="app-final-sidebar"></ng-content></ng-template>
 <ng-template #contents><ng-content select=":not(app-header):not(app-sidebar):not(app-footer)"></ng-content></ng-template>
 <ng-template #footer><ng-content select="app-footer"></ng-content></ng-template>
 

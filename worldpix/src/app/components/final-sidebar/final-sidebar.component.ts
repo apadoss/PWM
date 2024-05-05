@@ -1,5 +1,5 @@
 import { Component, HostListener} from '@angular/core';
-import { SidebarComponent } from '../structure/sidebar/sidebar.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 import { MobileSidebarComponent } from '../mobile-sidebar/mobile-sidebar.component';
 import { CommonModule } from '@angular/common';
 @Component({

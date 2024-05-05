@@ -8,14 +8,14 @@ export class ResponsiveService {
 
   constructor() { }
 
-  static getDevice() {
-    let returner: String;
+  static getDevice(): string {
+    //let returner: string = "unknown";
     if (window.innerWidth >= this.mobileWidth) {
-      returner = "desktop";
+      return "desktop";
     } else {
-      returner = "mobile";
+      return "mobile";
     }
-    return returner;
+    //return returner;
   }
 
   //Unused, intended for light/dark mode in the future

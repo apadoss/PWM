@@ -9,6 +9,7 @@ import { AlbumService } from '../../services/album.service';
 import { AlbumResponse } from '../../interfaces/albumresponse';
 import { ImageService } from '../../services/image.service';
 import { randFloat } from 'three/src/math/MathUtils';
+import { FinalSidebarComponent } from "../../components/final-sidebar/final-sidebar.component";
 
 @Component({
     selector: 'app-home',
@@ -16,7 +17,7 @@ import { randFloat } from 'three/src/math/MathUtils';
     templateUrl: './home.component.html',
     styleUrl: './home.component.css',
     providers: [AlbumService, ImageService],
-    imports: [GlobeComponent, BodyComponent, SidebarComponent, HeaderComponent, GenericButtonComponent, GenericButtonComponent]
+    imports: [GlobeComponent, BodyComponent, SidebarComponent, HeaderComponent, GenericButtonComponent, GenericButtonComponent, FinalSidebarComponent]
 })
 
 export class HomeComponent implements AfterViewInit {
