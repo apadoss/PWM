@@ -1,3 +1,6 @@
+/*@import "../../../../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";*/
+/*@import '@angular/material/prebuilt-themes/deeppurple-amber.css';*/
+
 .album-card-container {
   position: fixed;
   box-sizing: border-box;

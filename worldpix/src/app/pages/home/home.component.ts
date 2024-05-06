@@ -21,6 +21,8 @@ import { AlbumPreviewComponent } from "../../components/album-preview/album-prev
 import { CreateAlbumComponent } from "../../components/create-album/create-album.component";
 import { ResponsiveService } from '@app/services/general/responsive-service.service';
 import { ProgressBarComponent } from "../../components/progress-bar/progress-bar.component";
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 @Component({
     selector: 'app-home',
@@ -29,7 +31,7 @@ import { ProgressBarComponent } from "../../components/progress-bar/progress-bar
     styleUrl: './home.component.css',
     providers: [AlbumService, ImageService],
     encapsulation: ViewEncapsulation.None,
-    imports: [NgIf, CommonModule, RouterOutlet, GlobeComponent, BodyComponent, SidebarComponent, HeaderComponent, GenericButtonComponent, GenericButtonComponent, FinalSidebarComponent, AlbumCardComponent, AlbumPreviewComponent, CreateAlbumComponent, ProgressBarComponent]
+    imports: [MatProgressSpinnerModule, NgIf, CommonModule, RouterOutlet, GlobeComponent, BodyComponent, SidebarComponent, HeaderComponent, GenericButtonComponent, GenericButtonComponent, FinalSidebarComponent, AlbumCardComponent, AlbumPreviewComponent, CreateAlbumComponent, ProgressBarComponent]
 })
 
 export class HomeComponent implements AfterViewInit {

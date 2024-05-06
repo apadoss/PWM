@@ -41,5 +41,5 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(provideMessaging(() => getMessaging())), 
     importProvidersFrom(providePerformance(() => getPerformance())), 
     importProvidersFrom(provideStorage(() => getStorage())), 
-    importProvidersFrom(provideRemoteConfig(() => getRemoteConfig())), provideAnimationsAsync(), provideAnimationsAsync()]
+    importProvidersFrom(provideRemoteConfig(() => getRemoteConfig())), provideAnimationsAsync(), provideAnimationsAsync(), provideAnimationsAsync()]
 };
