@@ -110,14 +110,12 @@ export class ImageService {
       try {
           const snapshot = await uploadBytes(storageRef, file);
           const url = await getDownloadURL(snapshot.ref);
-          console.log("url", url);
           imageURL = url;
       } catch (error) {
           console.error("Error uploading image:", error);
       }
     }
 
-    console.log("imageURL", imageURL);
     return imageURL;
   }
 }

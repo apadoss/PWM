@@ -13,7 +13,6 @@ export class SidebarButtonComponent {
   @Output() buttonClick: EventEmitter<void> = new EventEmitter<void>();
 
   clickAddTodo(): void{
-    console.log(this.label);
     this.buttonClick.emit();
   }
 }

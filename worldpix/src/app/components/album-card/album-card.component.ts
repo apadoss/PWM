@@ -11,13 +11,14 @@ import { EventService } from '@app/services/general/event-service.service';
 import { ImageCascadeComponent } from "../image-cascade/image-cascade.component";
 import { ImageUploadComponent } from "../image-upload/image-upload.component";
 import { ImageService } from '@app/services/image.service';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @Component({
     selector: 'app-album-card',
     standalone: true,
     templateUrl: './album-card.component.html',
     styleUrl: './album-card.component.css',
-    imports: [BodyComponent, NgIf, CommonModule, Generic2ButtonComponent, IconRoundButtonComponent, ConfirmPopupComponent, ImageCascadeComponent, ImageUploadComponent]
+    imports: [MatProgressBarModule, BodyComponent, NgIf, CommonModule, Generic2ButtonComponent, IconRoundButtonComponent, ConfirmPopupComponent, ImageCascadeComponent, ImageUploadComponent]
 })
 export class AlbumCardComponent {
   /*@Input() album: Album = {
@@ -44,6 +45,7 @@ export class AlbumCardComponent {
     coordinates: [],
     userId: ''
   };
+  reset = true;
 
   constructor(private router: Router, private albumManager: AlbumService, private imageManager: ImageService, private eventManager: EventService, private route: ActivatedRoute) {}
 
@@ -64,7 +66,6 @@ export class AlbumCardComponent {
   }
 
   resolveDelete(result: boolean) {
-    console.log("deleting")
     this.deleting = false;
     if (result && this.album.id) {
       this.eventManager.albumDeleted(this.album.id);
@@ -74,11 +75,16 @@ export class AlbumCardComponent {
   }
 
   async resolveUpload(images: File[]) {
+    this.uploading = false;
+    this.reset = false;
     for (let i in images) {
       let buffer = await this.imageManager.generateImage(images[i], this.album.id)
       this.imageManager.addImage(this.album, buffer);
     }
-    this.uploading = false;
+    this.reset = true;
+  }
+
+  unlock() {
   }
 
   onMouseMove(event: Event) {

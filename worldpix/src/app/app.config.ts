@@ -12,6 +12,7 @@ import { getMessaging, provideMessaging } from '@angular/fire/messaging';
 import { getPerformance, providePerformance } from '@angular/fire/performance';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { getRemoteConfig, provideRemoteConfig } from '@angular/fire/remote-config';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const enviroment = {
   "projectId":"worldpix-database",
@@ -40,5 +41,5 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(provideMessaging(() => getMessaging())), 
     importProvidersFrom(providePerformance(() => getPerformance())), 
     importProvidersFrom(provideStorage(() => getStorage())), 
-    importProvidersFrom(provideRemoteConfig(() => getRemoteConfig()))]
+    importProvidersFrom(provideRemoteConfig(() => getRemoteConfig())), provideAnimationsAsync(), provideAnimationsAsync()]
 };

@@ -27,14 +27,17 @@
                         {{this.album.dateStart}} - {{this.album.dateEnd}}
                     </h3>
                 </span>
+                <!--div>
+                    <mat-progress-bar role="progressbar" mode="indeterminate"></mat-progress-bar>
+                </div-->
             </div>
             <hr class="divider">
             <span class="flex-row" style="height: 100%; gap: 20px; min-width: 100%; overflow: hidden;">
                 <div style="flex: 6; height: 100%; position: relative;">
-                    <div style="position: absolute; top: 5px; left: 5px;">
+                    <div *ngIf="this.reset" style="position: absolute; top: 5px; left: 5px;">
                         <app-icon-round-button (buttonClick)="uploading = true" [link]="'assets/plus.png'"></app-icon-round-button>
                     </div>
-                    <app-image-cascade *ngIf="!!this.album.id" [albumId]="this.album.id"></app-image-cascade>
+                    <app-image-cascade *ngIf="!!this.album.id && this.reset" [albumId]="this.album.id"></app-image-cascade>
                 </div>
                 <div class="flex-column" style="flex: 4; min-height: 100%; gap: 20px;">
                     <span>

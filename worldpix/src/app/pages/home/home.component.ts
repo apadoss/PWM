@@ -120,7 +120,6 @@ export class HomeComponent implements AfterViewInit {
   async removeAlbum(albumID: string) {
     let buffer = await this.albumManager.getAlbum(albumID);
     if (!!buffer) {
-      console.log("delete in effect")
       this.globe.deRenderAlbum(buffer);
       this.albumManager.deleteAlbum(albumID);
     }

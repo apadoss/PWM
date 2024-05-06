@@ -53,7 +53,6 @@ export class CreateAlbumComponent {
     this.latitude.valid = (!!this.latitude.value && this.latitude.value >= -90.0 && this.latitude.value <= 90.0);
     this.longitude.valid = (!!this.longitude.value && this.longitude.value >= -90.0 && this.longitude.value <= 90.0);
     returner = this.name.valid && this.dateStart.valid && this.dateEnd.valid && this.city.valid && this.latitude.valid && this.longitude.valid;
-    console.log("thing", returner);
     return returner;
   }
   
@@ -61,7 +60,6 @@ export class CreateAlbumComponent {
   create() {
     if (this.checkValidity()) {
       let newAlbum = this.albumManager.generateAlbum(this.name.value, UserService.currentUser, '', this.dateStart.value.toISOString().slice(0, 10), this.dateEnd.value.toISOString().slice(0, 10), this.city.value, [this.latitude.value, this.longitude.value], this.description.value);
-      console.log(newAlbum)
       this.created.emit(newAlbum);
     }
   }

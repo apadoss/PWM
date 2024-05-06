@@ -5,7 +5,6 @@
     *ngIf="login_register"
     (switchForm)="this.login_register = !this.login_register;"
     (loggedIn)="this.loggedIn($event)"
-    (dblclick)="this.loggedIn('2UXakLHd7JUIjCxI4Aqr')"
     ></app-login-form>
     <app-register-form
     *ngIf="!login_register"
