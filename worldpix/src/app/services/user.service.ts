@@ -52,7 +52,8 @@ export class UserService {
   }
 
   async addUser(user: User) {
-    return (await addDoc(this.userDoc, user)).id;
+    let buffer = await addDoc(this.userDoc, user);
+    return this.authenticateUser(user);
   }
 
   /*async addUser(user: User): Promise<string> {

@@ -32,7 +32,8 @@ export class IndexComponent {
     }*/
 
     async loggedIn(id: string) {
-        UserService.currentUser = id;
+        UserService.currentUser = await id;
+        
         this.router.navigateByUrl("home");
       }
 }

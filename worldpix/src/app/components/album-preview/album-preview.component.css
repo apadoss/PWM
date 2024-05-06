@@ -1,6 +1,6 @@
 
 .background-albumDisplay {
-    position: fixed;
+    position: absolute;
     bottom: 0%;
     background-color: rgb(125, 125, 125);
     z-index: 1;
