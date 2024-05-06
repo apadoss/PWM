@@ -1,7 +1,4 @@
 <div class="album-card-container" (pointermove)="onMouseMove($event)">
-    <div style="z-index: 10;">
-        <mat-spinner></mat-spinner>
-    </div>
     <div class="overlay"></div>
     <app-confirm-popup
     *ngIf="deleting"
@@ -41,6 +38,9 @@
                         <app-icon-round-button (buttonClick)="uploading = true" [link]="'assets/plus.png'"></app-icon-round-button>
                     </div>
                     <app-image-cascade *ngIf="!!this.album.id && this.reset" [albumId]="this.album.id"></app-image-cascade>
+                    <div class="centered">
+                        <app-spinner *ngIf="!this.reset"></app-spinner>
+                    </div>
                 </div>
                 <div class="flex-column" style="flex: 4; min-height: 100%; gap: 20px;">
                     <span>

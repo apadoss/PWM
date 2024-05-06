@@ -17,15 +17,17 @@ export class AlbumPreviewComponent {
   
   @Input() albumId: string = '';
   images: Image[] = [];
-  name = 'Album name'
+  name = 'Album name';
+  display = false;
 
-  ngAfterViewInit() {
-    this.loadData(this.albumId);
+  async ngAfterViewInit() {
+    await this.loadData(this.albumId);
+    this.display = true;
   }
 
   async loadData(id: string) {
     this.name = (<Album> await this.albumService.getAlbum(id)).name;
-    this.imageService.getAlbumImages(id).then(
+    await this.imageService.getAlbumImages(id).then(
       (images) => (this.images = images)
     ).then(() => {
       this.images = this.images.slice(0,4);

@@ -2,6 +2,9 @@
     <div class="cascade-grid-cell" *ngFor="let image of images">
         <div class="cascade-image-container">
             <img class="cascade-image" src={{image.imageURL}}>
+            <div style="position: absolute; bottom: 15px; right: 15px;">
+                <app-icon-round-button (buttonClick)="deleteImage(image)" [link]="'assets/trash.png'"></app-icon-round-button>
+            </div>
         </div>
     </div>
 </div>

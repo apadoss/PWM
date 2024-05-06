@@ -12,13 +12,14 @@ import { ImageCascadeComponent } from "../image-cascade/image-cascade.component"
 import { ImageUploadComponent } from "../image-upload/image-upload.component";
 import { ImageService } from '@app/services/image.service';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { SpinnerComponent } from "../spinner/spinner.component";
 
 @Component({
     selector: 'app-album-card',
     standalone: true,
     templateUrl: './album-card.component.html',
     styleUrl: './album-card.component.css',
-    imports: [MatProgressSpinnerModule, BodyComponent, NgIf, CommonModule, Generic2ButtonComponent, IconRoundButtonComponent, ConfirmPopupComponent, ImageCascadeComponent, ImageUploadComponent]
+    imports: [MatProgressSpinnerModule, BodyComponent, NgIf, CommonModule, Generic2ButtonComponent, IconRoundButtonComponent, ConfirmPopupComponent, ImageCascadeComponent, ImageUploadComponent, SpinnerComponent]
 })
 export class AlbumCardComponent {
   /*@Input() album: Album = {

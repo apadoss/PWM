@@ -22,6 +22,7 @@ import { CreateAlbumComponent } from "../../components/create-album/create-album
 import { ResponsiveService } from '@app/services/general/responsive-service.service';
 import { ProgressBarComponent } from "../../components/progress-bar/progress-bar.component";
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { SpinnerComponent } from "../../components/spinner/spinner.component";
 
 
 @Component({
@@ -31,7 +32,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     styleUrl: './home.component.css',
     providers: [AlbumService, ImageService],
     encapsulation: ViewEncapsulation.None,
-    imports: [MatProgressSpinnerModule, NgIf, CommonModule, RouterOutlet, GlobeComponent, BodyComponent, SidebarComponent, HeaderComponent, GenericButtonComponent, GenericButtonComponent, FinalSidebarComponent, AlbumCardComponent, AlbumPreviewComponent, CreateAlbumComponent, ProgressBarComponent]
+    imports: [MatProgressSpinnerModule, NgIf, CommonModule, RouterOutlet, GlobeComponent, BodyComponent, SidebarComponent, HeaderComponent, GenericButtonComponent, GenericButtonComponent, FinalSidebarComponent, AlbumCardComponent, AlbumPreviewComponent, CreateAlbumComponent, ProgressBarComponent, SpinnerComponent]
 })
 
 export class HomeComponent implements AfterViewInit {
