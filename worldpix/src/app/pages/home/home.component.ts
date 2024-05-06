@@ -20,6 +20,7 @@ import { Subscription } from 'rxjs';
 import { AlbumPreviewComponent } from "../../components/album-preview/album-preview.component";
 import { CreateAlbumComponent } from "../../components/create-album/create-album.component";
 import { ResponsiveService } from '@app/services/general/responsive-service.service';
+import { ProgressBarComponent } from "../../components/progress-bar/progress-bar.component";
 
 @Component({
     selector: 'app-home',
@@ -28,7 +29,7 @@ import { ResponsiveService } from '@app/services/general/responsive-service.serv
     styleUrl: './home.component.css',
     providers: [AlbumService, ImageService],
     encapsulation: ViewEncapsulation.None,
-    imports: [ NgIf, CommonModule, RouterOutlet, GlobeComponent, BodyComponent, SidebarComponent, HeaderComponent, GenericButtonComponent, GenericButtonComponent, FinalSidebarComponent, AlbumCardComponent, AlbumPreviewComponent, CreateAlbumComponent]
+    imports: [NgIf, CommonModule, RouterOutlet, GlobeComponent, BodyComponent, SidebarComponent, HeaderComponent, GenericButtonComponent, GenericButtonComponent, FinalSidebarComponent, AlbumCardComponent, AlbumPreviewComponent, CreateAlbumComponent, ProgressBarComponent]
 })
 
 export class HomeComponent implements AfterViewInit {

@@ -11,6 +11,7 @@
       "@components/*": ["src/app/components/*"],
       "@interfaces/*": ["src/app/interfaces/*"],
       "@pages/*": ["src/app/pages/*"],
+      "@node/*": ["node_modules/*"],
     },
     "noImplicitOverride": true,
     "noImplicitAny": true,
