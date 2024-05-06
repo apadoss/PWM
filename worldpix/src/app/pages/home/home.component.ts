@@ -81,6 +81,7 @@ export class HomeComponent implements AfterViewInit {
   }
 
   clicked(e: Event) {
+    this.hoveredAlbum = '';
     this.router.navigate(['/home', e]);
     /*
         this.route.paramMap.subscribe(params => {
