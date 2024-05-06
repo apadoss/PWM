@@ -1,5 +1,5 @@
 .sidebar-button {
-    background-color: white;
+    background-color: var(--structure-element-background);
     color: black;
     border: none;
     border-top-left-radius: 50px;
@@ -10,7 +10,6 @@
     width: 100%; 
     margin: 0px; 
     font-size: 156%;
-    font-family:'Times New Roman', Times, serif; 
   }
   
  .sidebar-button:hover {
@@ -18,5 +17,5 @@
   }
   
  .sidebar-button.active{
-    background-color: #e0e0e0;
+    background-color: white;
   }

@@ -1,4 +1,5 @@
-<div class="sidebar">
+<div class="sidebar flex-column">
+    <div></div>
     <app-sidebar-button class="sidebar-button" [label]="'Home'" [active]="activeTab === 'home'" (buttonClick)="this.clickTab.emit('home')"></app-sidebar-button>
     <app-sidebar-button class="sidebar-button" [label]="'Profile'" [active]="activeTab === 'profile'" (buttonClick)="this.clickTab.emit('profile')"></app-sidebar-button>
 </div>
