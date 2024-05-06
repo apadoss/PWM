@@ -9,7 +9,7 @@
     <app-body>
         <app-header></app-header>
         <app-final-sidebar></app-final-sidebar>
-        <app-create-album *ngIf="this.creating" (closed)="this.creating = false"></app-create-album>
+        <app-create-album *ngIf="this.creating" (closed)="this.creating = false" (created)="addAlbum($event)"></app-create-album>
         <app-globe
             (clickAlbum)="clicked($event)"
             (hoverAlbum)="hovered($event)"

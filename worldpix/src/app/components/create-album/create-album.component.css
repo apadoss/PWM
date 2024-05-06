@@ -44,7 +44,7 @@
     .flex-column {
         display: flex;
         flex-direction: column;
-        gap: 5px;
+        gap: 10px;
     }
     
     .flex-row {
@@ -58,5 +58,20 @@
 
     .divider {
         width: 100%;
+    }
+
+    .error-container {
+        position: relative;
+        width: 0;
+        height: 0;
+    
+        .error-message {
+          position: absolute;
+          left: 5px;
+          top: -5px;
+          width: max-content;
+          color: red;
+          font-size: 12px;
+        }
       }
 }

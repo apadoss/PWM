@@ -16,7 +16,14 @@
                     Album name
                 </h3>
             </span>
-            <input type="text" placeholder="User name" [(ngModel)]="name.value" (focus)="name.valid = true" class="input-field">
+            <input type="text" placeholder="Insert album name here" [(ngModel)]="name.value" (focus)="name.valid = true" class="input-field">
+            <div class="error-container">
+                <p class="error-message"
+                *ngIf="!this.name.valid"
+                >
+                Album must have a name
+              </p>
+            </div>
         </div>
         <div class="flex-column">
             <span>
@@ -24,7 +31,14 @@
                     City
                 </h3>
             </span>
-            <input type="text" placeholder="User name" [(ngModel)]="city.value" (focus)="city.valid = true" class="input-field">
+            <input type="text" placeholder="Insert city here" [(ngModel)]="city.value" (focus)="city.valid = true" class="input-field">
+            <div class="error-container">
+                <p class="error-message"
+                *ngIf="!this.city.valid"
+                >
+                Album must have an associated city
+              </p>
+            </div>
         </div>
         <div class="flex-column">
             <span>
@@ -32,7 +46,7 @@
                     Description
                 </h3>
             </span>
-            <textarea type="text" style="height: 60px;" placeholder="User name" [(ngModel)]="description.value" (focus)="description.valid = true" class="input-field"></textarea>
+            <textarea type="text" style="height: 60px;" placeholder="Insert description here" [(ngModel)]="description.value" (focus)="description.valid = true" class="input-field"></textarea>
         </div>
         <hr class="divider">
         <div class="flex-row">
@@ -43,7 +57,14 @@
                             Start date
                         </h3>
                     </span>
-                    <input type="date" placeholder="User name" [(ngModel)]="dateStart.value" (focus)="dateStart.valid = true" class="input-field">
+                    <input type="date" id="startdate" placeholder="Insert date here" (focus)="dateStart.valid = true" class="input-field">
+                    <div class="error-container">
+                        <p class="error-message"
+                        *ngIf="!this.dateStart.valid"
+                        >
+                        Album must have a start date
+                      </p>
+                    </div>
                 </div>
             </div>
             <div class="flex-column">
@@ -53,14 +74,56 @@
                             End date
                         </h3>
                     </span>
-                    <input type="date" placeholder="User name" [(ngModel)]="dateEnd.value" (focus)="dateEnd.valid = true" class="input-field">
-    
+                    <input type="date" id="enddate" placeholder="Insert date here" (focus)="dateEnd.valid = true" class="input-field">
+                    <div class="error-container">
+                        <p class="error-message"
+                        *ngIf="!this.dateEnd.valid"
+                        >
+                        Album must have a latter end date
+                      </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="divider">
+        <div class="flex-row">
+            <div class="flex-column">
+                <div style="left: 0; margin: auto">
+                    <span>
+                        <h3>
+                            Latitude
+                        </h3>
+                    </span>
+                    <input type="number" placeholder="" [(ngModel)]="latitude.value" (focus)="latitude.valid = true" class="input-field">
+                    <div class="error-container">
+                        <p class="error-message"
+                        *ngIf="!this.latitude.valid"
+                        >
+                        Between -90 and 90
+                      </p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-column">
+                <div style="margin: auto">
+                    <span>
+                        <h3>
+                            Longitude
+                        </h3>
+                    </span>
+                    <input type="number" placeholder="" [(ngModel)]="longitude.value" (focus)="longitude.valid = true" class="input-field">
+                    <div class="error-container">
+                        <p class="error-message"
+                        *ngIf="!this.longitude.valid"
+                        >
+                        Between -90 and 90
+                      </p>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="flex-row">
-            <!--app-generic2-button (buttonClick)="this.result.emit(true)" [label]="this.confirm"></app-generic2-button-->
-            <!--app-generic2-button (buttonClick)="this.result.emit(false)" [label]="this.cancel"></app-generic2-button-->
+            <app-generic2-button (buttonClick)="create()" [label]="'Create?'"></app-generic2-button>
         </div>
     </div>
 </div>

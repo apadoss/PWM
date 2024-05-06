@@ -99,12 +99,20 @@ export class HomeComponent implements AfterViewInit {
   }
 
   newAlbum() {
-    this.addAlbum("Random", UserService.currentUser, "test", "test", "test", "Random", [randFloat(-90,90), randFloat(-90,90)], "description")
+    //this.addAlbum("Random", UserService.currentUser, "test", "test", "test", "Random", [randFloat(-90,90), randFloat(-90,90)], "description")
   }
 
-  async addAlbum(name: string, userID: string, albumID: string, datestart: string, dateend: string, cityname: string, coordinates: number[], description: string) {
+  async addAlbum2(name: string, userID: string, albumID: string, datestart: string, dateend: string, cityname: string, coordinates: number[], description: string) {
     let newAlbum = this.albumManager.generateAlbum(name, userID, albumID, datestart, dateend, cityname, coordinates, description);
     let newID = await this.albumManager.addAlbum(newAlbum);
+    let newAlbum2 = await this.albumManager.getAlbum(newID);
+    this.globe.renderAlbum(await newAlbum2);
+  }
+
+  async addAlbum(album: Album) {
+    this.creating = false;
+    let buffer = album;
+    let newID = await this.albumManager.addAlbum(buffer);
     let newAlbum2 = await this.albumManager.getAlbum(newID);
     this.globe.renderAlbum(await newAlbum2);
   }
