@@ -27,10 +27,6 @@ export class LoginFormComponent {
   constructor(private userService: UserService) {
   }
 
-  ngOnInit() {
-    this.loggedIn.emit("2UXakLHd7JUIjCxI4Aqr");
-  }
-
   async tryLogin() {
     var user: User = {email: '', username: this.username.value, password: this.userService.hash(this.password.value)};
     var response = await this.userService.authenticateUser(user);
