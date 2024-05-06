@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { AlbumService } from '@app/services/album.service';
 import { UserService } from '@app/services/user.service';
 import { CommonModule, NgIf } from '@angular/common';
+import { OpenStreetMapProvider } from 'leaflet-geosearch';
 
 @Component({
     selector: 'app-create-album',
@@ -26,11 +27,21 @@ export class CreateAlbumComponent {
   latitude: Valid = {value: 0, valid: true, message: ''};
   longitude: Valid = {value: 0, valid: true, message: ''};
 
+  typingTimer: any;
+  typingDelay: number = 200;
+  
+  provider = new OpenStreetMapProvider({
+    params: {
+      limit: 3
+    }
+  });
+
   constructor(private albumManager: AlbumService, private userManager: UserService) {
 
   }
 
   checkValidity(): boolean {
+    //this.provider.endpoint("https://nominatim.openstreetmap.org/search?city=" + this.city.name)
     let start = <HTMLInputElement>document.getElementById("startdate");
     let end = <HTMLInputElement>document.getElementById("enddate");
     let returner = false;
@@ -70,6 +81,25 @@ export class CreateAlbumComponent {
       let newAlbum = this.albumManager.generateAlbum(this.name.value, UserService.currentUser, '', this.dateStart.value.toISOString().slice(0, 10), this.dateEnd.value.toISOString().slice(0, 10), this.city.value, [this.latitude.value, this.longitude.value], this.description.value);
       this.created.emit(newAlbum);
     }
+  }
+
+  onKeyUp() {
+    clearTimeout(this.typingTimer);
+    this.typingTimer = setTimeout(() => {
+      this.fireEvent(); // Fire your custom event after the delay
+    }, this.typingDelay);
+  }
+
+  onKeyDown() {
+    clearTimeout(this.typingTimer);
+  }
+
+  fireEvent() {
+    this.fetchCities();
+  }
+
+  async fetchCities() {
+    console.log(await this.provider.search( {query: "Paris"} ));
   }
 
   return() {

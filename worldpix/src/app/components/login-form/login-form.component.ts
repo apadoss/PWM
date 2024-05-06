@@ -6,13 +6,15 @@ import { Valid } from '../../interfaces/valid';
 import { CommonModule, NgIf } from '@angular/common';
 import { User } from '../../interfaces/user';
 import { GenericButtonComponent } from "../buttons/generic-button/generic-button.component";
+import { OpenStreetMapProvider } from 'leaflet-geosearch';
+import { CityListComponent } from "../create-album/city-list/city-list.component";
 
 @Component({
     selector: 'app-login-form',
     standalone: true,
     templateUrl: './login-form.component.html',
     styleUrl: './login-form.component.css',
-    imports: [Generic2ButtonComponent, FormsModule, NgIf, CommonModule, GenericButtonComponent]
+    imports: [Generic2ButtonComponent, FormsModule, NgIf, CommonModule, GenericButtonComponent, CityListComponent]
 })
 
 export class LoginFormComponent {
@@ -21,6 +23,12 @@ export class LoginFormComponent {
 
   username: Valid = {value: '', valid: true, message: 'Username does not exist' };
   password: Valid = {value: '', valid: true, message: 'Password incorrect'};
+
+  provider = new OpenStreetMapProvider({
+    params: {
+      limit: 3
+    }
+  });
 
   constructor(private userService: UserService) {
   }
@@ -47,5 +55,31 @@ export class LoginFormComponent {
 
   switchForms() {
     this.switchForm.emit();
+  }
+
+  typingTimer: any;
+  typingDelay: number = 200;
+
+  onKeyUp() {
+    clearTimeout(this.typingTimer);
+    this.typingTimer = setTimeout(() => {
+      this.fireEvent(); // Fire your custom event after the delay
+    }, this.typingDelay);
+  }
+
+  onKeyDown() {
+    clearTimeout(this.typingTimer);
+  }
+
+  fireEvent() {
+    this.fetchCities();
+  }
+
+  selected(city: any) {
+    console.log(city)
+  }
+
+  async fetchCities() {
+    console.log(await this.provider.search( {query: "Paris"} ));
   }
 }
