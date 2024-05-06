@@ -27,7 +27,6 @@
         <p style="position: relative; top: 20px; color: red; font-size: 12px;">Username already exists</p>
       </div-->
     </div>
-    <app-city-list></app-city-list>
     <app-generic-button (click)="$event.stopPropagation()" (clicked)="this.tryLogin()" [label]="'Log in'"></app-generic-button>
     <p>Don't have an account? <a (click)="this.switchForms()">Sign up</a></p>
   </div>

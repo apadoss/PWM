@@ -7,13 +7,14 @@ import { AlbumService } from '@app/services/album.service';
 import { UserService } from '@app/services/user.service';
 import { CommonModule, NgIf } from '@angular/common';
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
+import { CityListComponent } from "./city-list/city-list.component";
 
 @Component({
     selector: 'app-create-album',
     standalone: true,
     templateUrl: './create-album.component.html',
     styleUrl: './create-album.component.css',
-    imports: [NgIf, CommonModule, Generic2ButtonComponent, IconRoundButtonComponent, FormsModule]
+    imports: [NgIf, CommonModule, Generic2ButtonComponent, IconRoundButtonComponent, FormsModule, CityListComponent]
 })
 export class CreateAlbumComponent {
   @Output() closed: EventEmitter<any> = new EventEmitter();
@@ -38,6 +39,12 @@ export class CreateAlbumComponent {
 
   constructor(private albumManager: AlbumService, private userManager: UserService) {
 
+  }
+
+  citySelected(city: any) {
+    this.city.value = city[0];
+    this.latitude.value = city[1][0];
+    this.longitude.value = city[1][1];
   }
 
   checkValidity(): boolean {
@@ -71,6 +78,7 @@ export class CreateAlbumComponent {
     this.city.valid = !!this.city.value;
     this.latitude.valid = (!!this.latitude.value && this.latitude.value >= -90.0 && this.latitude.value <= 90.0);
     this.longitude.valid = (!!this.longitude.value && this.longitude.value >= -90.0 && this.longitude.value <= 90.0);
+    console.log(this.name.valid, this.dateStart.valid, this.dateEnd.valid, this.city.valid, this.latitude.valid, this.longitude.valid)
     returner = this.name.valid && this.dateStart.valid && this.dateEnd.valid && this.city.valid && this.latitude.valid && this.longitude.valid;
     return returner;
   }
@@ -79,27 +87,11 @@ export class CreateAlbumComponent {
   create() {
     if (this.checkValidity()) {
       let newAlbum = this.albumManager.generateAlbum(this.name.value, UserService.currentUser, '', this.dateStart.value.toISOString().slice(0, 10), this.dateEnd.value.toISOString().slice(0, 10), this.city.value, [this.latitude.value, this.longitude.value], this.description.value);
+      console.log("valid", newAlbum)
       this.created.emit(newAlbum);
+    } else {
+      console.log("cringefail")
     }
-  }
-
-  onKeyUp() {
-    clearTimeout(this.typingTimer);
-    this.typingTimer = setTimeout(() => {
-      this.fireEvent(); // Fire your custom event after the delay
-    }, this.typingDelay);
-  }
-
-  onKeyDown() {
-    clearTimeout(this.typingTimer);
-  }
-
-  fireEvent() {
-    this.fetchCities();
-  }
-
-  async fetchCities() {
-    console.log(await this.provider.search( {query: "Paris"} ));
   }
 
   return() {

@@ -65,7 +65,14 @@ export class CityListComponent {
     return returner;
   }
 
-  clicked(city: {}) {
-    console.log(city);
+  focusout() {
+    setTimeout(() => {
+        this.typing = -1;
+    }, 100);
+}
+
+  async clicked(city: any) {
+    this.name = this.process(city);
+    this.citySelected.emit([this.name, [city['y'], city['x']]])
   }
 }

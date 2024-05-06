@@ -31,13 +31,7 @@
                     City
                 </h3>
             </span>
-            <input type="text"
-            placeholder="Insert city here"
-            (keyup)="onKeyUp()"
-            (keydown)="onKeyDown()"
-            [(ngModel)]="city.value"
-            (focus)="city.valid = true"
-            class="input-field">
+            <app-city-list (citySelected)="citySelected($event)"></app-city-list>
             <div class="error-container">
                 <p class="error-message"
                 *ngIf="!this.city.valid"
