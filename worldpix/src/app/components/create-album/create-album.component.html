@@ -31,7 +31,7 @@
                     City
                 </h3>
             </span>
-            <app-city-list (citySelected)="citySelected($event)"></app-city-list>
+            <app-city-list (citySelected)="citySelected($event)" (click)="this.city.valid = true"></app-city-list>
             <div class="error-container">
                 <p class="error-message"
                 *ngIf="!this.city.valid"

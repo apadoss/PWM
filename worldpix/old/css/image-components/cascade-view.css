@@ -1,13 +1,14 @@
 .cascade-grid-viewer {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    overflow: auto;
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: min-content;
-    margin: 0px;
-    background-color: #b6b5b5;
-  }
+  width: 100%;
+  height: 100%;
+  display: grid;
+  overflow: auto;
+  justify-content: start;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: min-content;
+  margin: 0px;
+  background-color: #b6b5b5;
+}
 
   .cascade-grid-cell {
     width: 100%;

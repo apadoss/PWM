@@ -68,7 +68,7 @@ export class CityListComponent {
   focusout() {
     setTimeout(() => {
         this.typing = -1;
-    }, 100);
+    }, 250);
 }
 
   async clicked(city: any) {

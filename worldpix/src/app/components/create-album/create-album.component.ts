@@ -78,7 +78,7 @@ export class CreateAlbumComponent {
     this.city.valid = !!this.city.value;
     this.latitude.valid = (!!this.latitude.value && this.latitude.value >= -90.0 && this.latitude.value <= 90.0);
     this.longitude.valid = (!!this.longitude.value && this.longitude.value >= -90.0 && this.longitude.value <= 90.0);
-    console.log(this.name.valid, this.dateStart.valid, this.dateEnd.valid, this.city.valid, this.latitude.valid, this.longitude.valid)
+    console.log(this.latitude.value, this.longitude.value, this.name.valid, this.dateStart.valid, this.dateEnd.valid, this.city.valid, this.latitude.valid, this.longitude.valid)
     returner = this.name.valid && this.dateStart.valid && this.dateEnd.valid && this.city.valid && this.latitude.valid && this.longitude.valid;
     return returner;
   }
