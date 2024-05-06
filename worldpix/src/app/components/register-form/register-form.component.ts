@@ -57,10 +57,13 @@ export class RegisterFormComponent {
   }
 
   async validateUserName() {
-    if (this.username.value.lenght ) {
-      
+    if (this.username.value.length == 0 ) {
+      this.username.message = "Username invalid"
+      this.username.valid = false;
+      return false;
     }
     if (await this.userService.userNameExists(this.username.value)) {
+      this.username.message = "Username already exists"
       this.username.valid = false;
       return false;
     }
