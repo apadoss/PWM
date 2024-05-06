@@ -46,7 +46,7 @@
             style="top: 41px"
             *ngIf="!(this.password.valid && this.confirmPassword.valid)"
             >
-            {{this.passwordError}}
+            {{this.password.message}}
             </p>
         </div>
         <input 
@@ -70,6 +70,6 @@
             (focusout)="validatePassword()"
             class="input-field-password">
     </div>
-    <app-generic-button (click)="$event.stopPropagation()" (clicked)="register()" [label]="'Log in'"></app-generic-button>
+    <app-generic-button (click)="$event.stopPropagation()" (clicked)="register()" [label]="'Sign up'"></app-generic-button>
     <p>Already have an account? <a (click)="this.switchForms()">Sign up</a></p>
   </div>

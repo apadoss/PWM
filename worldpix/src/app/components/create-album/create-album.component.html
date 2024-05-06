@@ -21,7 +21,7 @@
                 <p class="error-message"
                 *ngIf="!this.name.valid"
                 >
-                Album must have a name
+                {{this.name.message}}
               </p>
             </div>
         </div>
@@ -36,7 +36,7 @@
                 <p class="error-message"
                 *ngIf="!this.city.valid"
                 >
-                Album must have an associated city
+                {{this.city.message}}
               </p>
             </div>
         </div>
@@ -62,7 +62,7 @@
                         <p class="error-message"
                         *ngIf="!this.dateStart.valid"
                         >
-                        Album must have a start date
+                        {{this.dateStart.message}}
                       </p>
                     </div>
                 </div>
@@ -79,14 +79,14 @@
                         <p class="error-message"
                         *ngIf="!this.dateEnd.valid"
                         >
-                        Album must have a latter end date
+                        {{this.dateEnd.message}}
                       </p>
                     </div>
                 </div>
             </div>
         </div>
         <hr class="divider">
-        <div class="flex-row">
+        <!--div class="flex-row">
             <div class="flex-column">
                 <div style="left: 0; margin: auto">
                     <span>
@@ -121,7 +121,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div-->
         <div class="flex-row">
             <app-generic2-button (buttonClick)="create()" [label]="'Create?'"></app-generic2-button>
         </div>

@@ -18,11 +18,11 @@ export class RegisterFormComponent {
   @Output() switchForm: EventEmitter<any> = new EventEmitter();
   @Output() registered: EventEmitter<any> = new EventEmitter();
 
-  passwordError = "Password error"
-  username: Valid = {value: '', valid: true};
-  email: Valid = {value: '', valid: true};;
-  password: Valid = {value: '', valid: true};;
-  confirmPassword: Valid = {value: '', valid: true};;
+  passwordError = "";
+  username: Valid = {value: '', valid: true, message: 'Username already exists'};
+  email: Valid = {value: '', valid: true, message: 'Email format incorrect'};;
+  password: Valid = {value: '', valid: true, message: 'Password error'};
+  confirmPassword: Valid = {value: '', valid: true, message: ''};
 
   constructor(private userService: UserService) { }
 
@@ -65,7 +65,9 @@ export class RegisterFormComponent {
   }
 
   async validateEmail() {
-    if (await this.userService.emailExists(this.email.value)) {
+    let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+    if (this.email.value.match(regex) && await this.userService.emailExists(this.email.value)) {
       this.email.valid = false;
       return false;
     }

@@ -18,13 +18,13 @@ export class CreateAlbumComponent {
   @Output() closed: EventEmitter<any> = new EventEmitter();
   @Output() created: EventEmitter<any> = new EventEmitter();
 
-  name: Valid = {value: '', valid: true};
-  description: Valid = {value: '', valid: true};
-  dateStart: Valid = {value: new Date, valid: true};
-  dateEnd: Valid = {value: new Date, valid: true};
-  city: Valid = {value: '', valid: true};
-  latitude: Valid = {value: 0, valid: true};
-  longitude: Valid = {value: 0, valid: true};
+  name: Valid = {value: '', valid: true, message: 'Album must have a name'};
+  description: Valid = {value: '', valid: true, message: ''};
+  dateStart: Valid = {value: new Date, valid: true, message: 'Album must have a start date'};
+  dateEnd: Valid = {value: new Date, valid: true, message: 'Album must have an end date'};
+  city: Valid = {value: '', valid: true, message: 'Album must have an associated city'};
+  latitude: Valid = {value: 0, valid: true, message: ''};
+  longitude: Valid = {value: 0, valid: true, message: ''};
 
   constructor(private albumManager: AlbumService, private userManager: UserService) {
 
@@ -47,7 +47,15 @@ export class CreateAlbumComponent {
     this.dateEnd.value = end.valueAsDate;
     this.dateStart.valid = !!this.dateStart.value;
     if (this.dateStart.valid) {
-      this.dateEnd.valid = (this.dateEnd.value && new Date(this.dateStart.value).valueOf() < new Date(this.dateEnd.value).valueOf());
+      if (!!!this.dateEnd.value) {
+        this.dateEnd.message = "Album must have an end date";
+        this.dateEnd.valid = false;
+      } else if (new Date(this.dateStart.value).valueOf() > new Date(this.dateEnd.value).valueOf()) {
+        this.dateEnd.message = "Must be a latter date";
+        this.dateEnd.valid = false;
+      } else {
+        this.dateEnd.valid = true;
+      }
     }
     this.city.valid = !!this.city.value;
     this.latitude.valid = (!!this.latitude.value && this.latitude.value >= -90.0 && this.latitude.value <= 90.0);

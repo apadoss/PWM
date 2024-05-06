@@ -19,8 +19,8 @@ export class LoginFormComponent {
   @Output() switchForm: EventEmitter<any> = new EventEmitter();
   @Output() loggedIn: EventEmitter<any> = new EventEmitter();
 
-  username: Valid = {value: '', valid: true};
-  password: Valid = {value: '', valid: true};
+  username: Valid = {value: '', valid: true, message: 'Username does not exist' };
+  password: Valid = {value: '', valid: true, message: 'Password incorrect'};
 
   constructor(private userService: UserService) {
   }
