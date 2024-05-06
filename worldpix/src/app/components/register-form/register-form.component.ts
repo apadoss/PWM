@@ -57,6 +57,9 @@ export class RegisterFormComponent {
   }
 
   async validateUserName() {
+    if (this.username.value.lenght ) {
+      
+    }
     if (await this.userService.userNameExists(this.username.value)) {
       this.username.valid = false;
       return false;
@@ -66,9 +69,13 @@ export class RegisterFormComponent {
 
   async validateEmail() {
     let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
-    if (this.email.value.match(regex) && await this.userService.emailExists(this.email.value)) {
+    if (!this.email.value.match(regex)) {
       this.email.valid = false;
+      this.email.message = "Email format incorrect"
+      return false;
+    } else if (await this.userService.emailExists(this.email.value)) {
+      this.email.valid = false;
+      this.email.message = "Email already exists"
       return false;
     }
     return true;
