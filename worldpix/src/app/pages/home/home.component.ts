@@ -19,6 +19,7 @@ import { EventService } from '@app/services/general/event-service.service';
 import { Subscription } from 'rxjs';
 import { AlbumPreviewComponent } from "../../components/album-preview/album-preview.component";
 import { CreateAlbumComponent } from "../../components/create-album/create-album.component";
+import { ResponsiveService } from '@app/services/general/responsive-service.service';
 
 @Component({
     selector: 'app-home',
@@ -27,7 +28,7 @@ import { CreateAlbumComponent } from "../../components/create-album/create-album
     styleUrl: './home.component.css',
     providers: [AlbumService, ImageService],
     encapsulation: ViewEncapsulation.None,
-    imports: [NgIf, CommonModule, RouterOutlet, GlobeComponent, BodyComponent, SidebarComponent, HeaderComponent, GenericButtonComponent, GenericButtonComponent, FinalSidebarComponent, AlbumCardComponent, AlbumPreviewComponent, CreateAlbumComponent]
+    imports: [ NgIf, CommonModule, RouterOutlet, GlobeComponent, BodyComponent, SidebarComponent, HeaderComponent, GenericButtonComponent, GenericButtonComponent, FinalSidebarComponent, AlbumCardComponent, AlbumPreviewComponent, CreateAlbumComponent]
 })
 
 export class HomeComponent implements AfterViewInit {
@@ -42,7 +43,7 @@ export class HomeComponent implements AfterViewInit {
   //albumManager = new AlbumManagerService;
 
 
-  constructor(private userManager: UserService, private eventManager: EventService, private router: Router, private route: ActivatedRoute, private albumManager: AlbumService) {
+  constructor(private userManager: UserService, private eventManager: EventService, private router: Router, private route: ActivatedRoute, private albumManager: AlbumService, private responsiveManager: ResponsiveService) {
     if (UserService.currentUser === "default") {
       //RESTORE FOR BETTER UX, DISABLED FOR DEV
       //window.alert("Error: not logged in");
@@ -55,6 +56,10 @@ export class HomeComponent implements AfterViewInit {
         }
       });
     }
+  }
+
+  state() {
+    return ResponsiveService.getDevice();
   }
 
   async testAlbum() {
@@ -86,16 +91,15 @@ export class HomeComponent implements AfterViewInit {
   async hovered(e: string) {
     this.hoveredAlbum = '';
     if (!!e) {
-      let thing = await this.albumManager.getAlbum(e);
-      this.hoveredAlbum = thing!['id'];
-    } /*else {
-      if (this.hoveredAlbum !== '') {
-        console.log("dispelling")
-        setTimeout(()=>{                           //<<<---using ()=> syntax
+      this.hoveredAlbum = '-1';
+      setTimeout(()=>{
+        if (this.hoveredAlbum === '-1') {
+          this.hoveredAlbum = e;
+        } else {
           this.hoveredAlbum = '';
-        }, 500);
-      }
-    }*/
+        }
+      }, 500);
+    }
   }
 
   newAlbum() {

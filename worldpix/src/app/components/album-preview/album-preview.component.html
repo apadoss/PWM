@@ -1,9 +1,12 @@
-<div class="background-albumDisplay">
-    <div class="cascade-grid-cell" *ngFor="let image of images">
-        <div class="cascade-image-container">
-            <img class="cascade-image" src={{image.imageURL}}>
+<div class="flex-column">
+    <h3 style="background-color: #b6b5b5; padding: 5px 10px; width: fit-content; height: fit-content; border-top-right-radius: 10px;">
+        {{name}}
+    </h3>
+    <div class="background-albumDisplay">
+        <div class="cascade-grid-cell" *ngFor="let image of images">
+            <div class="cascade-image-container">
+                <img class="cascade-image" src={{image.imageURL}}>
+            </div>
         </div>
     </div>
 </div>
-<div class="background-albumNameTab">Álbum name</div>
-<div class="background-openTab">⭡</div>

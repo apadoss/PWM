@@ -14,7 +14,9 @@
             (clickAlbum)="clicked($event)"
             (hoverAlbum)="hovered($event)"
         ></app-globe>
-        <app-album-preview *ngIf="this.hoveredAlbum !== ''" [albumId]="this.hoveredAlbum"></app-album-preview>
+        <div *ngIf="(state() === 'desktop') && (this.hoveredAlbum.length > 3)" style="position: absolute; bottom: 0;">
+            <app-album-preview [albumId]="this.hoveredAlbum"></app-album-preview>
+        </div>
         <div style="position: absolute; top: 0; right: 0; margin: 8px;">
             <app-generic-button (click)="$event.stopPropagation()" (clicked)="this.creating = true" label="Add new album"></app-generic-button>
         </div>
