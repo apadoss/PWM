@@ -122,7 +122,8 @@ export class HomeComponent implements AfterViewInit {
     let buffer = album;
     let newID = await this.albumManager.addAlbum(buffer);
     let newAlbum2 = await this.albumManager.getAlbum(newID);
-    this.globe.renderAlbum(await newAlbum2);
+    newAlbum2!['id'] = newID;
+    this.globe.renderAlbum(newAlbum2);
   }
 
   async removeAlbum(albumID: string) {

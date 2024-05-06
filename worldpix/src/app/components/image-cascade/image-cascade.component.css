@@ -32,6 +32,7 @@
   }
 
   .cascade-image-container {
+    position: relative;
     width: 100%;
     aspect-ratio: 1.5/1;
     margin:5%;

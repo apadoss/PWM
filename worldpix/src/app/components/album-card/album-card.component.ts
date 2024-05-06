@@ -66,6 +66,13 @@ export class AlbumCardComponent {
     this.router.navigateByUrl('home');
   }
 
+  refreshImages() {
+    this.reset = false;
+    setTimeout(()=>{
+      this.reset = true;
+    }, 100);
+  }
+
   resolveDelete(result: boolean) {
     this.deleting = false;
     if (result && this.album.id) {
