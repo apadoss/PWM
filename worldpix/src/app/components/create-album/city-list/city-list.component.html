@@ -1,7 +1,33 @@
-<div>
-    <span *ngFor="let option of options">
-        <p (click)="clicked(option)">
-            {{option}}
-        </p>
-    </span>
+<div class="city-list">
+    <input type="text"
+    placeholder="City name"
+    [(ngModel)]="name"
+    (keyup)="onKeyUp()"
+    (keydown)="onKeyDown()"
+    (focusout)="typing=-1"
+    class="input-field">
+    <div class="placer">
+        <div
+        class="flex-column display"
+        *ngIf="typing == 0"
+        >
+            <span 
+            *ngFor="let option of options; let last = last"
+            class="flex-column">
+                <p
+                style="width: 100%"
+                class="city-option"
+                (click)="clicked(option)">
+                    {{ process(option) }}
+                </p>
+                <hr *ngIf="!last" class="divider">
+            </span>
+            <span *ngIf="options.length == 0">
+                <p
+                style="width: 100%">
+                    No results
+                </p>
+            </span>
+        </div>
+    </div>
 </div>

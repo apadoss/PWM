@@ -24,12 +24,6 @@ export class LoginFormComponent {
   username: Valid = {value: '', valid: true, message: 'Username does not exist' };
   password: Valid = {value: '', valid: true, message: 'Password incorrect'};
 
-  provider = new OpenStreetMapProvider({
-    params: {
-      limit: 3
-    }
-  });
-
   constructor(private userService: UserService) {
   }
 
@@ -55,31 +49,5 @@ export class LoginFormComponent {
 
   switchForms() {
     this.switchForm.emit();
-  }
-
-  typingTimer: any;
-  typingDelay: number = 200;
-
-  onKeyUp() {
-    clearTimeout(this.typingTimer);
-    this.typingTimer = setTimeout(() => {
-      this.fireEvent(); // Fire your custom event after the delay
-    }, this.typingDelay);
-  }
-
-  onKeyDown() {
-    clearTimeout(this.typingTimer);
-  }
-
-  fireEvent() {
-    this.fetchCities();
-  }
-
-  selected(city: any) {
-    console.log(city)
-  }
-
-  async fetchCities() {
-    console.log(await this.provider.search( {query: "Paris"} ));
   }
 }

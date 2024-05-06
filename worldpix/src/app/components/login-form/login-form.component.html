@@ -5,8 +5,6 @@
       <input type="text"
       placeholder="User name"
       [(ngModel)]="username.value"
-      (keyup)="onKeyUp()"
-      (keydown)="onKeyDown()"
       (focus)="username.valid = true"
       class="input-field">
       <div class="error-container">
@@ -14,7 +12,6 @@
         *ngIf="!this.username.valid">
         Username does not exist
       </p>
-      <app-city-list *ngIf="typingTimer == 0" (citySelected)="selected($event)"></app-city-list>
       </div>
     </div>
     <div class="input-container">
@@ -30,6 +27,7 @@
         <p style="position: relative; top: 20px; color: red; font-size: 12px;">Username already exists</p>
       </div-->
     </div>
+    <app-city-list></app-city-list>
     <app-generic-button (click)="$event.stopPropagation()" (clicked)="this.tryLogin()" [label]="'Log in'"></app-generic-button>
     <p>Don't have an account? <a (click)="this.switchForms()">Sign up</a></p>
   </div>

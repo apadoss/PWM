@@ -1,0 +1,56 @@
+.city-list {
+    display: flex;
+    text-align: left;
+    flex-direction: column;
+    width: 100%;
+
+    .placer {
+        position: relative;
+        width: 100%;
+    }
+
+    .display {
+        width: 100%;
+        position:absolute;
+        box-sizing: border-box; 
+        padding: 10px; 
+        border-bottom-right-radius: 15px; 
+        border-bottom-left-radius: 15px; 
+        background-color: white;
+    }
+
+    .divider {
+        width: 100%;
+    }
+
+    .city-option {
+        border-radius: 5px;
+    }
+
+    .city-option:hover {
+        background-color: lightgray;
+        transition: 0.5s;
+        -webkit-transition: 0.5s;
+    }
+
+    .input-field {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 15px;
+        text-align: start;
+    }
+
+    .flex-column {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .flex-row {
+        display: flex;
+        flex-direction: row;
+        max-height: fit-content;
+        max-width: fit-content;
+        gap: 5px;
+    }
+}
