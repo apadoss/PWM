@@ -1,0 +1,92 @@
+.register-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  padding: 20px;
+  gap: 20px;
+  width: 300px;
+  background-color: rgba(240, 240, 240, 0.75);
+  border-radius: 15px;
+  text-align: center;
+  right: 80px; 
+  top: 80px;
+
+    .register-title {
+        font-size: 48px;
+        margin-top: 0px;
+        text-align: left;
+        padding-left: 5%;
+      }
+      
+      .divider {
+        width: 90%;
+        margin: auto;
+        margin-bottom: 10px;
+      }
+      
+      .input-container {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+      }
+
+      .input-container-password {
+        display: flex;
+        flex-direction: row;
+        gap: 0px;
+        text-align: left;
+      }
+      
+      .input-field {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 15px;
+        text-align: start;
+      }
+
+      .input-field-password {
+        padding: 10px;
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 15px;
+        text-align: start;
+      }
+
+      .error-container {
+        position: relative;
+        width: 0;
+        height: 0;
+    
+        .error-message {
+          position: absolute;
+          left: 5px;
+          top: 3px;
+          width: max-content;
+          color: red;
+          font-size: 12px;
+        }
+      }
+
+      a {
+        font-weight: 600;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    }
+  
+    @media (max-width: 500px) {
+      .register-container {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+  
+    @media (max-width: 390px) {
+      .register-container {
+        top: 40px;
+        transform: translateX(-50%) scale(75%);
+      }
+    }
+    

@@ -1,0 +1,15 @@
+<app-body>
+    <app-header></app-header>
+    <!--app-login-form></app-login-form-->
+    <app-login-form
+    *ngIf="login_register"
+    (switchForm)="this.login_register = !this.login_register;"
+    (loggedIn)="this.loggedIn($event)"
+    ></app-login-form>
+    <app-register-form
+    *ngIf="!login_register"
+    (switchForm)="this.login_register = !this.login_register;"
+    (registered)="this.loggedIn($event)"
+    ></app-register-form>
+    <app-footer></app-footer>
+</app-body>

@@ -1,0 +1,45 @@
+<!--This is necessary because otherwise it becomes very difficult to have several ng-content, even if only one exists at the moment-->
+<ng-template #header><ng-content select="app-header"></ng-content></ng-template>
+<ng-template #sidebar><ng-content select="app-final-sidebar"></ng-content></ng-template>
+<ng-template #contents><ng-content select=":not(app-header):not(app-sidebar):not(app-footer)"></ng-content></ng-template>
+<ng-template #footer><ng-content select="app-footer"></ng-content></ng-template>
+
+<div class="body-container">
+    <div class="background"></div>
+    <!--*ngIf="this.context === 'desktop'"-->
+    <div class="desktop-container" *ngIf="this.context === 'desktop'">
+        <!--So that the footer is at least under the screen-->
+        <div class="screen-size">
+            <!--Has to be inside of a div, else if missing it will affect the structure-->
+            <div>
+                <ng-container *ngTemplateOutlet="header"></ng-container>
+            </div>
+            <div style="display: flex;">
+                <ng-container *ngTemplateOutlet="sidebar"></ng-container>
+                <div class="content-container">
+                    <ng-container *ngTemplateOutlet="contents"></ng-container>
+                </div>
+            </div>
+        </div>
+        <div>
+            <ng-container *ngTemplateOutlet="footer"></ng-container>
+        </div>
+    </div>
+    
+    <div class="mobile-container" *ngIf="this.context === 'mobile'">
+        <div class="screen-size">
+            <div>
+                <ng-container *ngTemplateOutlet="header"></ng-container>
+            </div>
+            <div class="content-container">
+                <ng-container *ngTemplateOutlet="contents"></ng-container>
+            </div>
+            <div>
+                <ng-container *ngTemplateOutlet="sidebar"></ng-container>
+            </div>
+        </div>
+        <div>
+            <ng-container *ngTemplateOutlet="footer"></ng-container>
+        </div>
+    </div>
+</div>

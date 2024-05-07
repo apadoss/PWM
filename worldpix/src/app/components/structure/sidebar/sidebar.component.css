@@ -1,0 +1,79 @@
+/*.sidebar {
+  width: 14.5vw; 
+  background-color: rgb(255, 255, 255);
+  padding: 0; 
+  height: 100vh; 
+  position: fixed; 
+  top: 0; 
+  left: 0;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: flex-start; 
+}
+
+::ng-deep .sidebar-button:hover {
+  background-color: #f0f0f0;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+}
+
+::ng-deep .sidebar-button:active,
+::ng-deep .sidebar-button:focus {
+  background-color: #e0e0e0;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+}*/
+
+/*
+  width: 200px;
+  background-color: var(--structure-element-background);
+  padding: 0;
+  height: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+*/
+
+.sidebar {
+  width: 150px; 
+  background-color: var(--structure-element-background);
+  padding: 0; 
+  height: 100%; 
+  position: relative; 
+  top: 0; 
+  left: 0;
+  z-index:2;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: flex-start; 
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  max-height: fit-content;
+  max-width: fit-content;
+  gap: 5px;
+}
+
+::ng-deep .sidebar-button:hover {
+  /*background-color: white;*/
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+}
+
+::ng-deep .sidebar-button:active,
+::ng-deep .sidebar-button:focus {
+  background-color: white;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+}

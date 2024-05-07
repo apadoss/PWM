@@ -1,0 +1,76 @@
+header {
+    grid-column: 1 / 4;
+    grid-row: 1;
+    background-color: rgb(228, 228, 228);
+    z-index: 1;
+    display:flex;
+    align-items: center;
+    position: relative;
+}
+
+nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 100%;
+    height: 100%;
+    width: 100%;
+}
+
+p {
+    font-size: 1.06em;
+    display: inline-block;
+    margin: 12px 20px;
+}
+
+li {
+    display: inline;
+}
+
+a {
+    font-size: 1.06em;
+    padding: 14px 16px;
+}
+
+a:hover {
+    background-color: var(--structure-element-button-selected);
+}
+
+ul.header-ul {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-100%);
+    float: right;
+    right: 0;
+    margin: 10px 40px;
+    grid-column: 2;
+}
+
+.header-logo {
+    margin-left:20px;
+    display: flex;
+    align-items: center;
+    grid-column: 1;
+}
+
+.hamburger-menu {
+    display: none;
+}
+
+@media(max-width: 38em){
+    ul {
+        display: none;
+    }
+
+    .hamburger-menu {
+        position: absolute;
+        display: block;
+        padding: 5px 5px;
+        height: 80%;
+        right: 0;
+        cursor: pointer;
+    }
+
+    .hamburger-menu:hover {
+        background-color: #b9b9b9;
+    }
+}

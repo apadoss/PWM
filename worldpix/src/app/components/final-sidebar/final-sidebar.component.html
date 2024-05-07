@@ -1,0 +1,16 @@
+<app-sidebar
+class="sidebar"
+*ngIf="isLargeScreen"
+[activeTab]="this.activeTab"
+(clickTab)="this.switchTab($event)">
+    <!-- Contenido del sidebar -->
+</app-sidebar>
+
+<!-- Mobile Sidebar para pantallas pequeñas -->
+<app-mobile-sidebar
+class="mobile-sidebar"
+*ngIf="!isLargeScreen"
+[activeTab]="this.activeTab"
+(clickTab)="this.switchTab($event)">
+    <!-- Contenido del mobile-sidebar -->
+</app-mobile-sidebar>

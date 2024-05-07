@@ -1,0 +1,18 @@
+<div class="sidebar-mobile">
+    <div class="sidebar-background"></div>
+    <div class="contents">
+      <div class="button-container">
+        <section class="Home-section" [class.active]="activeTab === 'home'">
+          <button (click)="this.clickTab.emit('home')" class="home" type="button">
+            <img title="home-imag" src="/assets/home.png" height="50" width="50">
+          </button>
+        </section>
+        <section class="Profile-section" [class.active]="activeTab === 'profile'">
+          <button (click)="this.clickTab.emit('profile')" class="profile" type="button">
+            <img title="profile-imag" src="/assets/profile.png" height="45" width="45">
+          </button>
+        </section>
+      </div>
+    </div>
+  </div>
+  

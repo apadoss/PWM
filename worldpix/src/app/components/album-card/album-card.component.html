@@ -1,0 +1,69 @@
+<div class="album-card-container" (pointermove)="onMouseMove($event)">
+    <div class="overlay"></div>
+    <app-image-upload
+    *ngIf="uploading"
+    (filesUploaded)="resolveUpload($event)"
+    ></app-image-upload>
+    <div class="container">
+        <div style="position: absolute; top: 15px; right: 15px;">
+            <app-icon-round-button (buttonClick)="return()" [link]="'assets/close.png'"></app-icon-round-button>
+        </div>
+        <div style="position: absolute; bottom: 15px; right: 15px;">
+            <app-icon-round-button [confirm] = true (buttonClick)="resolveDelete($event)" [link]="'assets/trash.png'"></app-icon-round-button>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 20px; width: 100%; height: 100%;">
+            <div class="flex-column">
+                <span class="albumName">
+                    <h1>
+                        {{this.album.name}}
+                    </h1>
+                </span>
+                <span class="flex-column">
+                    <h3>
+                        {{this.album.dateStart}} - {{this.album.dateEnd}}
+                    </h3>
+                </span>
+                <!--div>
+                    <mat-progress-bar role="progressbar" mode="indeterminate"></mat-progress-bar>
+                </div-->
+            </div>
+            <hr class="divider">
+            <span class="flex-row" style="height: 100%; gap: 20px; min-width: 100%; overflow: hidden;">
+                <div style="flex: 6; height: 100%; position: relative;">
+                    <div *ngIf="this.reset" style="position: absolute; top: 5px; left: 5px; z-index: 4">
+                        <app-icon-round-button (buttonClick)="uploading = true" [link]="'assets/plus.png'"></app-icon-round-button>
+                    </div>
+                    <app-image-cascade *ngIf="!!this.album.id && this.reset" [albumId]="this.album.id" (imageDeleted)="refreshImages()"></app-image-cascade>
+                    <div class="centered">
+                        <app-spinner *ngIf="!this.reset"></app-spinner>
+                    </div>
+                </div>
+                <div class="flex-column" style="flex: 4; min-height: 100%; gap: 20px;">
+                    <span>
+                        <h2>
+                            Album information
+                        </h2>
+                    </span>
+                    <hr class="divider">
+                    <span class="flex-column">
+                        <h3>
+                            City
+                        </h3>
+                        <p>
+                            {{this.album.cityName}}
+                        </p>
+                    </span>
+                    <span class="flex-column">
+                        <h3>
+                            Description
+                        </h3>
+                        <p>
+                            {{this.album.description}}
+                        </p>
+                    </span>
+                </div>
+            </span>
+        </div>
+    </div>
+
+</div>

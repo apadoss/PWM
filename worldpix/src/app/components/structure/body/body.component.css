@@ -1,0 +1,30 @@
+.body-container {
+    min-height: 100vh;
+    width: auto;
+    height: auto;
+    display: grid;
+    grid-auto-rows: auto;
+    background: url("https://wallpapers.com/images/hd/world-globe-tyjrsnehdnbzey0v.jpg") no-repeat center center fixed;
+    background-size: cover;
+    backdrop-filter: blur(4px);
+
+    .desktop-container {
+        display: contents;
+    }
+
+    .mobile-container {
+        display: contents;
+    }
+
+    .screen-size {
+        min-height: 100vh;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+    }
+
+    .content-container {
+        position: relative;
+        flex: 1; 
+        overflow-y: auto;
+    }
+}

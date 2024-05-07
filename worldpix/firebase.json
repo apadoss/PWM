@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "worldpix",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}

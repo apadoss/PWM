@@ -1,0 +1,75 @@
+<!--h1>Registration</h1>
+
+<fieldset class="input_box">
+    <p><input type="text" placeholder="User name" name="userName" required></p>
+    <p><input type="email" placeholder="Email" name="email" required></p>
+    <p><input type="password" placeholder="Password" name="passwordField" 
+        pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" 
+        title="Password must contain 8 characters, letters and numbers and an special character."
+        onkeyup="validatePassword()"
+        required></p>
+    <p><input type="password" placeholder="Confirm password" name="confirmPassword" onkeyup="validatePassword()" required></p>
+</fieldset>
+
+<section class="btn_box">
+    <button type="submit" class="button">Sign up</button>
+</section>
+
+<p class="form_text">Already have an account? <a class="login_form_button" href="#">Login</a></p-->
+
+<div class="register-container">
+    <h2 class="register-title">Sign up</h2>
+    <hr class="divider">
+    <div class="input-container">
+        <input type="text" placeholder="User name" name="userName" [(ngModel)]="username.value" (focus)="username.valid = true" class="input-field" required>
+        <div class="error-container">
+            <p class="error-message"
+            *ngIf="!this.username.valid"
+            >
+            {{this.username.message}}
+          </p>
+        </div>
+    </div>
+    <div class="input-container">
+        <input type="email" placeholder="Email" name="email" [(ngModel)]="email.value" (focus)="email.valid = true" class="input-field" required>
+        <div class="error-container">
+            <p class="error-message"
+            *ngIf="!this.email.valid"
+            >
+            {{this.email.message}}
+          </p>
+        </div>
+    </div>
+    <div class="input-container-password">
+        <div class="error-container">
+            <p class="error-message"
+            style="top: 41px"
+            *ngIf="!(this.password.valid && this.confirmPassword.valid)"
+            >
+            {{this.password.message}}
+            </p>
+        </div>
+        <input 
+            type="password"
+            placeholder="Password"
+            name="passwordField"
+            [(ngModel)]="password.value"
+            (focus)="password.valid = true"
+            (focusout)="validatePassword()"
+            pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" 
+            title="Password must contain 8 characters, letters and numbers and an special character."
+            class="input-field-password"
+            required>
+        <div style="width:10px;"></div>
+        <input 
+            type="password"
+            placeholder="Confirm password"
+            name="confirmPassword"
+            [(ngModel)]="confirmPassword.value"
+            (focus)="password.valid = true"
+            (focusout)="validatePassword()"
+            class="input-field-password">
+    </div>
+    <app-generic-button (click)="$event.stopPropagation()" (clicked)="register()" [label]="'Sign up'"></app-generic-button>
+    <p>Already have an account? <a (click)="this.switchForms()">Sign up</a></p>
+  </div>
