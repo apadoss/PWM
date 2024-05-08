@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
 import * as THREE from "three";
+
 import {
   OrbitControls,
 } from "three/examples/jsm/controls/OrbitControls";
