@@ -20,6 +20,7 @@ import { FinalSidebarComponent } from './components/final-sidebar/final-sidebar.
 import { BodyComponent } from './components/structure/body/body.component';
 import { HomeComponent } from './pages/home/home.component';
 import { IndexComponent } from './pages/index/index.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 @Component({
   selector: 'app-root',

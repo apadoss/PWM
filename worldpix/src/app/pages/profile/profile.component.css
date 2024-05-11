@@ -1,0 +1,102 @@
+.profile-info-container {
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-start; 
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    background-color: #d6d5d5;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.container-info-image{
+    display: flex;
+    flex-direction: row; 
+    align-items: flex-start; 
+    justify-content: center;
+}
+
+.profile-image-container {
+    width: 300px;
+    height: 200px;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.5);
+    margin-top: 25vh;
+    margin-left: 12vw;
+    border-radius: 28px;
+}
+
+.profile-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.album-preview {
+    width: 200px;
+    height: 200px;
+    margin-top: 20px; 
+    background-color:  #d6d5d5;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+    width: 40vw;
+    border-radius: 13px;
+    text-align: center;
+    background-color:  #d6d5d5;
+    margin-top: 15vh;
+    margin-left: 10vw;
+    vertical-align: middle;
+    height: 50vh;
+    border: 2px solid rgb(148, 148, 148);
+}
+
+.user-info h1 {
+    font-size: 52px;
+    padding: 20px;
+}
+
+.profile-description {
+    font-size: 18px;
+    background-color: #c8c6c6;
+    padding: 40px;
+    margin-left: 40px;
+    margin-right: 40px;
+    border-radius: 13px;
+    text-align: left;
+    width: 55%;
+}
+
+.number-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.albums-number, .photos-number {
+    width: 50%;
+    text-align: center;
+}
+
+.component-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.albums, .photos {
+    width: 50%;
+    text-align: center;
+}

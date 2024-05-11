@@ -1,5 +1,5 @@
 .sidebar-button {
-    background-color: var(--structure-element-background);
+    background-color:  rgb(228, 228, 228);
     color: black;
     border: none;
     border-top-left-radius: 50px;
@@ -13,7 +13,7 @@
   }
   
  .sidebar-button:hover {
-    background-color: #f0f0f0;
+    background-color: #ffffff;
   }
   
  .sidebar-button.active{
