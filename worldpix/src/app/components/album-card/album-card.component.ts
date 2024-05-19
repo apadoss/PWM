@@ -38,6 +38,7 @@ export class AlbumCardComponent {
 
   album: Album = {
     name: '',
+    favorited: false,
     id: undefined,
     description: '',
     dateStart: '',

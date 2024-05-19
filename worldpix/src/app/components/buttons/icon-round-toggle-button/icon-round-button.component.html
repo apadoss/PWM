@@ -1,0 +1,10 @@
+<button *ngIf="state" class="icon-button" (click)="click()">
+    <img class="icon-button-image" src={{linkOn}}>
+</button>
+<button *ngIf="!state" class="icon-button" (click)="click()">
+    <img class="icon-button-image" src={{linkOff}}>
+</button>
+<app-confirm-popup
+*ngIf="confirming"
+(result)="resolved($event)"
+></app-confirm-popup>

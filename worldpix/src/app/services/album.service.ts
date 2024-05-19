@@ -26,6 +26,7 @@ export class AlbumService {
     let returner: Album = {
         "name": name,
         "userId": userID,
+        "favorited": false,
         "id": albumID,
         "dateStart": datestart,
         "dateEnd": dateend,
@@ -62,6 +63,7 @@ async getAlbum(id: string) {
       const album: Album = {
         id: doc.id,
         name: doc.data()["name"],
+        favorited: doc.data()["favorited"],
         description: doc.data()["description"],
         dateStart: doc.data()["date-start"],
         dateEnd: doc.data()["date-end"],

@@ -1,5 +1,6 @@
 export interface Album {
     id?: string;
+    favorited: boolean,
     name: string;
     description: string;
     dateStart: string;
