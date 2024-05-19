@@ -12,6 +12,7 @@ import { Album } from '@app/interfaces/album';
 import { AlbumService } from '@app/services/album.service';
 import { ImageService } from '@app/services/image.service';
 import { Image } from '@app/interfaces/image'; 
+import ResultList from 'leaflet-geosearch/dist/resultList';
 
 @Component({
   selector: 'app-profile',
@@ -46,7 +47,7 @@ export class ProfileComponent implements OnInit{
           console.log(currentUserId);
           if (currentUserId){
             await this.loadUserAlbums(currentUserId);
-            console.log(this.countUserTotalPhotos());
+            await this.countUserTotalPhotos();
           }
         }
       } catch (error) {
@@ -64,14 +65,17 @@ export class ProfileComponent implements OnInit{
       }
     }
 
-    private async countUserTotalPhotos(): Promise<number> {
-      let finalResult = 0;
+    private async countUserTotalPhotos(): Promise<void> {
+      var finalResult = 0;
       this.albums.forEach(async album => {
         if (album.id){
-        const result = await this.imageService.getAlbumImagesNumber(album.id, 2);
+        let result = await this.imageService.getAlbumImagesNumber(album.id, 2);
         finalResult = finalResult + result;
+        console.log(finalResult);
+        this.photosCount = finalResult;
         }
       });
-      return finalResult;
+      console.log(finalResult);
+      
     }
 }

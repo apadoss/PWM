@@ -82,7 +82,7 @@ async getAlbum(id: string) {
   setAlbumId(inputid: string) {
     const albumRef = doc(this.albumDoc, `${inputid}`);
     return updateDoc(albumRef, { id: inputid });
-  }
+  } 
 
   modifyAlbumName(id: string, newName: string) {
     const albumRef = doc(this.albumDoc, `${id}`);
