@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "ionic:build": "npm run build",
+    "ionic:serve": "npm run start"
   },
   "private": true,
   "dependencies": {
@@ -21,6 +23,14 @@
     "@angular/platform-browser": "^17.3.0",
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
+    "@capacitor/android": "6.0.0",
+    "@capacitor/app": "6.0.0",
+    "@capacitor/cli": "6.0.0",
+    "@capacitor/core": "6.0.0",
+    "@capacitor/haptics": "6.0.0",
+    "@capacitor/keyboard": "6.0.0",
+    "@capacitor/status-bar": "6.0.0",
+    "@ionic/angular": "^8.1.2",
     "@types/three": "^0.134.0",
     "bcryptjs": "^2.4.3",
     "firebase": "^10.10.0",
@@ -40,6 +50,7 @@
     "@angular-devkit/build-angular": "^17.3.2",
     "@angular/cli": "^17.3.2",
     "@angular/compiler-cli": "^17.3.0",
+    "@ionic/angular-toolkit": "latest",
     "@types/bcryptjs": "^2.4.6",
     "@types/jasmine": "~5.1.0",
     "jasmine-core": "~5.1.0",
@@ -49,5 +60,14 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.4.2"
-  }
+  },
+  "browserslist": [
+    "Chrome >=61",
+    "ChromeAndroid >=61",
+    "Firefox >=63",
+    "Firefox ESR",
+    "Edge >=79",
+    "Safari >=13",
+    "iOS >=13"
+  ]
 }
