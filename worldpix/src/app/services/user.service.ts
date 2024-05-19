@@ -5,13 +5,15 @@ import { initializeApp } from 'firebase/app';
 import { enviroment } from '../app.config';
 import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, query, updateDoc, where } from 'firebase/firestore';
 import { User } from '../interfaces/user';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject, firstValueFrom } from 'rxjs';
 import bcrypt from 'bcryptjs';
 import jsSHA from 'jssha';
+import { user } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class UserService {
 
   app: FirebaseApp;
@@ -19,12 +21,18 @@ export class UserService {
   userDoc: CollectionReference<DocumentData>
   salt = bcrypt.genSaltSync(10);
   static currentUser: string = "default"; 
+  private currentUserSubject: BehaviorSubject<User | null>;
+  public currentUserObject: Observable<User | null>;
 
   constructor() { 
     this.app = initializeApp(enviroment);
     this.database = getFirestore(this.app);
     this.userDoc = collection(this.database, "User");
+    this.currentUserSubject = new BehaviorSubject<User | null>(null);
+    this.currentUserObject = this.currentUserSubject.asObservable();
+
   }
+  
 
   /*async registerUser(user: User) {
     var username = user.username;
@@ -55,6 +63,7 @@ export class UserService {
     let buffer = await addDoc(this.userDoc, user);
     return this.authenticateUser(user);
   }
+
 
   /*async addUser(user: User): Promise<string> {
     try {
@@ -91,6 +100,7 @@ export class UserService {
       const userData = userSnapshot.docs[0].data() as User;
 
       if (password === userData.password) {
+        this.setCurrentUser(userData);
         return userSnapshot.docs[0].id;
       } else {
         return "pass"
@@ -105,6 +115,64 @@ export class UserService {
     const userRef = doc(this.userDoc, `${id}`);
     return docData(userRef, {idField: 'id'}) as Observable<User>;
   }
+
+  private setCurrentUser(user: User): void {
+    this.currentUserSubject.next(user);
+  }
+
+  public getCurrentUserObservable(): Observable<User | null> {
+    return this.currentUserObject;
+  }
+
+  public async getCurrentUser(): Promise<User | null> {
+    
+
+    const currentUser = this.currentUserSubject.value;
+  
+  // Check if currentUser is not null
+  if (!currentUser) {
+    console.log("Current user is null");
+    return null;
+  }
+  
+  try {
+    const userQuery = query(this.userDoc, where("email", "==", currentUser.email));
+    const userSnapshot = await getDocs(userQuery);
+    
+    if (userSnapshot.empty) {
+      console.log("Error al cargar el usuario actual");
+      return null;
+    }
+
+    const userData = userSnapshot.docs[0].data() as User;
+    this.setCurrentUser(userData);
+    return userData;
+
+  } catch (error) {
+    console.log("Error al cargar el usuario actual");
+    console.error(error);
+    return null;
+  }
+}
+
+public async getUserIdByEmail(email: string): Promise<string | null> {
+  try {
+    const userQuery = query(this.userDoc, where("email", "==", email));
+    const userSnapshot = await getDocs(userQuery);
+
+    if (userSnapshot.empty) {
+      console.log("No user found with the given email.");
+      return null;
+    }
+
+    return userSnapshot.docs[0].id;
+  } catch (error) {
+    console.error("Error fetching user ID by email:", error);
+    return null;
+  }
+}
+
+
 
   async userNameExists(username: string) {
     const userQuery = query(this.userDoc, where("username", "==", username));

@@ -83,6 +83,33 @@ export class ImageService {
     return result;
   }
 
+  async getAlbumImagesNumber(albumId: string, howMany: number = -1) {
+    const q = query(this.imageDoc, where("albumId", "==", albumId));
+    const querySnapshot = await getDocs(q);
+
+    var photosNumber = 0;
+
+    var result: Image[] = [];
+    querySnapshot.forEach((doc) => {
+      const image: Image = {
+        id: doc.id,
+        name: doc.data()["name"],
+        description: doc.data()["description"],
+        imageURL: doc.data()["imageURL"],
+        date: doc.data()["date"],
+        albumId: doc.data()["albumId"]
+      }
+      result.push(image);
+      photosNumber++;
+    });
+
+    if (howMany != -1 && howMany < result.length) {
+      result = result.slice(0, howMany);
+    }
+
+    return photosNumber;
+  }
+
    deleteImage(id: string) {
     const docRef = doc(this.database, 'Image', id);
     return deleteDoc(docRef);;
