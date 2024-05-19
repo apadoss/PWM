@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IconRoundButtonComponent } from './icon-round-button.component';
+import { IconRoundToggleButtonComponent } from './icon-round-toggle-button.component';
 
 describe('IconRoundButtonComponent', () => {
-  let component: IconRoundButtonComponent;
-  let fixture: ComponentFixture<IconRoundButtonComponent>;
+  let component: IconRoundToggleButtonComponent;
+  let fixture: ComponentFixture<IconRoundToggleButtonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [IconRoundButtonComponent]
+      imports: [IconRoundToggleButtonComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(IconRoundButtonComponent);
+    fixture = TestBed.createComponent(IconRoundToggleButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

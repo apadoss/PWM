@@ -5,7 +5,8 @@
     (filesUploaded)="resolveUpload($event)"
     ></app-image-upload>
     <div class="container">
-        <div style="position: absolute; top: 15px; right: 15px;">
+        <div style="display: flex; flex-direction: row; position: absolute; top: 15px; right: 15px; gap: 10px">
+            <app-icon-round-toggle-button (buttonClick)="toggleFavorite()" [state]="this.album.favorited" [linkOn]="'assets/star-shine.png'" [linkOff]="'assets/star-off.png'"></app-icon-round-toggle-button>
             <app-icon-round-button (buttonClick)="return()" [link]="'assets/close.png'"></app-icon-round-button>
         </div>
         <div style="position: absolute; bottom: 15px; right: 15px;">

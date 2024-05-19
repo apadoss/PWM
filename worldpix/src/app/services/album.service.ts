@@ -86,6 +86,11 @@ async getAlbum(id: string) {
     return updateDoc(albumRef, { id: inputid });
   }
 
+  setAlbumFavorite(inputid: string, inputBool: boolean) {
+    const albumRef = doc(this.albumDoc, `${inputid}`);
+    return updateDoc(albumRef, { favorited: inputBool });
+  }
+
   modifyAlbumName(id: string, newName: string) {
     const albumRef = doc(this.albumDoc, `${id}`);
     return updateDoc(albumRef, { name: newName });

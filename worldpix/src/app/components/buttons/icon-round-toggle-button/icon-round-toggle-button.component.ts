@@ -3,13 +3,13 @@ import { ConfirmPopupComponent } from "../../confirm-popup/confirm-popup.compone
 import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
-    selector: 'app-icon-round-button',
+    selector: 'app-icon-round-toggle-button',
     standalone: true,
-    templateUrl: './icon-round-button.component.html',
-    styleUrl: './icon-round-button.component.css',
+    templateUrl: './icon-round-toggle-button.component.html',
+    styleUrl: './icon-round-toggle-button.component.css',
     imports: [ NgIf, CommonModule, ConfirmPopupComponent]
 })
-export class IconRoundButtonComponent {
+export class IconRoundToggleButtonComponent {
   @Input() linkOff: string = '';
   @Input() linkOn: string = '';
   @Input() state: boolean = false;

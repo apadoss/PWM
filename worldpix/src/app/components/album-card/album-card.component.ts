@@ -13,13 +13,14 @@ import { ImageUploadComponent } from "../image-upload/image-upload.component";
 import { ImageService } from '@app/services/image.service';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { SpinnerComponent } from "../spinner/spinner.component";
+import { IconRoundToggleButtonComponent } from "../buttons/icon-round-toggle-button/icon-round-toggle-button.component";
 
 @Component({
     selector: 'app-album-card',
     standalone: true,
     templateUrl: './album-card.component.html',
     styleUrl: './album-card.component.css',
-    imports: [MatProgressSpinnerModule, BodyComponent, NgIf, CommonModule, Generic2ButtonComponent, IconRoundButtonComponent, ConfirmPopupComponent, ImageCascadeComponent, ImageUploadComponent, SpinnerComponent]
+    imports: [MatProgressSpinnerModule, BodyComponent, NgIf, CommonModule, Generic2ButtonComponent, IconRoundButtonComponent, ConfirmPopupComponent, ImageCascadeComponent, ImageUploadComponent, SpinnerComponent, IconRoundToggleButtonComponent]
 })
 export class AlbumCardComponent {
   /*@Input() album: Album = {
@@ -61,6 +62,11 @@ export class AlbumCardComponent {
         console.error("Album could not be retrieved")
       }
     });
+  }
+
+  toggleFavorite() {
+    this.album.favorited = !this.album.favorited;
+    this.albumManager.setAlbumFavorite(this.album.id!, this.album.favorited);
   }
 
   return() {
