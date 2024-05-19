@@ -12,11 +12,12 @@ import { Album } from '@app/interfaces/album';
 import { AlbumService } from '@app/services/album.service';
 import { ImageService } from '@app/services/image.service';
 import { Image } from '@app/interfaces/image'; 
+import { NgFor, CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [ SidebarComponent, HeaderComponent, BodyComponent, FinalSidebarComponent, RouterOutlet, ImageCascadeComponent],
+  imports: [ NgFor, CommonModule, SidebarComponent, HeaderComponent, BodyComponent, FinalSidebarComponent, RouterOutlet, ImageCascadeComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
@@ -24,6 +25,7 @@ import { Image } from '@app/interfaces/image';
 export class ProfileComponent implements OnInit{
   user: User | null = null;
   albums: Album[] = [];
+  favorites: string[] = [];
   albumsCount: number = 0;
   photosCount: number = 0;
 
@@ -59,6 +61,10 @@ export class ProfileComponent implements OnInit{
       try {
         this.albums = await this.albumService.getUserAlbums(userId);
         this.albumsCount = this.albums.length;
+        this.favorites = this.albums
+        .filter(album => album.favorited)
+        .map(album => album.name);
+        console.log("aaa", this.favorites)
       } catch (error) {
         console.error('Error fetching user albums:', error);
       }
