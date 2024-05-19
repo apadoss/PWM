@@ -64,7 +64,6 @@ export class ProfileComponent implements OnInit{
         this.favorites = this.albums
         .filter(album => album.favorited)
         .map(album => album.name);
-        console.log("aaa", this.favorites)
       } catch (error) {
         console.error('Error fetching user albums:', error);
       }
